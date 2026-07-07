@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Admin | VF Peças Agrícolas</title>
+    <meta name="description" content="Painel administrativo da VF Peças Agrícolas." />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="index.html#inicio" aria-label="VF Peças Agrícolas">
+        <img class="brand-mark" src="assets/logo-vf-exata.png" alt="" aria-hidden="true" />
+        <span>
+          <strong>VF</strong>
+          <small>Admin</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="index.html#catalogo">Catálogo</a>
+        <a href="envio-troca-garantia.html">Políticas</a>
+      </nav>
+
+      <a class="button secondary topbar-action" href="index.html#catalogo">Voltar ao site</a>
+    </header>
+
+    <main class="admin-page">
+      <section class="admin-hero">
+        <p class="eyebrow">Painel administrativo</p>
+        <h1>Pedidos e números do site</h1>
+        <p>
+          Painel administrativo para acompanhar pedidos, clientes e faturamento.
+          Para acessar dados do banco, entre com um usuário autorizado no Supabase.
+        </p>
+      </section>
+
+      <section class="admin-stats" aria-label="Resumo dos pedidos">
+        <article>
+          <span>Pedidos</span>
+          <strong data-admin-orders>0</strong>
+        </article>
+        <article>
+          <span>Faturamento estimado</span>
+          <strong data-admin-revenue>R$ 0,00</strong>
+        </article>
+        <article>
+          <span>Itens vendidos</span>
+          <strong data-admin-items>0</strong>
+        </article>
+      </section>
+
+      <section class="admin-login" data-admin-login>
+        <div>
+          <p class="eyebrow">Acesso restrito</p>
+          <h2>Entrar como administrador</h2>
+          <p>Use o e-mail autorizado no Supabase para acessar pedidos do banco.</p>
+        </div>
+        <form data-admin-login-form>
+          <label>
+            E-mail
+            <input name="email" type="email" autocomplete="username" required />
+          </label>
+          <label>
+            Senha
+            <input name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <button class="button primary" type="submit">Entrar no admin</button>
+          <p class="account-note" data-admin-login-status></p>
+        </form>
+      </section>
+
+      <section class="admin-section">
+        <div class="admin-section-head">
+          <div class="section-heading">
+            <p class="eyebrow">Histórico</p>
+            <h2>Pedidos recebidos</h2>
+          </div>
+          <div class="admin-actions">
+            <button class="button secondary" type="button" data-export-orders>Exportar CSV</button>
+            <button class="button secondary" type="button" data-refresh-admin>Atualizar</button>
+            <button class="button danger" type="button" data-clear-orders>Limpar local</button>
+          </div>
+        </div>
+        <div class="admin-orders" data-admin-list></div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="data-store.js"></script>
+    <script>
+      const money = (value) =>
+        value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+      const csvValue = (value) => `"${String(value ?? "").replaceAll('"', '""')}"`;
+      const escapeHtml = (value) =>
+        String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      const normalizeWhatsApp = (value) => {
+        const digits = String(value || "").replace(/\D/g, "");
+        if (!digits) return "";
+        if (digits.length === 11) return `55${digits}`;
+        return digits;
+      };
+      const orderStatuses = ["novo", "em atendimento", "pago", "enviado", "concluido"];
+
+      let currentOrders = [];
+
+      function orderWhatsAppUrl(order) {
+        const phone = normalizeWhatsApp(order.customer?.whatsapp);
+        if (!phone) return "";
+
+        const message = [
+          `Olá, ${order.customer?.name || "tudo bem"}!`,
+          `Aqui é da VF Peças Agrícolas sobre o pedido ${order.id}.`,
+          "Estou entrando em contato para confirmar os detalhes do atendimento.",
+        ].join("\n");
+
+        return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      }
+
+      async function getOrdersForDashboard() {
+        if (!window.VFStore.client) return window.VFStore.readOrders();
+
+        const {
+          data: { session },
+        } = await window.VFStore.client.auth.getSession();
+
+        if (!session) return [];
+
+        try {
+          return await window.VFStore.readRemoteOrders();
+        } catch (error) {
+          document.querySelector("[data-admin-list]").innerHTML = `
+            <p class="cart-empty">
+              Nao foi possivel carregar pedidos do banco. Verifique se o SQL foi rodado
+              e se seu usuario foi cadastrado em admin_users.
+            </p>
+          `;
+          return [];
+        }
+      }
+
+      async function readDashboard() {
+        const orders = await getOrdersForDashboard();
+        currentOrders = orders;
+        const totalRevenue = orders.reduce((sum, order) => sum + (order.total || 0), 0);
+        const totalItems = orders.reduce(
+          (sum, order) => sum + order.items.reduce((itemSum, item) => itemSum + item.amount, 0),
+          0
+        );
+
+        document.querySelector("[data-admin-orders]").textContent = orders.length;
+        document.querySelector("[data-admin-revenue]").textContent = money(totalRevenue);
+        document.querySelector("[data-admin-items]").textContent = totalItems;
+
+        document.querySelector("[data-admin-list]").innerHTML = orders.length
+          ? orders
+              .map(
+                (order) => {
+                  const whatsappUrl = orderWhatsAppUrl(order);
+
+                  return `
+                  <article class="admin-order">
+                    <div>
+                      <p class="eyebrow">${new Date(order.createdAt).toLocaleString("pt-BR")}</p>
+                      <h3>${order.id}</h3>
+                      <p>${order.customer?.name || "Cliente não informado"} | ${order.customer?.city || "Cidade não informada"}</p>
+                      <p>WhatsApp: ${order.customer?.whatsapp || "Nao informado"}</p>
+                    </div>
+                    <div class="admin-order-side">
+                      <strong>${money(order.total || 0)}</strong>
+                      ${
+                        whatsappUrl
+                          ? `<a class="button secondary admin-whatsapp" href="${whatsappUrl}" target="_blank" rel="noreferrer">Abrir WhatsApp</a>`
+                          : `<span class="admin-no-whatsapp">WhatsApp não informado</span>`
+                      }
+                      <label>
+                        Status
+                        <select data-order-status="${order.id}">
+                          ${orderStatuses
+                            .map(
+                              (status) =>
+                                `<option value="${status}" ${status === (order.status || "novo") ? "selected" : ""}>${status}</option>`
+                            )
+                            .join("")}
+                        </select>
+                      </label>
+                    </div>
+                    <ul>
+                      ${order.items
+                        .map(
+                          (item) =>
+                            `<li>${item.amount}x ${item.code} - ${item.name} (${money(item.subtotal || 0)})</li>`
+                        )
+                        .join("")}
+                    </ul>
+                    <div class="admin-checkout">
+                      <strong>Entrega e pagamento</strong>
+                      <p>CPF/CNPJ: ${order.checkout?.document || "Nao informado"}</p>
+                      <p>Endereço: ${order.checkout?.address || "Nao informado"}</p>
+                      <p>Cidade/UF: ${order.checkout?.city || order.customer?.city || "Nao informado"}</p>
+                      <p>Pagamento: ${order.checkout?.payment || "Nao informado"}</p>
+                      <p>Máquina/observação: ${order.checkout?.machineNote || "Sem observação"}</p>
+                    </div>
+                    <div class="admin-internal-note">
+                      <label>
+                        Observação interna
+                        <textarea data-order-note="${order.id}" rows="3" placeholder="Ex: cliente pediu retorno à tarde, conferir transportadora, negociar desconto">${escapeHtml(order.internalNote || "")}</textarea>
+                      </label>
+                      <button class="button secondary" type="button" data-save-note="${order.id}">
+                        Salvar observação
+                      </button>
+                    </div>
+                  </article>
+                `;
+                }
+              )
+              .join("")
+          : `<p class="cart-empty">Nenhum pedido salvo neste navegador ainda.</p>`;
+      }
+
+      function exportOrders() {
+        const orders = currentOrders.length ? currentOrders : window.VFStore.readOrders();
+        const rows = [
+          ["pedido", "data", "cliente", "whatsapp", "cidade", "status", "total", "observacao interna", "itens"].map(csvValue).join(","),
+          ...orders.map((order) =>
+            [
+              order.id,
+              new Date(order.createdAt).toLocaleString("pt-BR"),
+              order.customer?.name,
+              order.customer?.whatsapp,
+              order.customer?.city,
+              order.status || "novo",
+              order.total || 0,
+              order.internalNote || "",
+              order.items.map((item) => `${item.amount}x ${item.code}`).join(" | "),
+            ]
+              .map(csvValue)
+              .join(",")
+          ),
+        ];
+        const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "vf-pedidos.csv";
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+
+      document.querySelector("[data-export-orders]").addEventListener("click", exportOrders);
+      document.querySelector("[data-refresh-admin]").addEventListener("click", readDashboard);
+      document.querySelector("[data-clear-orders]").addEventListener("click", () => {
+        if (!confirm("Limpar pedidos salvos neste navegador?")) return;
+        window.VFStore.clearOrders();
+        readDashboard();
+      });
+
+      document.addEventListener("click", async (event) => {
+        const orderId = event.target.closest("[data-save-note]")?.dataset.saveNote;
+        if (!orderId) return;
+
+        const button = event.target.closest("[data-save-note]");
+        const textarea = document.querySelector(`[data-order-note="${orderId}"]`);
+        const internalNote = textarea?.value || "";
+
+        button.disabled = true;
+        button.textContent = "Salvando...";
+
+        try {
+          await window.VFStore.updateOrderInternalNote(orderId, internalNote);
+          const order = currentOrders.find((item) => item.id === orderId);
+          if (order) order.internalNote = internalNote;
+          button.textContent = "Observação salva";
+        } catch (error) {
+          button.textContent = "Salvar observação";
+          alert("Nao foi possivel salvar a observação interna. Verifique se o SQL foi atualizado e se voce esta logado como admin.");
+        } finally {
+          setTimeout(() => {
+            button.disabled = false;
+            button.textContent = "Salvar observação";
+          }, 1200);
+        }
+      });
+
+      document.addEventListener("change", async (event) => {
+        const orderId = event.target.closest("[data-order-status]")?.dataset.orderStatus;
+        if (!orderId) return;
+
+        const status = event.target.value;
+        event.target.disabled = true;
+
+        try {
+          await window.VFStore.updateOrderStatus(orderId, status);
+          const order = currentOrders.find((item) => item.id === orderId);
+          if (order) order.status = status;
+        } catch (error) {
+          alert("Nao foi possivel atualizar o status. Verifique se voce esta logado como admin.");
+        } finally {
+          event.target.disabled = false;
+        }
+      });
+
+      document.querySelector("[data-admin-login-form]").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const status = document.querySelector("[data-admin-login-status]");
+        status.textContent = "Entrando...";
+
+        try {
+          await window.VFStore.signInAdmin(data.get("email"), data.get("password"));
+          status.textContent = "Acesso liberado.";
+          document.querySelector("[data-admin-login]").hidden = true;
+          await readDashboard();
+        } catch (error) {
+          status.textContent = "Nao foi possivel entrar. Confira e-mail, senha e permissao de admin.";
+        }
+      });
+
+      readDashboard();
+    </script>
+  </body>
+</html>

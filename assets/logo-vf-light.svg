@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
+  <title id="title">VF Pecas Agricolas</title>
+  <desc id="desc">Logo VF unificada, pesada, em branco e amarelo.</desc>
+  <defs>
+    <linearGradient id="agroLight" x1="72" y1="224" x2="604" y2="224" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffefa"/>
+      <stop offset=".55" stop-color="#fffefa"/>
+      <stop offset=".56" stop-color="#d6a72f"/>
+      <stop offset="1" stop-color="#d6a72f"/>
+    </linearGradient>
+  </defs>
+  <path
+    fill="url(#agroLight)"
+    d="M0 0h108l166 336L346 0h294l-38 78H346v74h216l-38 78H346l-72 250L0 0Z"
+  />
+</svg>
