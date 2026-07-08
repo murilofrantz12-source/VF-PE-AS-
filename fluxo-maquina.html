@@ -6,7 +6,7 @@
     <title>Fluxo da Máquina | Caminho do material na colheitadeira | VF Peças Agrícolas</title>
     <meta
       name="description"
-      content="Fluxo da Máquina da VF Peças Agrícolas: acompanhe o caminho do material dentro da colheitadeira e veja onde atuam dedos da plataforma, kits reparo do rotor e capas do batedor."
+      content="Fluxo da Máquina da VF Peças Agrícolas: acompanhe, em etapas, o caminho do material dentro da colheitadeira e veja onde atuam peças VF no fluxo."
     />
     <link rel="canonical" href="https://murilofrantz12-source.github.io/VF-PE-AS-/fluxo-maquina.html" />
     <link rel="stylesheet" href="styles.css" />
@@ -32,199 +32,89 @@
       <a class="button primary topbar-action" href="index.html#catalogo">Comprar peças</a>
     </header>
 
-    <main class="machine-flow-page" data-machine-flow>
-      <section class="machine-flow-hero" aria-label="Fluxo técnico da colheitadeira">
-        <div class="machine-flow-copy">
+    <main class="machine-flow-page tour-page" data-machine-flow>
+      <section class="tour-hero" aria-label="Apresentação guiada do fluxo da colheitadeira">
+        <div class="tour-hero-copy">
           <p class="eyebrow">Fluxo da Máquina</p>
           <h1>Entenda o caminho do material dentro da colheitadeira</h1>
           <p>
-            Acompanhe o fluxo desde a plataforma até as etapas internas da máquina
-            e veja onde estão aplicadas as principais peças VF.
+            Acompanhe o fluxo como se fosse uma semente entrando na máquina:
+            plataforma, dedos, alimentação, rotor, batedor, peneira e final.
           </p>
-          <div class="machine-flow-actions">
+          <div class="tour-actions">
             <button class="button primary" type="button" data-flow-start>Iniciar apresentação</button>
             <button class="button secondary" type="button" data-flow-play>Assistir automático</button>
-            <a class="button secondary" data-flow-whatsapp data-message="Olá, quero solicitar orçamento de peças pelo Fluxo da Máquina da VF." href="#">Solicitar orçamento</a>
-          </div>
-          <div class="machine-flow-metrics" aria-label="Resumo técnico da experiência">
-            <span><strong>9</strong> peças em destaque</span>
-            <span><strong>7</strong> etapas do fluxo</span>
-            <span><strong>VF</strong> peças alternativas</span>
+            <a
+              class="button secondary"
+              data-flow-whatsapp
+              data-message="Olá, quero solicitar orçamento de peças pelo Fluxo da Máquina da VF."
+              href="#"
+            >Solicitar orçamento</a>
           </div>
         </div>
 
-        <div class="machine-flow-experience">
-          <div class="machine-flow-stage" data-flow-stage data-step="overview">
-            <div class="machine-grid" aria-hidden="true"></div>
-            <div class="machine-scan" aria-hidden="true"></div>
-
-            <div class="machine-viewport">
-              <svg class="machine-svg" viewBox="0 0 1280 650" role="img" aria-label="Colheitadeira em corte lateral mostrando o caminho do material">
-                <defs>
-                  <linearGradient id="bodyGradient" x1="0" x2="1" y1="0" y2="1">
-                    <stop offset="0" stop-color="#2f8f5a" stop-opacity="0.72" />
-                    <stop offset="0.48" stop-color="#123f2a" stop-opacity="0.86" />
-                    <stop offset="1" stop-color="#07130d" stop-opacity="0.96" />
-                  </linearGradient>
-                  <linearGradient id="goldFlow" x1="0" x2="1">
-                    <stop offset="0" stop-color="#fff4c0" stop-opacity="0.28" />
-                    <stop offset="0.48" stop-color="#dfb43a" />
-                    <stop offset="1" stop-color="#df6a2e" />
-                  </linearGradient>
-                  <linearGradient id="cutGradient" x1="0" x2="1">
-                    <stop offset="0" stop-color="#fffefa" stop-opacity="0.06" />
-                    <stop offset="1" stop-color="#fffefa" stop-opacity="0.16" />
-                  </linearGradient>
-                  <filter id="machineGlow" x="-35%" y="-35%" width="170%" height="170%">
-                    <feGaussianBlur stdDeviation="5" result="blur" />
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
-
-                <g class="machine-shadow">
-                  <ellipse cx="650" cy="552" rx="560" ry="34" />
-                </g>
-
-                <g class="crop-field" data-region="cultura">
-                  <path class="crop-ground" d="M28 510 C84 492 142 492 196 506 C250 520 306 518 360 504" />
-                  <path class="crop-stalk" d="M64 506 L74 430 M98 502 L108 418 M132 506 L142 432 M168 504 L176 424 M210 504 L218 432 M248 506 L254 438" />
-                  <path class="crop-head" d="M74 430 C58 414 54 398 70 386 C86 400 90 416 74 430 M108 418 C92 402 88 386 104 374 C122 390 124 406 108 418 M142 432 C128 416 126 400 140 388 C156 402 160 418 142 432 M176 424 C160 406 158 392 172 380 C190 398 192 412 176 424 M218 432 C204 416 202 402 216 390 C232 404 236 420 218 432 M254 438 C240 422 238 408 252 396 C268 410 272 426 254 438" />
-                </g>
-
-                <g class="machine-header" data-region="plataforma">
-                  <path class="header-main" d="M56 398 L340 330 L432 374 L122 476 Z" />
-                  <path class="header-side" d="M124 476 L432 374 L454 402 L154 510 Z" />
-                  <circle class="header-reel-ring" cx="250" cy="348" r="86" />
-                  <path class="header-reel-spoke" d="M250 262 L250 434 M164 348 L336 348 M188 286 L312 410 M312 286 L188 410" />
-                  <path class="header-auger" d="M106 396 C176 356 290 336 382 362" />
-                  <path class="header-teeth" d="M82 456 L104 492 L134 444 L162 480 L194 430 L222 466 L254 416 L282 452 L314 402 L342 438 L374 388 L402 424" />
-                  <path class="header-feed" d="M348 356 L486 310 L514 354 L388 420 Z" />
-                  <path class="header-fingers-zone" data-region="dedos" d="M80 448 L408 392" />
-                </g>
-
-                <g class="machine-body" data-region="estrutura">
-                  <path
-                    class="machine-shell"
-                    d="M382 260 L520 160 L822 146 L960 206 L1038 338 L974 456 L694 492 L432 430 L326 342 Z"
-                  />
-                  <path
-                    class="machine-cut"
-                    d="M438 282 L548 206 L780 192 L898 244 L952 330 L884 398 L668 430 L488 384 Z"
-                  />
-                  <path class="machine-panel-line" d="M454 292 L884 246 M486 384 L884 398 M548 206 L668 430" />
-                  <path class="machine-cab" d="M764 108 L884 134 L950 226 L824 218 L742 158 Z" />
-                  <path class="machine-cab-glass" d="M792 136 L858 150 L908 208 L832 204 L774 160 Z" />
-                  <path class="machine-tank" d="M510 104 L716 96 L824 146 L502 156 Z" />
-                  <path class="machine-auger" d="M748 138 C860 72 1010 64 1192 88" />
-                  <path class="machine-grain-elevator" d="M786 196 C836 264 856 344 828 426" />
-                  <path class="machine-rear" d="M926 304 L1088 276 L1120 330 L1008 384" />
-                </g>
-
-                <g class="internal-regions">
-                  <path class="region region-feedhouse" data-region="alimentacao" d="M402 370 L532 304 L558 346 L448 420 Z" />
-                  <ellipse class="region region-rotor" data-region="rotor" cx="682" cy="318" rx="160" ry="64" />
-                  <path class="rotor-spine" d="M532 322 C622 274 760 278 846 334" />
-                  <path class="rotor-flight" d="M548 304 C614 354 706 366 826 326 M548 336 C626 292 728 282 838 352" />
-                  <circle class="region region-batedor" data-region="batedor" cx="486" cy="296" r="60" />
-                  <path class="batedor-bars" d="M442 258 L530 334 M432 296 L540 296 M444 334 L528 258" />
-                  <path class="region region-separation" data-region="separacao" d="M732 290 C832 286 922 326 954 412" />
-                  <path class="region region-cleaning" data-region="limpeza" d="M556 438 C664 500 820 482 946 414" />
-                  <path class="cleaning-sieves" d="M572 456 L920 410 M604 476 L888 430 M644 492 L842 450" />
-                  <path class="region region-exit" data-region="saida" d="M930 354 C1012 390 1088 366 1172 320 M936 416 C1014 456 1090 444 1164 408" />
-                </g>
-
-                <g class="machine-wheels">
-                  <circle class="wheel-back" cx="844" cy="504" r="76" />
-                  <circle class="wheel-inner" cx="844" cy="504" r="34" />
-                  <circle class="wheel-front" cx="506" cy="510" r="104" />
-                  <circle class="wheel-inner" cx="506" cy="510" r="46" />
-                </g>
-
-                <g class="flow-lines" filter="url(#machineGlow)">
-                  <path class="flow-path flow-crop" data-flow-region="plataforma" d="M72 444 C150 420 238 398 346 372" />
-                  <path class="flow-path flow-dedos" data-flow-region="dedos" d="M106 456 C210 430 312 408 416 386" />
-                  <path class="flow-path flow-feed" data-flow-region="alimentacao" d="M386 388 C448 350 492 326 550 318" />
-                  <path class="flow-path flow-rotor" data-flow-region="rotor" d="M548 318 C632 270 770 286 846 348" />
-                  <path class="flow-path flow-batedor" data-flow-region="batedor" d="M430 316 C474 260 544 260 592 312" />
-                  <path class="flow-path flow-separation" data-flow-region="separacao" d="M734 304 C832 306 918 340 956 414" />
-                  <path class="flow-path flow-cleaning" data-flow-region="limpeza" d="M560 438 C682 500 828 480 950 416" />
-                  <path class="flow-path flow-exit" data-flow-region="saida" d="M936 382 C1022 434 1102 414 1174 350" />
-                </g>
-
-                <g class="flow-particles" aria-hidden="true">
-                  <circle class="particle particle-a" r="7" />
-                  <circle class="particle particle-b" r="5" />
-                  <circle class="particle particle-c" r="6" />
-                  <circle class="particle particle-d" r="4" />
-                </g>
-              </svg>
-
-              <div class="machine-hotspots" data-flow-hotspots></div>
+        <div class="tour-shell">
+          <div class="tour-frame" data-tour-frame data-step="plataforma">
+            <div class="tour-frame-grid" aria-hidden="true"></div>
+            <div class="tour-frame-top">
+              <div>
+                <span data-step-kicker>Etapa 01</span>
+                <strong data-step-title>A colheita começa na plataforma</strong>
+              </div>
+              <span class="tour-live-badge" data-tour-badge>Plataforma</span>
             </div>
 
-            <aside class="machine-insight" aria-live="polite">
-              <div class="machine-step-card">
-                <p class="eyebrow" data-step-kicker>Visão geral</p>
-                <h2 data-step-title>O material entra pela plataforma e percorre a máquina.</h2>
+            <div class="tour-scene" data-tour-scene aria-live="polite"></div>
+
+            <div class="tour-panel">
+              <div class="tour-step-copy">
+                <p class="eyebrow">O que acontece aqui</p>
+                <h2 data-step-heading>Plataforma</h2>
                 <p data-step-text>
-                  A apresentação acompanha o trigo entrando pela plataforma, passando
-                  pelo alimentador, rotor, batedor, limpeza e saída.
+                  A plataforma é o ponto de entrada do material na colheitadeira.
                 </p>
               </div>
 
-              <div class="machine-region-card">
-                <p class="eyebrow">Close da região</p>
-                <div class="machine-region-visual" data-region-visual>
-                  <span>Fluxo completo</span>
-                </div>
-                <strong data-region-title>Visão geral da colheitadeira</strong>
-                <p data-region-text>Primeiro entenda a região da máquina. Depois veja as peças VF aplicadas no ponto correto.</p>
-              </div>
-
-              <div class="machine-part-card" data-active-part-card>
-                <p class="eyebrow">Peça VF em destaque</p>
-                <h3>Selecione um hotspot</h3>
-                <p>Clique nos pontos luminosos da máquina para ver código, aplicação e função da peça.</p>
-              </div>
-            </aside>
+              <div class="tour-commercial" data-stage-parts></div>
+            </div>
           </div>
 
-          <div class="machine-controls" aria-label="Controle do fluxo da máquina">
-            <button class="button secondary" type="button" data-flow-prev>Voltar</button>
-            <ol class="machine-timeline" aria-label="Etapas do fluxo" data-flow-timeline></ol>
-            <button class="button primary" type="button" data-flow-next>Avançar</button>
+          <div class="tour-controls" aria-label="Controle do Fluxo da Máquina">
+            <button class="button secondary" type="button" data-flow-prev>Etapa anterior</button>
+            <ol class="tour-timeline" aria-label="Etapas do fluxo" data-flow-timeline></ol>
+            <button class="button primary" type="button" data-flow-next>Próxima etapa</button>
           </div>
         </div>
       </section>
 
-      <section class="machine-mobile-sequence" aria-label="Resumo do fluxo da colheitadeira"></section>
-
-      <section class="machine-featured-section" aria-label="Peças em destaque no fluxo">
+      <section class="tour-featured-section" aria-label="Peças em destaque no fluxo">
         <div class="section-heading">
           <p class="eyebrow">Peças em destaque no fluxo</p>
-          <h2>Itens de reposição para pontos de desgaste da máquina.</h2>
+          <h2>Peças VF aplicadas nos pontos estratégicos da colheitadeira.</h2>
           <p>
-            Peças alternativas/similares organizadas por aplicação para facilitar
-            o entendimento de revendas, oficinas e produtores.
+            O foco é entender primeiro a região da máquina. Depois, quando fizer sentido,
+            conferir a peça, o nome e o código para orçamento.
           </p>
         </div>
-        <div class="machine-parts-grid" data-featured-parts></div>
+        <div class="tour-featured-grid" data-featured-parts></div>
       </section>
 
-      <section class="machine-final-cta">
+      <section class="tour-final-cta">
         <div>
-          <p class="eyebrow">Orçamento técnico</p>
-          <h2>Encontrou a peça aplicada na sua máquina?</h2>
+          <p class="eyebrow">Identificação da peça</p>
+          <h2>Não encontrou a peça no fluxo?</h2>
           <p>
-            Envie o código, modelo da colheitadeira ou uma foto da peça. A equipe VF
-            ajuda a identificar e montar o orçamento.
+            Envie o código, modelo da máquina ou uma foto da peça. A equipe VF ajuda
+            a identificar a aplicação correta e montar o orçamento.
           </p>
         </div>
-        <div class="machine-final-actions">
-          <a class="button primary" data-flow-whatsapp data-message="Olá, quero chamar a VF pelo Fluxo da Máquina. Tenho código, modelo ou foto da peça para orçamento." href="#">Chamar no WhatsApp</a>
+        <div class="tour-final-actions">
+          <a
+            class="button primary"
+            data-flow-whatsapp
+            data-message="Olá, quero identificar uma peça agrícola que não encontrei no Fluxo da Máquina."
+            href="#"
+          >Falar com a VF</a>
           <a class="button secondary" href="index.html#catalogo">Ver catálogo</a>
           <a class="button secondary" href="index.html#orcamento">Solicitar orçamento</a>
         </div>

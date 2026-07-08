@@ -1,120 +1,35 @@
 const FLOW_WHATSAPP = "5545991444489";
 
-const flowSteps = [
-  {
-    id: "plataforma",
-    label: "Plataforma",
-    kicker: "Etapa 01",
-    title: "A cultura entra pela plataforma",
-    text:
-      "A plataforma é o ponto inicial do processo. É nela que a cultura é captada e conduzida para dentro da máquina.",
-    relatedGroups: [],
-    regionTitle: "Plataforma de corte",
-    regionText: "A cultura é captada na frente da máquina e começa a ser direcionada para o alimentador.",
-    regionType: "platform",
-  },
-  {
-    id: "dedos",
-    label: "Dedos",
-    kicker: "Etapa 02",
-    title: "Dedos da plataforma em destaque",
-    text:
-      "Os dedos da plataforma ajudam na condução do material, sendo componentes importantes na entrada e alimentação inicial.",
-    relatedGroups: ["Plataforma"],
-    regionTitle: "Dedos da plataforma",
-    regionText: "Os dedos ficam distribuídos na barra da plataforma e ajudam a guiar a cultura no início do fluxo.",
-    regionType: "fingers",
-  },
-  {
-    id: "alimentacao",
-    label: "Alimentação",
-    kicker: "Etapa 03",
-    title: "Material sendo puxado para dentro",
-    text:
-      "Depois do corte, o material é conduzido pelo alimentador para a parte interna da colheitadeira. Um fluxo regular reduz acúmulo e melhora a continuidade da operação.",
-    relatedGroups: [],
-    regionTitle: "Alimentador interno",
-    regionText: "O material sai da plataforma e sobe pelo canal de alimentação até chegar aos conjuntos internos.",
-    regionType: "feed",
-  },
-  {
-    id: "rotor",
-    label: "Rotor",
-    kicker: "Etapa 04",
-    title: "Rotor / trilha",
-    text:
-      "No rotor acontece uma das etapas mais importantes do processamento. É uma região de alto desgaste, por isso os kits de reparo são peças estratégicas para manutenção e reposição.",
-    relatedGroups: ["Rotor"],
-    regionTitle: "Rotor / trilha",
-    regionText: "Região central de processamento, com alto desgaste e necessidade de manutenção bem acompanhada.",
-    regionType: "rotor",
-  },
-  {
-    id: "batedor",
-    label: "Batedor",
-    kicker: "Etapa 05",
-    title: "Batedor e capas em destaque",
-    text:
-      "O batedor auxilia na continuidade do fluxo interno do material. As capas do batedor são peças importantes para proteção, condução e funcionamento adequado dessa região.",
-    relatedGroups: ["Batedor"],
-    regionTitle: "Batedor",
-    regionText: "Ponto de continuidade do fluxo após a trilha, com peças aplicadas na proteção e condução do conjunto.",
-    regionType: "batedor",
-  },
-  {
-    id: "limpeza",
-    label: "Separação e limpeza",
-    kicker: "Etapa 06",
-    title: "Separação e limpeza",
-    text:
-      "Nessa etapa, a máquina realiza a separação do grão e dos resíduos, conduzindo o material para as próximas fases do processo.",
-    relatedGroups: [],
-    regionTitle: "Peneira / separação / limpeza",
-    regionText: "O fluxo desce para a parte inferior, onde grãos, palha e resíduos são separados e conduzidos.",
-    regionType: "cleaning",
-  },
-  {
-    id: "saida",
-    label: "Saída",
-    kicker: "Etapa 07",
-    title: "Saída e visão geral do caminho",
-    text:
-      "Depois do processamento, o grão segue para armazenamento/descarga e a palha ou resíduo segue para a saída da máquina.",
-    relatedGroups: [],
-    regionTitle: "Saída do fluxo",
-    regionText: "A apresentação fecha mostrando o caminho completo percorrido pelo material dentro da máquina.",
-    regionType: "exit",
-  },
-];
-
 const featuredParts = [
   {
-    id: "capa-batedor-ah234023",
-    productId: "capa-batedor-9470-ah234023",
-    name: "Capa do batedor",
-    code: "AH234023",
-    group: "Batedor",
-    application: "JD 9470 | STS 9470, STS 9570, S540, S550",
-    function:
-      "Peça alternativa/similar aplicada na região do batedor, ponto importante para proteção e condução do material.",
-    image: "assets/products/capa-batedor-9470-ah234023.png",
-    position: { x: 40, y: 46 },
-    tone: "batedor",
-    emphasis: true,
+    id: "dedo-plataforma-6286531",
+    productId: "dedo-plataforma-lateral-6286531",
+    name: "Dedo da plataforma lateral",
+    code: "6286531",
+    group: "Dedos",
+    region: "Plataforma de corte | lateral",
+    description: "Ajuda na condução da cultura na lateral da plataforma durante a alimentação inicial.",
+    image: "assets/products/dedo-grosso-6286531.png",
   },
   {
-    id: "capa-batedor-ah214671",
-    productId: "capa-batedor-jd-9670-ah214671",
-    name: "Capa do batedor",
-    code: "AH214671",
-    group: "Batedor",
-    application: "JD 9670 | STS 9670, STS 9770 e Série S",
-    function:
-      "Item de reposição similar à original aplicado no batedor para auxiliar proteção, durabilidade e continuidade do fluxo interno.",
-    image: "assets/products/capa-batedor-jd-9670-ah214671.png",
-    position: { x: 44, y: 43 },
-    tone: "batedor",
-    emphasis: true,
+    id: "dedo-plataforma-6286532",
+    productId: "dedo-plataforma-central-6286532",
+    name: "Dedo da plataforma central",
+    code: "6286532",
+    group: "Dedos",
+    region: "Plataforma de corte | central",
+    description: "Item de reposição aplicado na região central da plataforma para condução uniforme do material.",
+    image: "assets/products/dedo-duplo-6286532.png",
+  },
+  {
+    id: "dedo-plataforma-6308502",
+    productId: "dedo-plataforma-menor-6308502",
+    name: "Dedo da plataforma menor",
+    code: "6308502",
+    group: "Dedos",
+    region: "Plataforma de corte | início/enrosação",
+    description: "Peça alternativa para aplicação no início da plataforma, auxiliando a entrada do material.",
+    image: "assets/products/dedo-corte-lateral-6308502.png",
   },
   {
     id: "kit-reparo-rotor-ah219761",
@@ -122,13 +37,9 @@ const featuredParts = [
     name: "Kit reparo do rotor dianteiro",
     code: "AH219761",
     group: "Rotor",
-    application: "JD 9470 | STS 9470, STS 9570, S540, S550",
-    function:
-      "Kit com 3 peças para manutenção da região dianteira do rotor, um dos principais pontos de desgaste da máquina.",
+    region: "Rotor | dianteiro | JD 9470",
+    description: "Kit com 3 peças para manutenção na região dianteira do rotor, ponto importante de desgaste.",
     image: "assets/products/kit-reparo-jd-9470-diant-ah219761-1.png",
-    position: { x: 52, y: 50 },
-    tone: "rotor",
-    emphasis: true,
   },
   {
     id: "kit-reparo-rotor-ah219762",
@@ -136,13 +47,9 @@ const featuredParts = [
     name: "Kit reparo do rotor traseiro",
     code: "AH219762",
     group: "Rotor",
-    application: "JD 9470 | STS 9470, STS 9570, S430, S440, S540, S550",
-    function:
-      "Kit de reposição aplicado na região traseira do rotor para recuperação e manutenção do sistema.",
+    region: "Rotor | traseiro | JD 9470",
+    description: "Kit com 3 peças para reposição na região traseira do rotor em aplicações compatíveis.",
     image: "assets/products/kit-reparo-jd-9470-tras-ah219762.png",
-    position: { x: 59, y: 48 },
-    tone: "rotor",
-    emphasis: true,
   },
   {
     id: "kit-reparo-rotor-ah216568",
@@ -150,13 +57,9 @@ const featuredParts = [
     name: "Kit reparo do rotor dianteiro",
     code: "AH216568",
     group: "Rotor",
-    application: "JD 9650/9670 | STS 9650, 9670, 9750, 9770 e Série S",
-    function:
-      "Conjunto similar à original para reparo dianteiro do rotor em aplicações STS e Série S compatíveis.",
+    region: "Rotor | dianteiro | JD 9650/9670",
+    description: "Conjunto similar à original para reparo dianteiro do rotor em máquinas STS e Série S compatíveis.",
     image: "assets/products/kit-reparo-jd-9670-diant-ah216568.png",
-    position: { x: 55, y: 42 },
-    tone: "rotor",
-    emphasis: true,
   },
   {
     id: "kit-reparo-rotor-ah216569",
@@ -164,78 +67,141 @@ const featuredParts = [
     name: "Kit reparo do rotor traseiro",
     code: "AH216569",
     group: "Rotor",
-    application: "JD 9650/9670 | STS 9650, 9670, 9750, 9770 e Série S",
-    function:
-      "Item de reposição para a região traseira do rotor, indicado para manutenção em ponto de alto desgaste.",
+    region: "Rotor | traseiro | JD 9650/9670",
+    description: "Item de reposição para manutenção da região traseira do rotor, em ponto de alto desgaste.",
     image: "assets/products/kit-reparo-jd-9670-tras-ah216569.png",
-    position: { x: 64, y: 52 },
-    tone: "rotor",
-    emphasis: true,
   },
   {
-    id: "dedo-plataforma-6286531",
-    productId: "dedo-plataforma-lateral-6286531",
-    name: "Dedo da plataforma lateral",
-    code: "6286531",
-    group: "Plataforma",
-    application: "Plataforma de corte | Lateral",
-    function:
-      "Peça alternativa para reposição lateral da plataforma, ajudando na condução uniforme da cultura no corte.",
-    image: "assets/products/dedo-grosso-6286531.png",
-    position: { x: 11, y: 70 },
-    tone: "plataforma",
-    emphasis: true,
+    id: "capa-batedor-ah234023",
+    productId: "capa-batedor-9470-ah234023",
+    name: "Capa do batedor",
+    code: "AH234023",
+    group: "Batedor",
+    region: "Batedor | JD 9470",
+    description: "Peça alternativa/similar aplicada na região do batedor para proteção e composição do conjunto.",
+    image: "assets/products/capa-batedor-9470-ah234023.png",
   },
   {
-    id: "dedo-plataforma-6286532",
-    productId: "dedo-plataforma-central-6286532",
-    name: "Dedo da plataforma central",
-    code: "6286532",
-    group: "Plataforma",
-    application: "Plataforma de corte | Central",
-    function:
-      "Dedo central para reposição na plataforma, com função importante na alimentação uniforme do material.",
-    image: "assets/products/dedo-duplo-6286532.png",
-    position: { x: 18, y: 66 },
-    tone: "plataforma",
-    emphasis: true,
+    id: "capa-batedor-ah214671",
+    productId: "capa-batedor-jd-9670-ah214671",
+    name: "Capa do batedor",
+    code: "AH214671",
+    group: "Batedor",
+    region: "Batedor | JD 9670",
+    description: "Item similar à original aplicado no batedor, auxiliando proteção e continuidade do fluxo interno.",
+    image: "assets/products/capa-batedor-jd-9670-ah214671.png",
+  },
+];
+
+const flowSteps = [
+  {
+    id: "plataforma",
+    label: "Plataforma",
+    kicker: "Etapa 01",
+    title: "A colheita começa na plataforma",
+    heading: "Plataforma",
+    text:
+      "A plataforma é o ponto de entrada do material na colheitadeira. É aqui que a cultura é captada e conduzida para dentro da máquina.",
+    visual: "platform",
+    parts: [],
+    context: "Entrada do material",
   },
   {
-    id: "dedo-plataforma-6308502",
-    productId: "dedo-plataforma-menor-6308502",
-    name: "Dedo da plataforma menor",
-    code: "6308502",
-    group: "Plataforma",
-    application: "Plataforma de corte | Início/enrosação",
-    function:
-      "Peça alternativa de reposição para aplicação no início/enrosação da plataforma. Código encontrado no cadastro atual como 6308502.",
-    image: "assets/products/dedo-corte-lateral-6308502.png",
-    position: { x: 25, y: 67 },
-    tone: "plataforma",
-    emphasis: true,
+    id: "dedos",
+    label: "Dedos",
+    kicker: "Etapa 02",
+    title: "Os dedos conduzem o material",
+    heading: "Dedos da plataforma",
+    text:
+      "Os dedos ajudam a conduzir o material na entrada da máquina e são fundamentais na alimentação inicial da colheita.",
+    visual: "fingers",
+    parts: ["dedo-plataforma-6286531", "dedo-plataforma-6286532", "dedo-plataforma-6308502"],
+    context: "Ponto visual de reposição",
+  },
+  {
+    id: "alimentacao",
+    label: "Alimentação",
+    kicker: "Etapa 03",
+    title: "O material entra na máquina",
+    heading: "Alimentação / entrada",
+    text:
+      "Depois da plataforma, o material segue para a alimentação interna, iniciando o percurso dentro da colheitadeira.",
+    visual: "feed",
+    parts: [],
+    context: "Conexão do fluxo",
+  },
+  {
+    id: "rotor",
+    label: "Rotor",
+    kicker: "Etapa 04",
+    title: "Rotor em foco",
+    heading: "Rotor",
+    text:
+      "O rotor é uma das regiões mais importantes do processamento e também um dos principais pontos de desgaste da máquina.",
+    visual: "rotor",
+    parts: [
+      "kit-reparo-rotor-ah219761",
+      "kit-reparo-rotor-ah219762",
+      "kit-reparo-rotor-ah216568",
+      "kit-reparo-rotor-ah216569",
+    ],
+    context: "Trilha e separação",
+  },
+  {
+    id: "batedor",
+    label: "Batedor",
+    kicker: "Etapa 05",
+    title: "O fluxo segue pelo batedor",
+    heading: "Batedor / trilha",
+    text:
+      "As capas do batedor são aplicadas nessa região do fluxo interno, compondo e protegendo o conjunto.",
+    visual: "beater",
+    parts: ["capa-batedor-ah234023", "capa-batedor-ah214671"],
+    context: "Proteção do conjunto",
+  },
+  {
+    id: "peneira",
+    label: "Peneira",
+    kicker: "Etapa 06",
+    title: "Separação e limpeza",
+    heading: "Peneira / separação / limpeza",
+    text:
+      "Nesta fase, a máquina realiza a separação e limpeza do material, distinguindo grãos, palha e resíduos.",
+    visual: "cleaning",
+    parts: [],
+    context: "Parte inferior da máquina",
+  },
+  {
+    id: "final",
+    label: "Final",
+    kicker: "Etapa 07",
+    title: "Resumo do caminho completo",
+    heading: "Visão final do fluxo",
+    text:
+      "A VF oferece peças em pontos estratégicos do fluxo da colheitadeira, ajudando na manutenção e reposição dos principais conjuntos.",
+    visual: "summary",
+    parts: [],
+    context: "Mapa completo",
   },
 ];
 
 const flowRoot = document.querySelector("[data-machine-flow]");
-const flowStage = document.querySelector("[data-flow-stage]");
-const hotspotLayer = document.querySelector("[data-flow-hotspots]");
+const tourFrame = document.querySelector("[data-tour-frame]");
+const tourScene = document.querySelector("[data-tour-scene]");
 const timeline = document.querySelector("[data-flow-timeline]");
 const featuredGrid = document.querySelector("[data-featured-parts]");
-const mobileSequence = document.querySelector(".machine-mobile-sequence");
-const partCard = document.querySelector("[data-active-part-card]");
-const regionVisual = document.querySelector("[data-region-visual]");
-const regionTitle = document.querySelector("[data-region-title]");
-const regionText = document.querySelector("[data-region-text]");
+const stageParts = document.querySelector("[data-stage-parts]");
 const stepKicker = document.querySelector("[data-step-kicker]");
 const stepTitle = document.querySelector("[data-step-title]");
+const stepHeading = document.querySelector("[data-step-heading]");
 const stepText = document.querySelector("[data-step-text]");
+const tourBadge = document.querySelector("[data-tour-badge]");
 const startButton = document.querySelector("[data-flow-start]");
 const playButton = document.querySelector("[data-flow-play]");
 const nextButton = document.querySelector("[data-flow-next]");
 const prevButton = document.querySelector("[data-flow-prev]");
 
 let activeStepIndex = 0;
-let activePartId = featuredParts[0].id;
 let playTimer = null;
 
 function quoteUrl(message) {
@@ -247,60 +213,221 @@ function productUrl(part) {
 }
 
 function quoteMessage(part) {
-  return `Olá, quero solicitar orçamento da peça ${part.name} código ${part.code}. Aplicação: ${part.application}.`;
+  return `Olá, quero solicitar orçamento da peça ${part.name} código ${part.code}. Região: ${part.region}.`;
 }
 
 function partsForStep(step) {
-  return featuredParts.filter((part) => step.relatedGroups.includes(part.group));
+  return step.parts
+    .map((partId) => featuredParts.find((part) => part.id === partId))
+    .filter(Boolean);
 }
 
-function renderStepParts(parts, step) {
-  if (!parts.length) {
-    renderPartCard({
-      id: "general",
-      name: step.title,
-      code: "Fluxo",
-      group: "Processo",
-      application: step.label,
-      function: step.text,
-      productId: "",
-      tone: "neutral",
-    });
-    return;
-  }
+const flowCoordinates = {
+  platform: [
+    [9, 68],
+    [17, 66],
+    [25, 64],
+    [33, 61],
+    [41, 58],
+    [49, 55],
+    [57, 51],
+    [65, 48],
+    [73, 45],
+  ],
+  fingers: [
+    [8, 57],
+    [16, 57],
+    [24, 57],
+    [32, 56],
+    [40, 56],
+    [48, 56],
+    [56, 56],
+    [64, 55],
+    [72, 55],
+  ],
+  feed: [
+    [8, 72],
+    [16, 68],
+    [24, 63],
+    [32, 58],
+    [40, 53],
+    [48, 48],
+    [56, 43],
+    [64, 38],
+    [72, 34],
+  ],
+  rotor: [
+    [16, 53],
+    [23, 49],
+    [30, 46],
+    [37, 44],
+    [44, 44],
+    [51, 46],
+    [58, 50],
+    [65, 54],
+    [72, 57],
+  ],
+  beater: [
+    [12, 56],
+    [20, 52],
+    [28, 49],
+    [36, 49],
+    [44, 51],
+    [52, 54],
+    [60, 57],
+    [68, 59],
+    [76, 60],
+  ],
+  cleaning: [
+    [42, 23],
+    [44, 31],
+    [46, 39],
+    [48, 47],
+    [50, 55],
+    [52, 63],
+    [54, 71],
+    [56, 78],
+    [58, 84],
+  ],
+  summary: [
+    [11, 16],
+    [16, 21],
+    [22, 27],
+    [28, 33],
+    [34, 39],
+    [40, 45],
+    [47, 51],
+    [54, 57],
+    [61, 63],
+    [68, 69],
+    [75, 73],
+    [82, 76],
+    [88, 78],
+    [92, 80],
+  ],
+};
 
-  partCard.innerHTML = `
-    <p class="eyebrow">Peças VF nesta etapa</p>
-    <h3>${step.label}</h3>
-    <p class="machine-part-note">O fluxo chegou nesta região. Primeiro identifique o local na máquina; depois confira os itens aplicados aqui.</p>
-    <div class="machine-stage-parts">
-      ${parts
-        .map(
-          (part) => `
-            <button class="${part.id === activePartId ? "active" : ""}" type="button" data-stage-part="${part.id}">
-              <img src="${part.image}" alt="" aria-hidden="true" loading="lazy" />
-              <span>
-                <b>${part.name}</b>
-                <small>${part.code}</small>
-              </span>
-            </button>
-          `
-        )
-        .join("")}
+function renderFlowParticles(visual = "platform") {
+  const coords = flowCoordinates[visual] || flowCoordinates.platform;
+  return coords
+    .map(([x, y], index) => `<i style="--x:${x}%; --y:${y}%; --delay:${(index * 0.22).toFixed(2)}s"></i>`)
+    .join("");
+}
+
+function renderSceneVisual(step) {
+  const flow = renderFlowParticles(step.visual);
+
+  const templates = {
+    platform: `
+      <div class="tour-visual tour-visual-platform">
+        <div class="tour-crop" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="tour-platform">
+          <div class="tour-reel"><i></i><i></i><i></i><i></i></div>
+          <div class="tour-cutterbar"></div>
+          <div class="tour-auger"></div>
+        </div>
+        <div class="tour-flow-path platform-path">${flow}</div>
+      </div>
+    `,
+    fingers: `
+      <div class="tour-visual tour-visual-fingers">
+        <div class="tour-region-label">Local dos dedos na plataforma</div>
+        <div class="tour-finger-row">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="tour-finger-products">
+          ${partsForStep(step)
+            .map(
+              (part) => `
+                <figure>
+                  <img src="${part.image}" alt="${part.name}" loading="lazy" />
+                  <figcaption>${part.name}</figcaption>
+                </figure>
+              `
+            )
+            .join("")}
+        </div>
+        <div class="tour-flow-path fingers-path">${flow}</div>
+      </div>
+    `,
+    feed: `
+      <div class="tour-visual tour-visual-feed">
+        <div class="tour-feed-mouth">Plataforma</div>
+        <div class="tour-feed-channel">
+          <span>Canal de alimentação</span>
+        </div>
+        <div class="tour-feed-entry">Interior</div>
+        <div class="tour-flow-path feed-path">${flow}</div>
+      </div>
+    `,
+    rotor: `
+      <div class="tour-visual tour-visual-rotor">
+        <div class="tour-cutaway-card">
+          <span>Alimentação</span>
+          <strong>Rotor / trilha</strong>
+          <span>Separação</span>
+        </div>
+        <div class="tour-rotor-cylinder">
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="tour-wear-zones">
+          <span>Dianteiro</span>
+          <span>Traseiro</span>
+        </div>
+        <div class="tour-flow-path rotor-path">${flow}</div>
+      </div>
+    `,
+    beater: `
+      <div class="tour-visual tour-visual-beater">
+        <div class="tour-beater-drum">
+          <i></i><i></i><i></i><i></i>
+        </div>
+        <div class="tour-cover-plates">
+          <span>Capa do batedor</span>
+          <span>Proteção do conjunto</span>
+        </div>
+        <div class="tour-flow-path beater-path">${flow}</div>
+      </div>
+    `,
+    cleaning: `
+      <div class="tour-visual tour-visual-cleaning">
+        <div class="tour-fall-zone">
+          <span>grãos</span><span>palha</span><span>resíduos</span>
+        </div>
+        <div class="tour-sieves">
+          <i></i><i></i><i></i><i></i>
+        </div>
+        <div class="tour-flow-path cleaning-path">${flow}</div>
+      </div>
+    `,
+    summary: `
+      <div class="tour-visual tour-visual-summary">
+        <div class="tour-summary-map">
+          ${flowSteps
+            .map(
+              (item, index) => `
+                <span class="${index <= activeStepIndex ? "done" : ""}">
+                  <b>${String(index + 1).padStart(2, "0")}</b>
+                  ${item.label}
+                </span>
+              `
+            )
+            .join("")}
+        </div>
+        <div class="tour-flow-path summary-path">${flow}</div>
+      </div>
+    `,
+  };
+
+  return `
+    <div class="tour-scene-copy">
+      <p>${step.context}</p>
+      <strong>${step.heading}</strong>
     </div>
-    <div class="machine-panel-actions">
-      <a class="button primary" href="${quoteUrl(`Olá, quero orçamento das peças da etapa ${step.label} no Fluxo da Máquina da VF.`)}" target="_blank" rel="noreferrer">Solicitar orçamento</a>
-    </div>
+    ${templates[step.visual] || templates.platform}
   `;
-}
-
-function setWhatsAppLinks() {
-  document.querySelectorAll("[data-flow-whatsapp]").forEach((link) => {
-    const message = link.dataset.message || "Olá, quero falar com a VF Peças Agrícolas.";
-    link.href = quoteUrl(message);
-    link.target = "_blank";
-    link.rel = "noreferrer";
-  });
 }
 
 function renderTimeline() {
@@ -318,150 +445,81 @@ function renderTimeline() {
     .join("");
 }
 
-function renderHotspots() {
-  hotspotLayer.innerHTML = featuredParts
-    .map(
-      (part) => `
-        <button
-          class="machine-hotspot tone-${part.tone}"
-          style="left: ${part.position.x}%; top: ${part.position.y}%"
-          type="button"
-          data-part-id="${part.id}"
-          aria-label="${part.name} ${part.code}"
-        >
-          <span aria-hidden="true"></span>
-        </button>
-      `
-    )
-    .join("");
+function renderStageParts(step) {
+  const parts = partsForStep(step);
+
+  if (!parts.length) {
+    stageParts.innerHTML = `
+      <div class="tour-context-card">
+        <p class="eyebrow">Contexto do funcionamento</p>
+        <h3>Sem peça comercial forte nesta etapa</h3>
+        <p>
+          Esta fase aparece para manter o caminho do material claro. Se precisa
+          identificar uma peça dessa região, fale com a equipe VF.
+        </p>
+        <a class="button secondary" href="${quoteUrl(`Olá, quero identificar uma peça na etapa ${step.label} do fluxo da colheitadeira.`)}" target="_blank" rel="noreferrer">Falar com a VF</a>
+      </div>
+    `;
+    return;
+  }
+
+  stageParts.innerHTML = `
+    <div class="tour-stage-header">
+      <p class="eyebrow">Peças VF nesta região</p>
+      <strong>Primeiro reconheça o local. Depois confira a peça.</strong>
+    </div>
+    <div class="tour-stage-grid">
+      ${parts.map(renderPartCard).join("")}
+    </div>
+  `;
 }
 
 function renderPartCard(part) {
-  const actions = part.productId
-    ? `
-      <a class="button primary" href="${quoteUrl(quoteMessage(part))}" target="_blank" rel="noreferrer">Solicitar orçamento</a>
-      <a class="button secondary" href="${quoteUrl(`Olá, quero falar no WhatsApp sobre a peça ${part.code}.`)}" target="_blank" rel="noreferrer">Falar no WhatsApp</a>
-      <a class="button secondary" href="${productUrl(part)}">Ver peça</a>
-    `
-    : `
-      <a class="button primary" href="${quoteUrl("Olá, quero falar com a VF sobre peças aplicadas no fluxo da colheitadeira.")}" target="_blank" rel="noreferrer">Falar com especialista</a>
-      <a class="button secondary" href="index.html#catalogo">Ver catálogo</a>
-    `;
-
-  partCard.innerHTML = `
-    <p class="eyebrow">${part.group} | ${part.code}</p>
-    <div class="machine-part-visual">
-      ${part.image ? `<img src="${part.image}" alt="${part.name} ${part.code}" loading="lazy" />` : `<span>${part.group}</span>`}
-    </div>
-    <h3>${part.name}</h3>
-    <dl>
-      <div>
-        <dt>Onde fica</dt>
-        <dd>${part.application}</dd>
+  return `
+    <article class="tour-part-card">
+      <div class="tour-part-image">
+        <img src="${part.image}" alt="${part.name} ${part.code}" loading="lazy" />
       </div>
       <div>
-        <dt>Função</dt>
-        <dd>${part.function}</dd>
+        <span>${part.region}</span>
+        <h3>${part.name}</h3>
+        <small>Código ${part.code}</small>
+        <p>${part.description}</p>
       </div>
-      <div>
-        <dt>Código</dt>
-        <dd>${part.code}</dd>
+      <div class="tour-part-actions">
+        <a class="button primary" href="${quoteUrl(quoteMessage(part))}" target="_blank" rel="noreferrer">Solicitar orçamento</a>
+        <a class="button secondary" href="${quoteUrl(`Olá, quero falar no WhatsApp sobre a peça ${part.code}.`)}" target="_blank" rel="noreferrer">Falar no WhatsApp</a>
+        <a class="button secondary" href="${productUrl(part)}">Ver peça</a>
       </div>
-    </dl>
-    <p class="machine-part-note">Peça alternativa / similar à original. Confirme aplicação pelo modelo da máquina antes do envio.</p>
-    <div class="machine-panel-actions">
-      ${actions}
-    </div>
+    </article>
   `;
 }
 
 function renderFeaturedCards() {
-  featuredGrid.innerHTML = featuredParts
-    .map(
-      (part) => `
-        <article class="machine-feature-card tone-${part.tone}">
-          <img src="${part.image}" alt="${part.name} ${part.code}" loading="lazy" />
-          <span>${part.group}</span>
-          <h3>${part.name}</h3>
-          <strong>${part.code}</strong>
-          <p><b>Aplicação:</b> ${part.application}</p>
-          <p><b>Função:</b> ${part.function}</p>
-          <a class="button primary" href="${quoteUrl(quoteMessage(part))}" target="_blank" rel="noreferrer">Orçar esta peça</a>
-        </article>
-      `
-    )
-    .join("");
+  featuredGrid.innerHTML = featuredParts.map(renderPartCard).join("");
 }
 
-function renderMobileSequence() {
-  mobileSequence.innerHTML = flowSteps
-    .map(
-      (step, index) => {
-        const parts = partsForStep(step);
-        const partsMarkup = parts.length
-          ? `
-            <div class="machine-mobile-parts">
-              ${parts
-                .map(
-                  (part) => `
-                    <a href="${quoteUrl(quoteMessage(part))}" target="_blank" rel="noreferrer">
-                      <img src="${part.image}" alt="" aria-hidden="true" loading="lazy" />
-                      <span>
-                        <b>${part.name}</b>
-                        <small>${part.code}</small>
-                      </span>
-                    </a>
-                  `
-                )
-                .join("")}
-            </div>
-          `
-          : "";
-
-        return `
-        <article>
-          <span>${String(index + 1).padStart(2, "0")}</span>
-          <h2>${step.title}</h2>
-          <strong>${step.regionTitle}</strong>
-          <p>${step.text}</p>
-          ${partsMarkup}
-        </article>
-      `;
-      }
-    )
-    .join("");
-}
-
-function renderRegion(step) {
-  if (!regionVisual || !regionTitle || !regionText) return;
-  regionVisual.className = `machine-region-visual region-${step.regionType}`;
-  regionVisual.innerHTML = `
-    <span>${step.regionTitle}</span>
-    <i></i>
-  `;
-  regionTitle.textContent = step.regionTitle;
-  regionText.textContent = step.regionText;
-}
-
-function setActivePart(partId) {
-  const part = featuredParts.find((item) => item.id === partId) || featuredParts[0];
-  activePartId = part.id;
-  renderPartCard(part);
-  document.querySelectorAll("[data-part-id]").forEach((hotspot) => {
-    hotspot.classList.toggle("active", hotspot.dataset.partId === part.id);
+function setWhatsAppLinks() {
+  document.querySelectorAll("[data-flow-whatsapp]").forEach((link) => {
+    const message = link.dataset.message || "Olá, quero falar com a VF Peças Agrícolas.";
+    link.href = quoteUrl(message);
+    link.target = "_blank";
+    link.rel = "noreferrer";
   });
 }
 
-function setStep(index, options = {}) {
+function setStep(index) {
   activeStepIndex = Math.max(0, Math.min(flowSteps.length - 1, Number(index) || 0));
   const step = flowSteps[activeStepIndex];
-  const relatedParts = partsForStep(step);
 
-  flowStage.dataset.step = step.id;
+  tourFrame.dataset.step = step.id;
   stepKicker.textContent = step.kicker;
   stepTitle.textContent = step.title;
+  stepHeading.textContent = step.heading;
   stepText.textContent = step.text;
-  renderRegion(step);
+  tourBadge.textContent = step.label;
+  tourScene.innerHTML = renderSceneVisual(step);
+  renderStageParts(step);
 
   document.querySelectorAll("[data-flow-step]").forEach((button) => {
     const isActive = Number(button.dataset.flowStep) === activeStepIndex;
@@ -469,25 +527,8 @@ function setStep(index, options = {}) {
     button.setAttribute("aria-current", isActive ? "step" : "false");
   });
 
-  document.querySelectorAll("[data-part-id]").forEach((hotspot) => {
-    const part = featuredParts.find((item) => item.id === hotspot.dataset.partId);
-    const isRelated = part && step.relatedGroups.includes(part.group);
-    hotspot.classList.toggle("related", Boolean(isRelated));
-  });
-
-  if (relatedParts.length && !options.keepPart) {
-    activePartId = relatedParts[0].id;
-    renderStepParts(relatedParts, step);
-    document.querySelectorAll("[data-part-id]").forEach((hotspot) => {
-      hotspot.classList.toggle("active", hotspot.dataset.partId === activePartId);
-    });
-  } else if (!options.keepPart) {
-    renderStepParts([], step);
-    document.querySelectorAll("[data-part-id]").forEach((hotspot) => hotspot.classList.remove("active"));
-  }
-
   if (prevButton) prevButton.disabled = activeStepIndex === 0;
-  if (nextButton) nextButton.textContent = activeStepIndex === flowSteps.length - 1 ? "Reiniciar" : "Avançar";
+  if (nextButton) nextButton.textContent = activeStepIndex === flowSteps.length - 1 ? "Reiniciar" : "Próxima etapa";
 }
 
 function stopAutoPlay() {
@@ -517,13 +558,11 @@ function startAutoPlay() {
       return;
     }
     nextStep();
-  }, 4700);
+  }, 5200);
 }
 
 renderTimeline();
-renderHotspots();
 renderFeaturedCards();
-renderMobileSequence();
 setWhatsAppLinks();
 setStep(0);
 
@@ -532,25 +571,6 @@ timeline.addEventListener("click", (event) => {
   if (!button) return;
   stopAutoPlay();
   setStep(button.dataset.flowStep);
-});
-
-hotspotLayer.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-part-id]");
-  if (!button) return;
-  stopAutoPlay();
-  const part = featuredParts.find((item) => item.id === button.dataset.partId);
-  if (part) {
-    const stepIndex = flowSteps.findIndex((step) => step.relatedGroups.includes(part.group));
-    if (stepIndex >= 0) setStep(stepIndex, { keepPart: true });
-    setActivePart(part.id);
-  }
-});
-
-partCard.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-stage-part]");
-  if (!button) return;
-  stopAutoPlay();
-  setActivePart(button.dataset.stagePart);
 });
 
 startButton?.addEventListener("click", () => {
