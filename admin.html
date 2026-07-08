@@ -8,8 +8,8 @@
     <meta name="description" content="Painel administrativo da VF Peças Agrícolas." />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <header class="topbar">
+  <body class="admin-body">
+    <header class="topbar admin-topbar">
       <a class="brand" href="index.html#inicio" aria-label="VF Peças Agrícolas">
         <img class="brand-mark" src="assets/logo-vf-exata.png" alt="" aria-hidden="true" />
         <span>
@@ -28,15 +28,27 @@
 
     <main class="admin-page">
       <section class="admin-hero">
-        <p class="eyebrow">Painel administrativo</p>
-        <h1>Pedidos e números do site</h1>
-        <p>
-          Painel administrativo para acompanhar pedidos, clientes e faturamento.
-          Para acessar dados do banco, entre com um usuário autorizado no Supabase.
-        </p>
+        <div>
+          <p class="eyebrow">VF Admin</p>
+          <h1>Central de pedidos e atendimento</h1>
+          <p>
+            Acompanhe pedidos, clientes, valores, status de atendimento, frete,
+            prazo e observações internas em um painel único.
+          </p>
+        </div>
+        <div class="admin-live-panel">
+          <span>Fonte dos dados</span>
+          <strong data-admin-source>Carregando...</strong>
+          <small data-admin-last-sync>Atualizando painel</small>
+        </div>
       </section>
 
       <section class="admin-stats" aria-label="Resumo dos pedidos">
+        <article>
+          <span>Total de pedidos</span>
+          <strong data-admin-total-orders>0</strong>
+          <small>Histórico carregado no painel</small>
+        </article>
         <article>
           <span>Pedidos novos hoje</span>
           <strong data-admin-new-today>0</strong>
@@ -57,7 +69,19 @@
           <strong data-admin-service-value>R$ 0,00</strong>
           <small>Potencial em negociação</small>
         </article>
+        <article>
+          <span>Total vendido</span>
+          <strong data-admin-total-value>R$ 0,00</strong>
+          <small>Pedidos pagos, enviados ou concluídos</small>
+        </article>
+        <article>
+          <span>Ticket médio</span>
+          <strong data-admin-average-ticket>R$ 0,00</strong>
+          <small>Média dos pedidos carregados</small>
+        </article>
       </section>
+
+      <section class="admin-pipeline" aria-label="Pedidos por status" data-admin-pipeline></section>
 
       <section class="admin-login" data-admin-login>
         <div>
@@ -84,12 +108,57 @@
           <div class="section-heading">
             <p class="eyebrow">Histórico</p>
             <h2>Pedidos recebidos</h2>
+            <p data-admin-filter-summary>Mostrando todos os pedidos carregados.</p>
           </div>
           <div class="admin-actions">
             <button class="button secondary" type="button" data-export-orders>Exportar CSV</button>
             <button class="button secondary" type="button" data-refresh-admin>Atualizar</button>
             <button class="button danger" type="button" data-clear-orders>Limpar local</button>
           </div>
+        </div>
+        <div class="admin-toolbar" aria-label="Filtros do admin">
+          <label>
+            Buscar
+            <input data-admin-search type="search" placeholder="Pedido, cliente, cidade, WhatsApp ou código" />
+          </label>
+          <label>
+            Status
+            <select data-admin-status-filter>
+              <option value="todos">Todos os status</option>
+              <option value="novo">Novo</option>
+              <option value="em atendimento">Em atendimento</option>
+              <option value="pago">Pago</option>
+              <option value="enviado">Enviado</option>
+              <option value="concluido">Concluído</option>
+              <option value="cancelado">Cancelado</option>
+              <option value="arquivado">Arquivado</option>
+            </select>
+          </label>
+          <label>
+            Período
+            <select data-admin-period-filter>
+              <option value="todos">Todo o período</option>
+              <option value="hoje">Hoje</option>
+              <option value="7">Últimos 7 dias</option>
+              <option value="30">Últimos 30 dias</option>
+            </select>
+          </label>
+          <label>
+            Ordenar
+            <select data-admin-sort>
+              <option value="recentes">Mais recentes</option>
+              <option value="valor">Maior valor</option>
+              <option value="status">Por status</option>
+            </select>
+          </label>
+        </div>
+        <div class="admin-quick-filters" aria-label="Atalhos de status">
+          <button type="button" class="active" data-admin-quick-status="todos">Todos</button>
+          <button type="button" data-admin-quick-status="novo">Novos</button>
+          <button type="button" data-admin-quick-status="em atendimento">Em atendimento</button>
+          <button type="button" data-admin-quick-status="pago">Pagos</button>
+          <button type="button" data-admin-quick-status="enviado">Enviados</button>
+          <button type="button" data-admin-quick-status="concluido">Concluídos</button>
         </div>
         <div class="admin-orders" data-admin-list></div>
       </section>
@@ -116,8 +185,137 @@
         return digits;
       };
       const orderStatuses = ["novo", "em atendimento", "pago", "enviado", "concluido", "cancelado", "arquivado"];
+      const statusLabels = {
+        novo: "Novo",
+        "em atendimento": "Em atendimento",
+        pago: "Pago",
+        enviado: "Enviado",
+        concluido: "Concluído",
+        cancelado: "Cancelado",
+        arquivado: "Arquivado",
+      };
+      const statusRank = {
+        novo: 1,
+        "em atendimento": 2,
+        pago: 3,
+        enviado: 4,
+        concluido: 5,
+        cancelado: 6,
+        arquivado: 7,
+      };
 
       let currentOrders = [];
+      let adminDataSource = "local";
+      const adminFilters = {
+        query: "",
+        status: "todos",
+        period: "todos",
+        sort: "recentes",
+      };
+
+      function normalizeText(value) {
+        return String(value || "")
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+      }
+
+      function formatDate(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "Data não informada";
+        return date.toLocaleString("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+
+      function statusLabel(status) {
+        return statusLabels[status || "novo"] || status || "Novo";
+      }
+
+      function statusClass(status) {
+        return normalizeText(status || "novo").replaceAll(" ", "-");
+      }
+
+      function orderSearchText(order) {
+        return normalizeText([
+          order.id,
+          order.status,
+          order.customer?.name,
+          order.customer?.whatsapp,
+          order.customer?.email,
+          order.customer?.city,
+          order.checkout?.city,
+          order.checkout?.state,
+          order.checkout?.document,
+          order.checkout?.machineNote,
+          order.items?.map((item) => `${item.code} ${item.name}`).join(" "),
+        ].join(" "));
+      }
+
+      function isInsidePeriod(order, period) {
+        if (period === "todos") return true;
+        const created = new Date(order.createdAt);
+        if (Number.isNaN(created.getTime())) return false;
+        const now = new Date();
+        if (period === "hoje") return created.toISOString().slice(0, 10) === now.toISOString().slice(0, 10);
+        const days = Number(period);
+        const limit = new Date(now);
+        limit.setDate(now.getDate() - days);
+        return created >= limit;
+      }
+
+      function filteredOrders() {
+        const query = normalizeText(adminFilters.query);
+        return currentOrders
+          .filter((order) => adminFilters.status === "todos" || (order.status || "novo") === adminFilters.status)
+          .filter((order) => isInsidePeriod(order, adminFilters.period))
+          .filter((order) => !query || orderSearchText(order).includes(query))
+          .sort((a, b) => {
+            if (adminFilters.sort === "valor") return (b.total || 0) - (a.total || 0);
+            if (adminFilters.sort === "status") {
+              const byStatus = (statusRank[a.status || "novo"] || 99) - (statusRank[b.status || "novo"] || 99);
+              if (byStatus !== 0) return byStatus;
+            }
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          });
+      }
+
+      function updateQuickFilters() {
+        document.querySelectorAll("[data-admin-quick-status]").forEach((button) => {
+          button.classList.toggle("active", button.dataset.adminQuickStatus === adminFilters.status);
+        });
+      }
+
+      function updateAdminSource() {
+        const source = document.querySelector("[data-admin-source]");
+        const lastSync = document.querySelector("[data-admin-last-sync]");
+        if (source) source.textContent = adminDataSource === "supabase" ? "Banco Supabase" : "Dados locais";
+        if (lastSync) lastSync.textContent = `Atualizado em ${new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
+      }
+
+      function renderAdminPipeline(orders) {
+        const pipeline = document.querySelector("[data-admin-pipeline]");
+        if (!pipeline) return;
+
+        pipeline.innerHTML = orderStatuses
+          .map((status) => {
+            const statusOrders = orders.filter((order) => (order.status || "novo") === status);
+            const statusValue = statusOrders.reduce((sum, order) => sum + (order.total || 0), 0);
+
+            return `
+              <article class="admin-pipeline-card status-${statusClass(status)}">
+                <span>${statusLabel(status)}</span>
+                <strong>${statusOrders.length}</strong>
+                <small>${money(statusValue)}</small>
+              </article>
+            `;
+          })
+          .join("");
+      }
 
       function orderWhatsAppUrl(order) {
         const phone = normalizeWhatsApp(order.customer?.whatsapp);
@@ -134,17 +332,25 @@
 
       function renderAdminOrder(order) {
         const whatsappUrl = orderWhatsAppUrl(order);
+        const status = order.status || "novo";
+        const itemsCount = order.items.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+        const cityState = order.checkout?.state
+          ? `${order.checkout?.city || order.customer?.city || "Cidade não informada"}-${order.checkout.state}`
+          : order.checkout?.city || order.customer?.city || "Cidade não informada";
 
         return `
-          <article class="admin-order">
-            <div>
-              <p class="eyebrow">${new Date(order.createdAt).toLocaleString("pt-BR")}</p>
-              <h3>${order.id}</h3>
-              <p>${order.customer?.name || "Cliente não informado"} | ${order.customer?.city || "Cidade não informada"}</p>
-              <p>WhatsApp: ${order.customer?.whatsapp || "Nao informado"}</p>
+          <article class="admin-order status-${statusClass(status)}">
+            <div class="admin-order-main">
+              <div class="admin-order-title">
+                <p class="eyebrow">${formatDate(order.createdAt)}</p>
+                <h3>${order.customer?.name || "Cliente não informado"}</h3>
+                <span>Pedido ${order.id}</span>
+              </div>
+              <span class="admin-status-chip status-${statusClass(status)}">${statusLabel(status)}</span>
             </div>
             <div class="admin-order-side">
               <strong>${money(order.total || 0)}</strong>
+              <small>${itemsCount || order.items.length} item(ns)</small>
               ${
                 whatsappUrl
                   ? `<a class="button secondary admin-whatsapp" href="${whatsappUrl}" target="_blank" rel="noreferrer">Abrir WhatsApp</a>`
@@ -156,7 +362,7 @@
                   ${orderStatuses
                     .map(
                       (status) =>
-                        `<option value="${status}" ${status === (order.status || "novo") ? "selected" : ""}>${status}</option>`
+                        `<option value="${status}" ${status === (order.status || "novo") ? "selected" : ""}>${statusLabel(status)}</option>`
                     )
                     .join("")}
                 </select>
@@ -174,11 +380,22 @@
                 }
               </div>
             </div>
-            <ul>
+            <div class="admin-customer-grid">
+              <span><small>WhatsApp</small>${order.customer?.whatsapp || "Não informado"}</span>
+              <span><small>E-mail</small>${order.customer?.email || "Não informado"}</span>
+              <span><small>Cidade/UF</small>${cityState}</span>
+              <span><small>Pagamento</small>${order.checkout?.payment || "Não informado"}</span>
+            </div>
+            <ul class="admin-items-list">
               ${order.items
                 .map(
                   (item) =>
-                    `<li>${item.amount}x ${item.code} - ${item.name} (${money(item.subtotal || 0)})</li>`
+                    `<li>
+                      <span>${item.amount}x</span>
+                      <strong>${item.code}</strong>
+                      <em>${item.name}</em>
+                      <b>${money(item.subtotal || 0)}</b>
+                    </li>`
                 )
                 .join("")}
             </ul>
@@ -188,11 +405,7 @@
               <p>CEP: ${order.checkout?.zipCode || "Nao informado"}</p>
               <p>Endereço: ${order.checkout?.address || "Nao informado"}${order.checkout?.number ? `, ${order.checkout.number}` : ""}</p>
               <p>Bairro: ${order.checkout?.district || "Nao informado"}</p>
-              <p>Cidade/UF: ${
-                order.checkout?.state
-                  ? `${order.checkout?.city || "Nao informado"}-${order.checkout.state}`
-                  : order.checkout?.city || order.customer?.city || "Nao informado"
-              }</p>
+              <p>Cidade/UF: ${cityState}</p>
               <p>Pagamento: ${order.checkout?.payment || "Nao informado"}</p>
               <p>Máquina/observação: ${order.checkout?.machineNote || "Sem observação"}</p>
             </div>
@@ -234,16 +447,24 @@
       }
 
       async function getOrdersForDashboard() {
-        if (!window.VFStore.client) return window.VFStore.readOrders();
+        if (!window.VFStore.client) {
+          adminDataSource = "local";
+          return window.VFStore.readOrders();
+        }
 
         const {
           data: { session },
         } = await window.VFStore.client.auth.getSession();
 
-        if (!session) return [];
+        if (!session) {
+          adminDataSource = "local";
+          return [];
+        }
 
         try {
-          return await window.VFStore.readRemoteOrders();
+          const orders = await window.VFStore.readRemoteOrders();
+          adminDataSource = "supabase";
+          return orders;
         } catch (error) {
           document.querySelector("[data-admin-list]").innerHTML = `
             <p class="cart-empty">
@@ -251,6 +472,7 @@
               e se seu usuario foi cadastrado em admin_users.
             </p>
           `;
+          adminDataSource = "local";
           return [];
         }
       }
@@ -258,6 +480,7 @@
       async function readDashboard() {
         const orders = await getOrdersForDashboard();
         currentOrders = orders;
+        updateAdminSource();
         const today = new Date();
         const todayKey = today.toISOString().slice(0, 10);
         const newToday = orders.filter((order) => {
@@ -267,6 +490,7 @@
         const openStatuses = ["novo", "em atendimento", "pago", "enviado"];
         const paidStatuses = ["pago", "enviado"];
         const serviceStatuses = ["novo", "em atendimento"];
+        const soldStatuses = ["pago", "enviado", "concluido"];
         const openOrdersCount = orders.filter((order) =>
           openStatuses.includes(order.status || "novo")
         ).length;
@@ -276,18 +500,38 @@
         const serviceValue = orders
           .filter((order) => serviceStatuses.includes(order.status || "novo"))
           .reduce((sum, order) => sum + (order.total || 0), 0);
+        const totalValue = orders
+          .filter((order) => soldStatuses.includes(order.status || "novo"))
+          .reduce((sum, order) => sum + (order.total || 0), 0);
+        const averageTicket = orders.length
+          ? orders.reduce((sum, order) => sum + (order.total || 0), 0) / orders.length
+          : 0;
 
+        document.querySelector("[data-admin-total-orders]").textContent = orders.length;
         document.querySelector("[data-admin-new-today]").textContent = newToday.length;
         document.querySelector("[data-admin-open-orders]").textContent = openOrdersCount;
         document.querySelector("[data-admin-paid-orders]").textContent = paidOrdersCount;
         document.querySelector("[data-admin-service-value]").textContent = money(serviceValue);
+        document.querySelector("[data-admin-total-value]").textContent = money(totalValue);
+        document.querySelector("[data-admin-average-ticket]").textContent = money(averageTicket);
 
+        renderAdminPipeline(orders);
+        renderAdminOrders();
+      }
+
+      function renderAdminOrders() {
+        updateQuickFilters();
+        const orders = filteredOrders();
         const closedStatuses = ["concluido", "cancelado", "arquivado"];
         const activeOrders = orders.filter((order) => !closedStatuses.includes(order.status || "novo"));
         const completedOrders = orders.filter((order) => (order.status || "novo") === "concluido");
         const archivedOrders = orders.filter((order) =>
           ["cancelado", "arquivado"].includes(order.status || "novo")
         );
+        const summary = document.querySelector("[data-admin-filter-summary]");
+        if (summary) {
+          summary.textContent = `${orders.length} pedido(s) exibido(s) de ${currentOrders.length} carregado(s).`;
+        }
 
         document.querySelector("[data-admin-list]").innerHTML = orders.length
           ? `
@@ -325,7 +569,7 @@
               }
             </div>
           `
-          : `<p class="cart-empty">Nenhum pedido salvo neste navegador ainda.</p>`;
+          : `<p class="cart-empty">Nenhum pedido encontrado para os filtros atuais.</p>`;
       }
 
       function exportOrders() {
@@ -381,6 +625,34 @@
         if (!confirm("Limpar pedidos salvos neste navegador?")) return;
         window.VFStore.clearOrders();
         readDashboard();
+      });
+
+      document.querySelector("[data-admin-search]").addEventListener("input", (event) => {
+        adminFilters.query = event.target.value;
+        renderAdminOrders();
+      });
+
+      document.querySelector("[data-admin-status-filter]").addEventListener("change", (event) => {
+        adminFilters.status = event.target.value;
+        renderAdminOrders();
+      });
+
+      document.querySelector("[data-admin-period-filter]").addEventListener("change", (event) => {
+        adminFilters.period = event.target.value;
+        renderAdminOrders();
+      });
+
+      document.querySelector("[data-admin-sort]").addEventListener("change", (event) => {
+        adminFilters.sort = event.target.value;
+        renderAdminOrders();
+      });
+
+      document.querySelectorAll("[data-admin-quick-status]").forEach((button) => {
+        button.addEventListener("click", () => {
+          adminFilters.status = button.dataset.adminQuickStatus;
+          document.querySelector("[data-admin-status-filter]").value = adminFilters.status;
+          renderAdminOrders();
+        });
       });
 
       async function setOrderStatus(orderId, status, button) {
