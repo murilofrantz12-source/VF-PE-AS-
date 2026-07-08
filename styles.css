@@ -2610,6 +2610,519 @@ button:disabled {
   border-radius: 4px;
 }
 
+.machine-flow-body {
+  color: rgba(255, 254, 250, 0.92);
+  background:
+    radial-gradient(circle at 72% 12%, rgba(223, 180, 58, 0.18), transparent 30%),
+    radial-gradient(circle at 18% 20%, rgba(47, 111, 159, 0.2), transparent 28%),
+    linear-gradient(135deg, #050907 0%, #0b1710 44%, #06110c 100%);
+}
+
+.machine-flow-body .button.secondary {
+  color: rgba(255, 254, 250, 0.92);
+  background: rgba(255, 254, 250, 0.08);
+  border-color: rgba(255, 254, 250, 0.22);
+}
+
+.machine-flow-body .button.secondary:hover {
+  background: rgba(255, 254, 250, 0.14);
+}
+
+.machine-flow-topbar {
+  background: rgba(6, 14, 10, 0.88);
+  border-bottom-color: rgba(223, 180, 58, 0.18);
+}
+
+.machine-flow-topbar .brand strong,
+.machine-flow-topbar .nav a {
+  color: rgba(255, 254, 250, 0.9);
+}
+
+.machine-flow-topbar .brand small {
+  color: rgba(255, 254, 250, 0.6);
+}
+
+.machine-flow-topbar .brand-mark {
+  padding: 4px;
+  background: var(--white);
+  border-radius: 4px;
+}
+
+.machine-flow-topbar .nav a[aria-current="page"] {
+  color: var(--yellow);
+}
+
+.machine-flow-page {
+  min-height: calc(100vh - 89px);
+}
+
+.machine-flow-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.7fr);
+  gap: clamp(24px, 4vw, 56px);
+  min-height: calc(100vh - 89px);
+  padding: clamp(28px, 5vw, 70px);
+  overflow: hidden;
+}
+
+.machine-flow-hero::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.5), transparent 72%);
+  content: "";
+}
+
+.machine-flow-copy {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  max-width: 560px;
+}
+
+.machine-flow-copy h1,
+.machine-insight h2 {
+  color: var(--white);
+}
+
+.machine-flow-copy h1 {
+  max-width: 760px;
+  margin-bottom: 18px;
+  font-size: clamp(2.4rem, 5.4vw, 5.7rem);
+  line-height: 0.94;
+}
+
+.machine-flow-copy p:not(.eyebrow),
+.machine-insight p {
+  color: rgba(255, 254, 250, 0.7);
+  line-height: 1.7;
+}
+
+.machine-flow-actions,
+.machine-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.machine-flow-stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: minmax(360px, 1fr) auto;
+  align-self: stretch;
+  min-width: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(18, 63, 42, 0.18), rgba(29, 79, 120, 0.08)),
+    rgba(255, 254, 250, 0.035);
+  border: 1px solid rgba(255, 254, 250, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.38);
+}
+
+.machine-grid {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, rgba(223, 180, 58, 0.12), transparent 46%),
+    linear-gradient(rgba(223, 180, 58, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47, 111, 159, 0.08) 1px, transparent 1px);
+  background-size: auto, 34px 34px, 34px 34px;
+  opacity: 0.75;
+}
+
+.machine-viewport {
+  position: relative;
+  display: grid;
+  min-height: 430px;
+  overflow: hidden;
+}
+
+.machine-svg {
+  z-index: 1;
+  align-self: center;
+  justify-self: center;
+  width: min(100%, 980px);
+  filter: drop-shadow(0 34px 45px rgba(0, 0, 0, 0.38));
+  transform-origin: center;
+  transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease;
+}
+
+.machine-flow-stage[data-step="0"] .machine-svg {
+  transform: translateX(16%) scale(1.24);
+}
+
+.machine-flow-stage[data-step="1"] .machine-svg {
+  transform: translateX(22%) translateY(-1%) scale(1.55);
+}
+
+.machine-flow-stage[data-step="2"] .machine-svg {
+  transform: translateX(0) scale(1.22);
+}
+
+.machine-flow-stage[data-step="3"] .machine-svg {
+  transform: translateX(-8%) translateY(1%) scale(1.42);
+}
+
+.machine-flow-stage[data-step="4"] .machine-svg,
+.machine-flow-stage[data-step="5"] .machine-svg {
+  transform: translateX(6%) translateY(1%) scale(1.44);
+}
+
+.machine-flow-stage[data-step="6"] .machine-svg {
+  transform: translateX(-12%) scale(1.16);
+}
+
+.machine-shadow ellipse {
+  fill: rgba(0, 0, 0, 0.55);
+}
+
+.machine-shell {
+  fill: url(#bodyGradient);
+  stroke: rgba(119, 220, 155, 0.7);
+  stroke-width: 3;
+}
+
+.machine-cut {
+  fill: rgba(255, 254, 250, 0.045);
+  stroke: rgba(255, 254, 250, 0.24);
+  stroke-dasharray: 10 12;
+  stroke-width: 2;
+}
+
+.machine-cab,
+.machine-tank {
+  fill: rgba(29, 79, 120, 0.38);
+  stroke: rgba(255, 254, 250, 0.28);
+  stroke-width: 2;
+}
+
+.machine-auger,
+.header-reel {
+  fill: none;
+  stroke: rgba(223, 180, 58, 0.62);
+  stroke-linecap: round;
+  stroke-width: 12;
+}
+
+.header-frame {
+  fill: rgba(18, 63, 42, 0.72);
+  stroke: rgba(223, 180, 58, 0.58);
+  stroke-width: 3;
+}
+
+.header-teeth {
+  fill: none;
+  stroke: rgba(255, 254, 250, 0.76);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 8;
+}
+
+.wheel-front,
+.wheel-back {
+  fill: rgba(5, 9, 7, 0.88);
+  stroke: rgba(223, 180, 58, 0.62);
+  stroke-width: 8;
+}
+
+.wheel-inner {
+  fill: rgba(223, 180, 58, 0.82);
+  stroke: rgba(5, 9, 7, 0.7);
+  stroke-width: 6;
+}
+
+.component {
+  fill: none;
+  opacity: 0.22;
+  stroke: rgba(255, 254, 250, 0.36);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 8;
+  transition: opacity 0.32s ease, stroke 0.32s ease, filter 0.32s ease;
+}
+
+.rotor-component {
+  fill: rgba(255, 254, 250, 0.035);
+}
+
+.machine-flow-stage[data-step="0"] .dedo-component,
+.machine-flow-stage[data-step="1"] .dedo-component,
+.machine-flow-stage[data-step="3"] .rotor-component,
+.machine-flow-stage[data-step="3"] .kit-component,
+.machine-flow-stage[data-step="4"] .batedor-component,
+.machine-flow-stage[data-step="5"] .batedor-component,
+.machine-flow-stage[data-step="5"] .capa-component {
+  opacity: 1;
+  stroke: #f2d16b;
+  filter: url(#machineGlow);
+}
+
+.machine-flow-stage[data-step="3"] .kit-component,
+.machine-flow-stage[data-step="5"] .capa-component {
+  stroke: #df6a2e;
+}
+
+.flow-path {
+  fill: none;
+  opacity: 0.14;
+  stroke: url(#goldFlow);
+  stroke-dasharray: 18 18;
+  stroke-linecap: round;
+  stroke-width: 8;
+  animation: machineFlow 1.2s linear infinite;
+  transition: opacity 0.28s ease, stroke-width 0.28s ease;
+}
+
+.machine-flow-stage[data-step="0"] .flow-platform,
+.machine-flow-stage[data-step="1"] .flow-platform,
+.machine-flow-stage[data-step="2"] .flow-platform,
+.machine-flow-stage[data-step="2"] .flow-feed,
+.machine-flow-stage[data-step="3"] .flow-feed,
+.machine-flow-stage[data-step="3"] .flow-rotor,
+.machine-flow-stage[data-step="4"] .flow-rotor,
+.machine-flow-stage[data-step="5"] .flow-rotor,
+.machine-flow-stage[data-step="6"] .flow-exit {
+  opacity: 1;
+  stroke-width: 10;
+}
+
+.particle {
+  fill: var(--yellow);
+  filter: url(#machineGlow);
+  opacity: 0.9;
+}
+
+.particle-a {
+  animation: particleA 4.4s ease-in-out infinite;
+}
+
+.particle-b {
+  animation: particleB 4.4s ease-in-out 0.65s infinite;
+}
+
+.particle-c {
+  animation: particleC 4.4s ease-in-out 1.2s infinite;
+}
+
+.machine-hotspot {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  color: var(--white);
+  background: radial-gradient(circle, rgba(223, 180, 58, 0.95), rgba(223, 106, 46, 0.74));
+  border: 1px solid rgba(255, 254, 250, 0.46);
+  border-radius: 999px;
+  box-shadow: 0 0 0 10px rgba(223, 180, 58, 0.12), 0 0 32px rgba(223, 180, 58, 0.42);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.machine-hotspot:hover,
+.machine-hotspot.active {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.hotspot-platform {
+  top: 63%;
+  left: 19%;
+}
+
+.hotspot-rotor {
+  top: 48%;
+  left: 58%;
+}
+
+.hotspot-batedor {
+  top: 43%;
+  left: 43%;
+}
+
+.machine-insight {
+  position: relative;
+  z-index: 4;
+  min-height: 240px;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(5, 9, 7, 0.15), rgba(5, 9, 7, 0.72));
+  border-top: 1px solid rgba(255, 254, 250, 0.1);
+}
+
+.machine-panel {
+  display: none;
+  max-width: 620px;
+}
+
+.machine-panel.active {
+  display: block;
+  animation: panelEnter 0.34s ease both;
+}
+
+.machine-panel h2 {
+  margin-bottom: 10px;
+  font-size: clamp(1.45rem, 2.5vw, 2.4rem);
+  line-height: 1.05;
+}
+
+.machine-controls {
+  position: relative;
+  z-index: 2;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.machine-timeline {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.machine-timeline button {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 8px;
+  color: rgba(255, 254, 250, 0.62);
+  background: rgba(255, 254, 250, 0.06);
+  border: 1px solid rgba(255, 254, 250, 0.14);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 900;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.machine-timeline button.active {
+  color: var(--ink);
+  background: var(--yellow);
+  border-color: var(--yellow);
+}
+
+.machine-mobile-sequence {
+  display: none;
+  gap: 12px;
+  padding: 0 clamp(16px, 5vw, 70px) 40px;
+}
+
+.machine-mobile-sequence article {
+  padding: 18px;
+  background: rgba(255, 254, 250, 0.07);
+  border: 1px solid rgba(255, 254, 250, 0.12);
+  border-radius: 8px;
+}
+
+.machine-mobile-sequence span {
+  color: var(--yellow);
+  font-weight: 900;
+}
+
+.machine-mobile-sequence h2 {
+  color: var(--white);
+  font-size: 1.18rem;
+}
+
+.machine-mobile-sequence p {
+  color: rgba(255, 254, 250, 0.68);
+  line-height: 1.55;
+}
+
+.machine-mobile-sequence a {
+  color: var(--yellow);
+  font-weight: 900;
+}
+
+@keyframes machineFlow {
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+
+@keyframes panelEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes particleA {
+  0% {
+    opacity: 0;
+    transform: translate(94px, 368px);
+  }
+
+  28% {
+    opacity: 1;
+    transform: translate(350px, 292px);
+  }
+
+  64% {
+    opacity: 1;
+    transform: translate(612px, 244px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(972px, 298px);
+  }
+}
+
+@keyframes particleB {
+  0% {
+    opacity: 0;
+    transform: translate(120px, 356px);
+  }
+
+  42% {
+    opacity: 1;
+    transform: translate(474px, 234px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(826px, 318px);
+  }
+}
+
+@keyframes particleC {
+  0% {
+    opacity: 0;
+    transform: translate(214px, 334px);
+  }
+
+  48% {
+    opacity: 1;
+    transform: translate(596px, 248px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(940px, 300px);
+  }
+}
+
 @media (max-width: 1000px) {
   .trust-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2653,6 +3166,14 @@ button:disabled {
 
   .about-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .machine-flow-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .machine-flow-copy {
+    align-self: end;
   }
 }
 
@@ -2815,6 +3336,67 @@ button:disabled {
 
   .checkout-seals {
     grid-template-columns: 1fr;
+  }
+
+  .machine-flow-page {
+    min-height: auto;
+  }
+
+  .machine-flow-hero {
+    min-height: auto;
+    padding: 28px 16px;
+  }
+
+  .machine-flow-copy h1 {
+    max-width: 100%;
+    font-size: clamp(2.3rem, 13vw, 4.2rem);
+  }
+
+  .machine-flow-stage {
+    grid-template-rows: auto auto;
+  }
+
+  .machine-viewport {
+    min-height: 330px;
+  }
+
+  .machine-svg,
+  .machine-flow-stage[data-step="0"] .machine-svg,
+  .machine-flow-stage[data-step="1"] .machine-svg,
+  .machine-flow-stage[data-step="2"] .machine-svg,
+  .machine-flow-stage[data-step="3"] .machine-svg,
+  .machine-flow-stage[data-step="4"] .machine-svg,
+  .machine-flow-stage[data-step="5"] .machine-svg,
+  .machine-flow-stage[data-step="6"] .machine-svg {
+    transform: none;
+  }
+
+  .machine-hotspot {
+    width: 54px;
+    height: 54px;
+    font-size: 0.62rem;
+  }
+
+  .machine-insight {
+    min-height: 250px;
+    padding: 18px;
+  }
+
+  .machine-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .machine-timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    order: -1;
+  }
+
+  .machine-timeline button {
+    border-radius: 6px;
+  }
+
+  .machine-mobile-sequence {
+    display: grid;
   }
 }
 

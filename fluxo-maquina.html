@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fluxo da Máquina | Raio-x da colheitadeira | VF Peças Agrícolas</title>
+    <meta
+      name="description"
+      content="Experiência visual Fluxo da Máquina da VF Peças Agrícolas. Entenda o caminho do material na colheitadeira e veja onde atuam dedo da plataforma, kit reparo do rotor e capa do batedor."
+    />
+    <link rel="canonical" href="https://murilofrantz12-source.github.io/VF-PE-AS-/fluxo-maquina.html" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="machine-flow-body">
+    <header class="topbar machine-flow-topbar">
+      <a class="brand" href="index.html#inicio" aria-label="VF Peças Agrícolas">
+        <img class="brand-mark" src="assets/logo-vf-exata.png" alt="" aria-hidden="true" />
+        <span>
+          <strong>VF</strong>
+          <small>Peças Agrícolas</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="index.html#catalogo">Catálogo</a>
+        <a href="sobre.html">Sobre a VF</a>
+        <a href="fluxo-maquina.html" aria-current="page">Fluxo da Máquina</a>
+        <a href="index.html#fluxo">Como funciona</a>
+        <a href="index.html#orcamento">Orçamento</a>
+      </nav>
+
+      <a class="button primary topbar-action" href="index.html#catalogo">Comprar peças</a>
+    </header>
+
+    <main class="machine-flow-page" data-machine-flow>
+      <section class="machine-flow-hero" aria-label="Fluxo da Máquina">
+        <div class="machine-flow-copy">
+          <p class="eyebrow">Fluxo da Máquina</p>
+          <h1>Veja o fluxo completo da colheitadeira</h1>
+          <p>
+            Entenda o caminho do material dentro da máquina e conheça as peças
+            essenciais para manter a operação no máximo desempenho.
+          </p>
+          <div class="machine-flow-actions">
+            <button class="button primary" type="button" data-flow-start>Iniciar fluxo</button>
+            <button class="button secondary" type="button" data-flow-play>Assistir automático</button>
+          </div>
+        </div>
+
+        <div class="machine-flow-stage" data-flow-stage data-step="intro">
+          <div class="machine-grid" aria-hidden="true"></div>
+          <div class="machine-viewport">
+            <svg class="machine-svg" viewBox="0 0 1120 540" role="img" aria-label="Desenho técnico de uma colheitadeira em corte">
+              <defs>
+                <linearGradient id="bodyGradient" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#2f8f5a" stop-opacity="0.58" />
+                  <stop offset="0.55" stop-color="#123f2a" stop-opacity="0.74" />
+                  <stop offset="1" stop-color="#07130d" stop-opacity="0.88" />
+                </linearGradient>
+                <linearGradient id="goldFlow" x1="0" x2="1">
+                  <stop offset="0" stop-color="#dfb43a" stop-opacity="0.15" />
+                  <stop offset="0.5" stop-color="#f2d16b" />
+                  <stop offset="1" stop-color="#df6a2e" />
+                </linearGradient>
+                <filter id="machineGlow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="5" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <g class="machine-shadow">
+                <ellipse cx="610" cy="456" rx="438" ry="28" />
+              </g>
+
+              <g class="machine-body">
+                <path
+                  class="machine-shell"
+                  d="M318 196 L468 128 L770 146 L884 218 L862 334 L706 378 L450 354 L292 292 Z"
+                />
+                <path class="machine-cut" d="M386 220 L522 170 L746 178 L818 232 L784 300 L614 326 L420 302 Z" />
+                <path class="machine-cab" d="M704 116 L806 132 L858 210 L754 202 L694 164 Z" />
+                <path class="machine-tank" d="M486 94 L642 92 L720 134 L486 134 Z" />
+                <path class="machine-auger" d="M690 128 C790 84 896 70 1030 86" />
+              </g>
+
+              <g class="machine-header">
+                <path class="header-frame" d="M54 354 L318 298 L350 338 L102 406 Z" />
+                <path class="header-teeth" d="M80 394 L106 426 L132 384 L158 416 L184 372 L210 404 L236 360 L262 392 L288 350 L314 382" />
+                <path class="header-reel" d="M116 318 C190 276 280 268 348 312" />
+              </g>
+
+              <g class="machine-wheels">
+                <circle class="wheel-back" cx="744" cy="384" r="72" />
+                <circle class="wheel-inner" cx="744" cy="384" r="34" />
+                <circle class="wheel-front" cx="438" cy="388" r="88" />
+                <circle class="wheel-inner" cx="438" cy="388" r="42" />
+              </g>
+
+              <g class="machine-components">
+                <path class="component dedo-component" d="M126 378 L314 330" />
+                <ellipse class="component rotor-component" cx="604" cy="268" rx="118" ry="48" />
+                <path class="component kit-component" d="M510 262 C574 224 682 224 748 270" />
+                <path class="component batedor-component" d="M382 244 C444 194 522 188 584 224" />
+                <path class="component capa-component" d="M396 226 L570 206 L586 238 L414 260 Z" />
+              </g>
+
+              <g class="flow-lines" filter="url(#machineGlow)">
+                <path class="flow-path flow-platform" d="M94 368 C196 342 286 326 366 294" />
+                <path class="flow-path flow-feed" d="M348 292 C436 236 518 220 612 244" />
+                <path class="flow-path flow-rotor" d="M592 246 C692 226 782 262 804 318" />
+                <path class="flow-path flow-exit" d="M780 318 C846 336 904 330 972 298" />
+              </g>
+
+              <g class="flow-particles" aria-hidden="true">
+                <circle class="particle particle-a" r="7" />
+                <circle class="particle particle-b" r="5" />
+                <circle class="particle particle-c" r="6" />
+              </g>
+            </svg>
+
+            <button class="machine-hotspot hotspot-platform" type="button" data-step-target="1">
+              <span>Dedo</span>
+            </button>
+            <button class="machine-hotspot hotspot-rotor" type="button" data-step-target="3">
+              <span>Rotor</span>
+            </button>
+            <button class="machine-hotspot hotspot-batedor" type="button" data-step-target="5">
+              <span>Batedor</span>
+            </button>
+          </div>
+
+          <aside class="machine-insight" aria-live="polite">
+            <div class="machine-panel active" data-flow-panel="intro">
+              <p class="eyebrow">Visão técnica</p>
+              <h2>Uma leitura visual do caminho do material.</h2>
+              <p>
+                Inicie o fluxo para acompanhar plataforma, alimentação interna,
+                rotor, batedor e saída do processo.
+              </p>
+            </div>
+
+            <div class="machine-panel" data-flow-panel="0">
+              <p class="eyebrow">Etapa 01</p>
+              <h2>Plataforma de corte</h2>
+              <p>
+                O material entra pela plataforma. Uma alimentação uniforme reduz
+                perdas e melhora a continuidade do trabalho.
+              </p>
+            </div>
+
+            <div class="machine-panel" data-flow-panel="1">
+              <p class="eyebrow">Peça em destaque</p>
+              <h2>Dedo da Plataforma</h2>
+              <p>Peça essencial para alimentação uniforme e eficiência no corte.</p>
+              <div class="machine-panel-actions">
+                <a class="button primary" href="produto.html?id=dedo-plataforma-central-6286532">Ver peça</a>
+                <a class="button secondary" data-flow-quote data-message="Olá, quero solicitar orçamento para Dedo da Plataforma." href="#">Solicitar orçamento</a>
+              </div>
+            </div>
+
+            <div class="machine-panel" data-flow-panel="2">
+              <p class="eyebrow">Raio-x interno</p>
+              <h2>Alimentação interna</h2>
+              <p>
+                O fluxo segue para dentro da máquina. As linhas luminosas mostram
+                o caminho do material até o conjunto de separação.
+              </p>
+            </div>
+
+            <div class="machine-panel" data-flow-panel="3">
+              <p class="eyebrow">Peça em destaque</p>
+              <h2>Kit Reparo do Rotor</h2>
+              <p>Conjunto indicado para manutenção, recuperação e melhor funcionamento do sistema.</p>
+              <div class="machine-panel-actions">
+                <a class="button primary" href="produto.html?id=kit-reparo-rotor-dianteiro-ah216568">Ver peça</a>
+                <a class="button secondary" data-flow-quote data-message="Olá, quero solicitar orçamento para Kit Reparo do Rotor." href="#">Solicitar orçamento</a>
+              </div>
+            </div>
+
+            <div class="machine-panel" data-flow-panel="4">
+              <p class="eyebrow">Sistema do batedor</p>
+              <h2>Batedor em operação</h2>
+              <p>
+                A etapa de impacto e condução exige componentes em bom estado
+                para manter rendimento, durabilidade e regularidade.
+              </p>
+            </div>
+
+            <div class="machine-panel" data-flow-panel="5">
+              <p class="eyebrow">Peça em destaque</p>
+              <h2>Capa do Batedor</h2>
+              <p>Componente importante para proteção, desempenho e durabilidade do conjunto.</p>
+              <div class="machine-panel-actions">
+                <a class="button primary" href="produto.html?id=capa-batedor-9470-ah234023">Ver peça</a>
+                <a class="button secondary" data-flow-quote data-message="Olá, quero solicitar orçamento para Capa do Batedor." href="#">Solicitar orçamento</a>
+              </div>
+            </div>
+
+            <div class="machine-panel" data-flow-panel="6">
+              <p class="eyebrow">Fechamento</p>
+              <h2>Cada etapa do fluxo depende de peças em perfeito estado.</h2>
+              <p>
+                Confira o catálogo ou fale com um especialista para montar o pedido
+                conforme código, aplicação e modelo da máquina.
+              </p>
+              <div class="machine-panel-actions">
+                <a class="button primary" data-flow-quote data-message="Olá, quero falar com um especialista da VF Peças Agrícolas." href="#">Fale com um especialista</a>
+                <a class="button secondary" href="index.html#catalogo">Ver catálogo de peças</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="machine-controls" aria-label="Controle do fluxo da máquina">
+          <button class="button secondary" type="button" data-flow-prev>Voltar</button>
+          <ol class="machine-timeline" aria-label="Etapas do fluxo">
+            <li><button type="button" data-step-target="0">Plataforma</button></li>
+            <li><button type="button" data-step-target="1">Dedo</button></li>
+            <li><button type="button" data-step-target="2">Rotor</button></li>
+            <li><button type="button" data-step-target="3">Kit Reparo</button></li>
+            <li><button type="button" data-step-target="4">Batedor</button></li>
+            <li><button type="button" data-step-target="5">Capa</button></li>
+            <li><button type="button" data-step-target="6">Saída</button></li>
+          </ol>
+          <button class="button primary" type="button" data-flow-next>Avançar</button>
+        </div>
+      </section>
+
+      <section class="machine-mobile-sequence" aria-label="Resumo mobile do fluxo da colheitadeira">
+        <article>
+          <span>01</span>
+          <h2>Plataforma e dedos</h2>
+          <p>O corte começa pela plataforma. Os dedos ajudam a manter alimentação uniforme.</p>
+          <a href="produto.html?id=dedo-plataforma-central-6286532">Ver Dedo da Plataforma</a>
+        </article>
+        <article>
+          <span>02</span>
+          <h2>Rotor e kit reparo</h2>
+          <p>O material segue para o sistema interno, onde a manutenção do rotor sustenta desempenho.</p>
+          <a href="produto.html?id=kit-reparo-rotor-dianteiro-ah216568">Ver Kit Reparo</a>
+        </article>
+        <article>
+          <span>03</span>
+          <h2>Batedor e capa</h2>
+          <p>A capa do batedor protege o conjunto e contribui para durabilidade em operação.</p>
+          <a href="produto.html?id=capa-batedor-9470-ah234023">Ver Capa do Batedor</a>
+        </article>
+      </section>
+    </main>
+
+    <script src="fluxo-maquina.js"></script>
+  </body>
+</html>
