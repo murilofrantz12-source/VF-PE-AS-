@@ -360,6 +360,74 @@ h3 {
   line-height: 1.25;
 }
 
+.code-order {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(320px, 1.2fr);
+  align-items: center;
+  gap: clamp(18px, 4vw, 48px);
+  padding: 24px clamp(16px, 4vw, 48px);
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+
+.code-order h2 {
+  margin-bottom: 8px;
+  font-size: clamp(1.35rem, 2.4vw, 2.35rem);
+}
+
+.code-order p:not(.eyebrow),
+.code-order-form > p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.code-order-form {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  background: linear-gradient(90deg, var(--green-soft), var(--yellow-soft));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.code-order-form label {
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.code-order-form div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.code-order-form input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  outline: none;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.code-order-form input:focus {
+  border-color: var(--green-2);
+  box-shadow: 0 0 0 4px rgba(36, 112, 74, 0.12);
+}
+
+.code-order-form .button {
+  min-height: 46px;
+  white-space: nowrap;
+}
+
 .seo-local {
   display: grid;
   gap: 6px;
@@ -2309,6 +2377,10 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 
+  .code-order {
+    grid-template-columns: 1fr;
+  }
+
   .about-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2434,6 +2506,10 @@ button:disabled {
 
   .confirmation-summary,
   .confirmation-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .code-order-form div {
     grid-template-columns: 1fr;
   }
 

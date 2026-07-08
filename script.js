@@ -41,6 +41,8 @@ const customerSummary = document.querySelector("[data-customer-summary]");
 const overlay = document.querySelector("[data-overlay]");
 const cartWhatsApp = document.querySelector("[data-cart-whatsapp]");
 const quoteForm = document.querySelector("[data-quote-form]");
+const codeOrderForm = document.querySelector("[data-code-order-form]");
+const codeOrderStatus = document.querySelector("[data-code-order-status]");
 const productModal = document.querySelector("[data-product-modal]");
 const productDetail = document.querySelector("[data-product-detail]");
 const floatingWhatsApp = document.querySelector(".floating-whatsapp");
@@ -179,6 +181,30 @@ function quantityLabel(product, amount) {
 
 function productType(product) {
   return product.quantity === "Kit com 3 peças" ? "Kit" : "Peça";
+}
+
+function normalizeCode(value) {
+  return String(value || "")
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, "");
+}
+
+function productMatchesCode(product, code) {
+  const normalizedCode = normalizeCode(code);
+  const normalizedProductCode = normalizeCode(product.code);
+  return normalizedCode && normalizedProductCode.includes(normalizedCode);
+}
+
+function addProductToCart(product, amount = 1) {
+  const existing = state.cart.find((item) => item.id === product.id);
+
+  if (existing) {
+    existing.amount += amount;
+  } else {
+    state.cart.push({ ...product, amount });
+  }
+
+  renderCart();
 }
 
 function cartMessage(intent = "confirmar", orderId = "", checkout = {}) {
@@ -708,17 +734,10 @@ document.addEventListener("click", (event) => {
 
   if (addId) {
     const product = products.find((item) => item.id === addId);
+    if (!product) return;
     const quantityInput = document.querySelector(`[data-quantity="${addId}"]`);
     const amount = Math.max(1, Number.parseInt(quantityInput?.value, 10) || 1);
-    const existing = state.cart.find((item) => item.id === addId);
-
-    if (existing) {
-      existing.amount += amount;
-    } else {
-      state.cart.push({ ...product, amount });
-    }
-
-    renderCart();
+    addProductToCart(product, amount);
     openCart();
   }
 
@@ -809,6 +828,33 @@ document.addEventListener("click", (event) => {
 document.querySelector("#search").addEventListener("input", (event) => {
   state.search = event.target.value;
   renderProducts();
+});
+
+codeOrderForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const data = new FormData(codeOrderForm);
+  const code = String(data.get("codigo") || "").trim();
+  const matches = products.filter((product) => productMatchesCode(product, code));
+
+  if (matches.length === 1) {
+    addProductToCart(matches[0], 1);
+    codeOrderStatus.textContent = `${matches[0].code} adicionado ao pedido. Ajuste a quantidade no carrinho.`;
+    openCart();
+    return;
+  }
+
+  state.filter = "todos";
+  state.search = code;
+  document.querySelector("#search").value = code;
+  document.querySelectorAll("[data-filter]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.filter === "todos");
+  });
+  renderProducts();
+  document.querySelector("#catalogo")?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  codeOrderStatus.textContent = matches.length
+    ? "Encontramos mais de uma possibilidade. Confira o resultado no catálogo."
+    : "Não encontramos esse código exato. Confira o resultado da busca ou fale com o vendedor.";
 });
 
 document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {

@@ -84,6 +84,29 @@
         </div>
       </section>
 
+      <section class="code-order" aria-label="Pedido rápido por código">
+        <div>
+          <p class="eyebrow">Pedido por código</p>
+          <h2>Já sabe o código da peça?</h2>
+          <p>Digite o código para localizar ou adicionar direto ao pedido.</p>
+        </div>
+        <form class="code-order-form" data-code-order-form>
+          <label for="quick-code">Código da peça</label>
+          <div>
+            <input
+              id="quick-code"
+              name="codigo"
+              type="search"
+              autocomplete="off"
+              placeholder="Ex: AH216568, 6286531, 6308502"
+              required
+            />
+            <button class="button primary" type="submit">Adicionar pelo código</button>
+          </div>
+          <p data-code-order-status>Se houver mais de uma opção, mostramos o resultado no catálogo.</p>
+        </form>
+      </section>
+
       <section class="seo-local" aria-label="Atendimento local e aplicações">
         <h2>Peças agrícolas em Toledo-PR</h2>
         <p>
