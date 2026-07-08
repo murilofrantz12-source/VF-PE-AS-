@@ -1016,6 +1016,95 @@ h3 {
   border: 1px solid rgba(255, 254, 250, 0.26);
 }
 
+.about-page {
+  background: var(--paper);
+}
+
+.about-hero {
+  background:
+    linear-gradient(135deg, rgba(255, 254, 250, 0.96), rgba(237, 244, 236, 0.94)),
+    var(--white);
+}
+
+.about-intro {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(320px, 1fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: start;
+  padding: clamp(34px, 6vw, 72px) clamp(16px, 4vw, 48px);
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+
+.about-intro h2 {
+  max-width: 680px;
+}
+
+.about-intro > p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 1.04rem;
+  line-height: 1.7;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  padding: clamp(34px, 6vw, 72px) clamp(16px, 4vw, 48px);
+}
+
+.about-grid article {
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(20, 35, 28, 0.05);
+}
+
+.about-grid span {
+  display: inline-flex;
+  margin-bottom: 18px;
+  color: var(--yellow);
+  font-weight: 900;
+}
+
+.about-grid h2 {
+  font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+}
+
+.about-grid p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.about-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: clamp(34px, 6vw, 64px) clamp(16px, 4vw, 48px);
+  color: var(--white);
+  background:
+    linear-gradient(135deg, rgba(18, 63, 42, 0.98), rgba(29, 79, 120, 0.88)),
+    var(--green);
+}
+
+.about-band div {
+  max-width: 780px;
+}
+
+.about-band h2 {
+  margin-bottom: 12px;
+}
+
+.about-band p:not(.eyebrow) {
+  margin-bottom: 0;
+  color: rgba(255, 254, 250, 0.8);
+  line-height: 1.6;
+}
+
 .admin-page {
   background: var(--paper);
 }
@@ -2164,6 +2253,10 @@ button:disabled {
   .product-page-hero {
     grid-template-columns: 1fr;
   }
+
+  .about-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 760px) {
@@ -2206,8 +2299,15 @@ button:disabled {
   .shop-strip,
   .quote-section,
   .policy-grid,
-  .flow-grid {
+  .flow-grid,
+  .about-intro,
+  .about-grid {
     grid-template-columns: 1fr;
+  }
+
+  .about-band {
+    align-items: start;
+    flex-direction: column;
   }
 
   .trust-strip {
