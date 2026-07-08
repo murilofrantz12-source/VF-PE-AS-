@@ -1,2 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://murilofrantz12-source.github.io/VF-PE-AS-/sitemap.xml

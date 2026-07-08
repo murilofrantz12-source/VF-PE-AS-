@@ -22,6 +22,16 @@ function productType(item) {
   return item.quantity === "Kit com 3 peças" ? "Kit" : "Peça";
 }
 
+function productSeoName(item) {
+  if (item.category === "kits") return item.name.replace("Kit reparo do rotor", "Kit reparo rotor");
+  return item.name;
+}
+
+function productSeoDescription(item) {
+  const brandText = item.category === "dedos" ? "peças agrícolas" : "colheitadeiras John Deere STS e Série S";
+  return `${productSeoName(item)} para ${brandText}. Código ${item.code}, aplicação ${item.application}, ${item.note.toLowerCase()} e pedido online na VF Peças Agrícolas.`;
+}
+
 function renderProductPage() {
   if (!product) {
     productPage.innerHTML = `
@@ -35,10 +45,10 @@ function renderProductPage() {
     return;
   }
 
-  document.title = `${product.name} | VF Peças Agrícolas`;
+  document.title = `${productSeoName(product)} | VF Peças Agrícolas`;
   document.querySelector('meta[name="description"]').setAttribute(
     "content",
-    `${product.name}, código ${product.code}, ${product.note}. Compatível com ${product.compatibility}.`
+    productSeoDescription(product)
   );
 
   const message = [
@@ -89,6 +99,18 @@ function renderProductPage() {
           <a class="button secondary" href="${whatsappUrl(message)}" target="_blank" rel="noreferrer">Falar no WhatsApp</a>
         </div>
       </div>
+    </section>
+    <section class="product-seo-section" aria-label="Informações da peça">
+      <div>
+        <p class="eyebrow">Compra por código</p>
+        <h2>${productSeoName(product)}</h2>
+      </div>
+      <p>
+        A peça ${productSeoName(product)} está disponível para pedido online na VF Peças Agrícolas.
+        Código ${product.code}, aplicação ${product.application}, quantidade ${product.quantity}.
+        Compatibilidade informada: ${product.compatibility}. Em caso de dúvida, confirme o modelo
+        da máquina antes do envio.
+      </p>
     </section>
   `;
 }
