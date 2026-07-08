@@ -1198,7 +1198,7 @@ h3 {
 
 .admin-stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
   padding: 24px clamp(16px, 4vw, 48px);
 }
@@ -1213,7 +1213,7 @@ h3 {
 
 .admin-stats article {
   display: grid;
-  gap: 8px;
+  gap: 7px;
   padding: 18px;
 }
 
@@ -1224,6 +1224,11 @@ h3 {
 
 .admin-stats strong {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.admin-stats small {
+  color: var(--muted);
+  line-height: 1.35;
 }
 
 .admin-section {

@@ -38,16 +38,24 @@
 
       <section class="admin-stats" aria-label="Resumo dos pedidos">
         <article>
-          <span>Pedidos</span>
-          <strong data-admin-orders>0</strong>
+          <span>Pedidos novos hoje</span>
+          <strong data-admin-new-today>0</strong>
+          <small>Entraram nas últimas horas</small>
         </article>
         <article>
-          <span>Faturamento estimado</span>
-          <strong data-admin-revenue>R$ 0,00</strong>
+          <span>Total em aberto</span>
+          <strong data-admin-open-orders>0</strong>
+          <small>Pedidos para atender</small>
         </article>
         <article>
-          <span>Itens vendidos</span>
-          <strong data-admin-items>0</strong>
+          <span>Pedidos pagos</span>
+          <strong data-admin-paid-orders>0</strong>
+          <small>Aguardando envio ou conclusão</small>
+        </article>
+        <article>
+          <span>Valor em atendimento</span>
+          <strong data-admin-service-value>R$ 0,00</strong>
+          <small>Potencial em negociação</small>
         </article>
       </section>
 
@@ -250,15 +258,29 @@
       async function readDashboard() {
         const orders = await getOrdersForDashboard();
         currentOrders = orders;
-        const totalRevenue = orders.reduce((sum, order) => sum + (order.total || 0), 0);
-        const totalItems = orders.reduce(
-          (sum, order) => sum + order.items.reduce((itemSum, item) => itemSum + item.amount, 0),
-          0
-        );
+        const today = new Date();
+        const todayKey = today.toISOString().slice(0, 10);
+        const newToday = orders.filter((order) => {
+          const created = new Date(order.createdAt);
+          return !Number.isNaN(created.getTime()) && created.toISOString().slice(0, 10) === todayKey;
+        });
+        const openStatuses = ["novo", "em atendimento", "pago", "enviado"];
+        const paidStatuses = ["pago", "enviado"];
+        const serviceStatuses = ["novo", "em atendimento"];
+        const openOrdersCount = orders.filter((order) =>
+          openStatuses.includes(order.status || "novo")
+        ).length;
+        const paidOrdersCount = orders.filter((order) =>
+          paidStatuses.includes(order.status || "novo")
+        ).length;
+        const serviceValue = orders
+          .filter((order) => serviceStatuses.includes(order.status || "novo"))
+          .reduce((sum, order) => sum + (order.total || 0), 0);
 
-        document.querySelector("[data-admin-orders]").textContent = orders.length;
-        document.querySelector("[data-admin-revenue]").textContent = money(totalRevenue);
-        document.querySelector("[data-admin-items]").textContent = totalItems;
+        document.querySelector("[data-admin-new-today]").textContent = newToday.length;
+        document.querySelector("[data-admin-open-orders]").textContent = openOrdersCount;
+        document.querySelector("[data-admin-paid-orders]").textContent = paidOrdersCount;
+        document.querySelector("[data-admin-service-value]").textContent = money(serviceValue);
 
         const closedStatuses = ["concluido", "cancelado", "arquivado"];
         const activeOrders = orders.filter((order) => !closedStatuses.includes(order.status || "novo"));
