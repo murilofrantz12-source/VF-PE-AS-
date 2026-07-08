@@ -70,17 +70,22 @@ function renderProductPage() {
       <div class="product-page-content">
         <p class="eyebrow">${product.tag}</p>
         <h1>${product.name}</h1>
-        <div class="product-page-code">
-          <span>Código</span>
-          <strong>${product.code}</strong>
-        </div>
-        <strong class="price product-page-price">${money(product.price)}</strong>
-        <p>${product.spec}</p>
-        <dl class="product-details product-page-details">
-          <div>
-            <dt>Compatível com</dt>
-            <dd>${product.compatibility}</dd>
+        <div class="product-buy-panel">
+          <div class="product-page-code">
+            <span>Código</span>
+            <strong>${product.code}</strong>
           </div>
+          <div class="product-page-pricebox">
+            <span>Valor unitário</span>
+            <strong class="price product-page-price">${money(product.price)}</strong>
+          </div>
+        </div>
+        <p>${product.spec}</p>
+        <div class="product-compatibility-box">
+          <span>Compatível com</span>
+          <strong>${product.compatibility}</strong>
+        </div>
+        <dl class="product-details product-page-details">
           <div>
             <dt>Aplicação</dt>
             <dd>${product.application}</dd>
@@ -94,8 +99,11 @@ function renderProductPage() {
             <dd>${product.note}</dd>
           </div>
         </dl>
+        <p class="product-compatibility-alert">
+          Confirme compatibilidade pelo modelo da máquina antes do envio.
+        </p>
         <div class="product-page-actions">
-          <a class="button primary" href="index.html#catalogo">Adicionar pelo catálogo</a>
+          <a class="button primary" href="index.html?add=${product.id}#catalogo">Adicionar ao carrinho</a>
           <a class="button secondary" href="${whatsappUrl(message)}" target="_blank" rel="noreferrer">Falar no WhatsApp</a>
         </div>
       </div>

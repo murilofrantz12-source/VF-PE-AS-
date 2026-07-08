@@ -1018,7 +1018,24 @@ async function initCustomerSession() {
   renderCart();
 }
 
+function handleIncomingProductAdd() {
+  const params = new URLSearchParams(window.location.search);
+  const addId = params.get("add");
+  if (!addId) return;
+
+  const product = products.find((item) => item.id === addId || item.code === addId);
+  if (!product) return;
+
+  addProductToCart(product, 1);
+  openCart();
+  params.delete("add");
+  const cleanQuery = params.toString();
+  const cleanUrl = `${window.location.pathname}${cleanQuery ? `?${cleanQuery}` : ""}${window.location.hash || ""}`;
+  window.history.replaceState({}, "", cleanUrl);
+}
+
 renderProducts();
 renderCart();
 renderAccountShortcut();
 initCustomerSession();
+handleIncomingProductAdd();
