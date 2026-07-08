@@ -137,11 +137,26 @@ textarea {
   font-weight: 900;
 }
 
+.login-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 14px;
+  color: var(--green);
+  background: var(--white);
+  border: 1px solid #d6dfd1;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
 .cart-button,
 .button,
 .filter,
 .nav-button,
 .mobile-orders-button,
+.login-button,
 .icon-button {
   border: 0;
   cursor: pointer;
@@ -2064,6 +2079,12 @@ h3 {
 
   .topbar-actions {
     gap: 6px;
+  }
+
+  .login-button {
+    min-height: 40px;
+    padding: 0 10px;
+    font-size: 0.82rem;
   }
 
   .mobile-orders-button {

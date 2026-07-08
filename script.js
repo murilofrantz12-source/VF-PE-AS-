@@ -191,6 +191,7 @@ const registerForm = document.querySelector("[data-register-form]");
 const checkoutForm = document.querySelector("[data-checkout-form]");
 const orderReview = document.querySelector("[data-order-review]");
 const accountStatus = document.querySelector("[data-account-status]");
+const loginLabel = document.querySelector("[data-login-label]");
 
 function readCustomer() {
   return window.VFStore?.readCustomer() || null;
@@ -199,6 +200,12 @@ function readCustomer() {
 function saveCustomer(customer) {
   state.customer = customer;
   window.VFStore?.saveCustomer(customer);
+  renderAccountShortcut();
+}
+
+function renderAccountShortcut() {
+  if (!loginLabel) return;
+  loginLabel.textContent = state.customer ? "Minha conta" : "Entrar";
 }
 
 function readOrders() {
@@ -836,6 +843,14 @@ document.addEventListener("click", (event) => {
   }
 
   if (event.target.closest("[data-open-cart]")) openCart();
+  if (event.target.closest("[data-open-login]")) {
+    if (state.customer) {
+      openOrdersModal();
+    } else {
+      openAccountModal("login", "orders");
+      accountStatus.textContent = "Entre para visualizar seus pedidos ou finalizar uma compra.";
+    }
+  }
   if (event.target.closest("[data-close-cart]")) closeCart();
   if (event.target.closest("[data-close-product]")) closeProductDetail();
   if (event.target.closest("[data-close-account]")) closeAccountModal();
@@ -969,3 +984,4 @@ quoteForm.addEventListener("submit", (event) => {
 
 renderProducts();
 renderCart();
+renderAccountShortcut();
