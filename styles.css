@@ -2113,6 +2113,107 @@ h3 {
   font-size: 0.82rem;
 }
 
+.order-timeline {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin: 2px 0 0;
+  padding: 12px;
+  list-style: none;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.order-timeline li {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.74rem;
+  line-height: 1.2;
+}
+
+.order-timeline li::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: calc(-50% + 18px);
+  width: calc(100% - 36px);
+  height: 2px;
+  background: var(--line);
+}
+
+.order-timeline li:first-child::before {
+  display: none;
+}
+
+.order-timeline span {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: var(--muted);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.order-timeline strong {
+  font-size: 0.74rem;
+}
+
+.order-timeline li.done,
+.order-timeline li.current {
+  color: var(--ink);
+}
+
+.order-timeline li.done::before,
+.order-timeline li.current::before {
+  background: var(--green-2);
+}
+
+.order-timeline li.done span {
+  color: var(--white);
+  background: var(--green-2);
+  border-color: var(--green-2);
+}
+
+.order-timeline li.current span {
+  color: var(--ink);
+  background: var(--yellow);
+  border-color: var(--yellow);
+}
+
+.order-timeline li.current strong {
+  color: var(--green);
+}
+
+.order-timeline-closed {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  color: var(--muted);
+  background: var(--yellow-soft);
+  border-color: #ecd27d;
+}
+
+.order-timeline-closed strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+}
+
+.order-timeline-closed p {
+  margin: 0;
+}
+
 .client-order-note {
   grid-column: 1 / -1;
   padding-top: 10px;
@@ -2502,6 +2603,23 @@ button:disabled {
 
   .client-order-status {
     justify-self: start;
+  }
+
+  .order-timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .order-timeline li {
+    grid-template-columns: 28px 1fr;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .order-timeline li::before {
+    top: -10px;
+    left: 13px;
+    width: 2px;
+    height: 16px;
   }
 
   .confirmation-summary,

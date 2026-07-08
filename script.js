@@ -130,6 +130,44 @@ function orderStatusLabel(status = "novo") {
   return labels[status] || status;
 }
 
+function orderTimeline(status = "novo") {
+  const normalizedStatus = status || "novo";
+  const closedStatuses = ["cancelado", "arquivado"];
+  const steps = [
+    { key: "novo", label: "Pedido recebido" },
+    { key: "em atendimento", label: "Em atendimento" },
+    { key: "pago", label: "Pago" },
+    { key: "enviado", label: "Enviado" },
+    { key: "concluido", label: "Concluído" },
+  ];
+  const currentIndex = steps.findIndex((step) => step.key === normalizedStatus);
+  const activeIndex = currentIndex >= 0 ? currentIndex : 0;
+
+  if (closedStatuses.includes(normalizedStatus)) {
+    return `
+      <div class="order-timeline order-timeline-closed" aria-label="Status do pedido">
+        <strong>${orderStatusLabel(normalizedStatus)}</strong>
+        <p>Este pedido não está mais no fluxo de envio. Fale com a VF se precisar de alguma informação.</p>
+      </div>
+    `;
+  }
+
+  return `
+    <ol class="order-timeline" aria-label="Linha do tempo do pedido">
+      ${steps
+        .map(
+          (step, index) => `
+            <li class="${index < activeIndex ? "done" : ""} ${index === activeIndex ? "current" : ""}">
+              <span>${index + 1}</span>
+              <strong>${step.label}</strong>
+            </li>
+          `
+        )
+        .join("")}
+    </ol>
+  `;
+}
+
 function formatDate(date) {
   return new Date(date).toLocaleString("pt-BR", {
     day: "2-digit",
@@ -574,6 +612,7 @@ function renderClientOrders(orders) {
             <p>${order.items.length} ${order.items.length === 1 ? "item" : "itens"} | Total ${money(order.total)}</p>
           </div>
           <strong class="client-order-status">${orderStatusLabel(order.status)}</strong>
+          ${orderTimeline(order.status)}
           <ul>
             ${order.items
               .map(
