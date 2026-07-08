@@ -116,10 +116,32 @@ textarea {
   color: var(--green);
 }
 
+.topbar-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.mobile-orders-button {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 12px;
+  color: var(--green);
+  background: #edf2e9;
+  border: 1px solid #d6dfd1;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
 .cart-button,
 .button,
 .filter,
 .nav-button,
+.mobile-orders-button,
 .icon-button {
   border: 0;
   cursor: pointer;
@@ -1795,6 +1817,10 @@ h3 {
     display: none;
   }
 
+  .mobile-orders-button {
+    display: inline-flex;
+  }
+
   .hero {
     min-height: 580px;
   }
@@ -1894,6 +1920,16 @@ h3 {
 
   .cart-button span:nth-child(2) {
     display: none;
+  }
+
+  .topbar-actions {
+    gap: 6px;
+  }
+
+  .mobile-orders-button {
+    min-height: 40px;
+    padding: 0 10px;
+    font-size: 0.82rem;
   }
 
   .topbar-action {
