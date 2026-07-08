@@ -666,6 +666,105 @@ h3 {
   white-space: normal;
 }
 
+.product-page {
+  background: var(--paper);
+}
+
+.product-page-loading,
+.product-page-empty,
+.product-page-hero {
+  padding: clamp(44px, 8vw, 88px) clamp(16px, 4vw, 48px);
+}
+
+.product-page-empty {
+  max-width: 760px;
+}
+
+.product-page-empty p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.product-page-hero {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.9fr) minmax(320px, 1fr);
+  gap: clamp(22px, 4vw, 48px);
+  align-items: center;
+}
+
+.product-page-visual {
+  display: grid;
+  min-height: 520px;
+  place-items: center;
+  padding: clamp(18px, 4vw, 42px);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 18px 44px rgba(25, 34, 28, 0.08);
+}
+
+.product-page-visual img {
+  display: block;
+  max-width: 100%;
+  max-height: 460px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.product-page-content {
+  display: grid;
+  gap: 14px;
+}
+
+.product-page-content h1 {
+  max-width: 12ch;
+  margin-bottom: 0;
+  color: var(--ink);
+}
+
+.product-page-content > p:not(.eyebrow) {
+  max-width: 620px;
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.product-page-code {
+  display: inline-grid;
+  width: fit-content;
+  gap: 3px;
+  padding: 10px 12px;
+  color: var(--white);
+  background: var(--green);
+  border-radius: 6px;
+}
+
+.product-page-code span {
+  font-size: 0.72rem;
+  font-weight: 800;
+  opacity: 0.76;
+  text-transform: uppercase;
+}
+
+.product-page-code strong {
+  font-size: 1.18rem;
+}
+
+.product-page-price {
+  font-size: 1.6rem;
+}
+
+.product-page-details {
+  margin: 4px 0 0;
+}
+
+.product-page-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  max-width: 520px;
+}
+
 .confidence-section {
   background: var(--white);
   border-top: 1px solid var(--line);
@@ -2009,6 +2108,10 @@ h3 {
   .family-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .product-page-hero {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 760px) {
@@ -2103,6 +2206,14 @@ h3 {
   }
 
   .family-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-page-visual {
+    min-height: 340px;
+  }
+
+  .product-page-actions {
     grid-template-columns: 1fr;
   }
 
