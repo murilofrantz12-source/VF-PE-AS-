@@ -582,6 +582,45 @@ h3 {
   line-height: 1.35;
 }
 
+.catalog-missing-callout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 22px;
+  padding: 16px;
+  background: var(--green-soft);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--yellow);
+  border-radius: 8px;
+}
+
+.catalog-missing-callout strong,
+.catalog-empty-state strong {
+  color: var(--ink);
+}
+
+.catalog-missing-callout p,
+.catalog-empty-state p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.catalog-empty-state {
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--yellow);
+  border-radius: 8px;
+}
+
+.catalog-empty-state .button {
+  justify-self: start;
+}
+
 .product-grid {
   display: grid;
   gap: 28px;
@@ -2664,6 +2703,11 @@ button:disabled {
   }
 
   .about-band {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .catalog-missing-callout {
     align-items: start;
     flex-direction: column;
   }

@@ -374,7 +374,18 @@ function renderProducts() {
     .join("");
 
   if (!filtered.length) {
-    productGrid.innerHTML = `<p class="cart-empty">Nenhuma peça encontrada com esse filtro.</p>`;
+    productGrid.innerHTML = `
+      <div class="catalog-empty-state">
+        <strong>Nenhuma peça encontrada com esse filtro.</strong>
+        <p>
+          Gostaria de uma peça que não está aqui? Entre em contato com nossos vendedores
+          e envie o código, foto da peça ou modelo da máquina.
+        </p>
+        <a class="button secondary" href="${whatsappUrl("Olá, gostaria de uma peça que não está no site da VF Peças Agrícolas.")}" target="_blank" rel="noreferrer">
+          Falar com vendedor
+        </a>
+      </div>
+    `;
   }
 }
 
@@ -898,6 +909,12 @@ codeOrderForm?.addEventListener("submit", (event) => {
 
 document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {
   link.href = whatsappUrl("Olá, quero falar sobre peças agrícolas da VF Peças Agrícolas.");
+  link.target = "_blank";
+  link.rel = "noreferrer";
+});
+
+document.querySelectorAll("[data-whatsapp-missing]").forEach((link) => {
+  link.href = whatsappUrl("Olá, gostaria de uma peça que não está no site da VF Peças Agrícolas.");
   link.target = "_blank";
   link.rel = "noreferrer";
 });
