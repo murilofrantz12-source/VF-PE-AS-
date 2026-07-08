@@ -5,24 +5,33 @@ const flowSteps = [
     id: "plataforma",
     label: "Plataforma",
     kicker: "Etapa 01",
-    title: "Plataforma / alimentação",
+    title: "A cultura entra pela plataforma",
     text:
-      "A plataforma é o primeiro contato da máquina com o material. É aqui que os dedos e componentes de alimentação ajudam a conduzir a cultura para dentro da colheitadeira.",
+      "A plataforma é o ponto inicial do processo. É nela que a cultura é captada e conduzida para dentro da máquina.",
+    relatedGroups: [],
+  },
+  {
+    id: "dedos",
+    label: "Dedos",
+    kicker: "Etapa 02",
+    title: "Dedos da plataforma em destaque",
+    text:
+      "Os dedos da plataforma ajudam na condução do material, sendo componentes importantes na entrada e alimentação inicial.",
     relatedGroups: ["Plataforma"],
   },
   {
     id: "alimentacao",
     label: "Alimentação",
-    kicker: "Etapa 02",
-    title: "Entrada do material",
+    kicker: "Etapa 03",
+    title: "Material sendo puxado para dentro",
     text:
-      "O material segue da plataforma para a parte interna. A regularidade nessa entrada ajuda a manter o fluxo contínuo e reduz paradas durante a operação.",
-    relatedGroups: ["Plataforma"],
+      "Depois do corte, o material é conduzido pelo alimentador para a parte interna da colheitadeira. Um fluxo regular reduz acúmulo e melhora a continuidade da operação.",
+    relatedGroups: [],
   },
   {
     id: "rotor",
     label: "Rotor",
-    kicker: "Etapa 03",
+    kicker: "Etapa 04",
     title: "Rotor / trilha",
     text:
       "No rotor acontece uma das etapas mais importantes do processamento. É uma região de alto desgaste, por isso os kits de reparo são peças estratégicas para manutenção e reposição.",
@@ -31,35 +40,26 @@ const flowSteps = [
   {
     id: "batedor",
     label: "Batedor",
-    kicker: "Etapa 04",
-    title: "Sistema do batedor",
+    kicker: "Etapa 05",
+    title: "Batedor e capas em destaque",
     text:
       "O batedor auxilia na continuidade do fluxo interno do material. As capas do batedor são peças importantes para proteção, condução e funcionamento adequado dessa região.",
     relatedGroups: ["Batedor"],
   },
   {
-    id: "separacao",
-    label: "Separação",
-    kicker: "Etapa 05",
-    title: "Separação do material",
-    text:
-      "Após a trilha, o material segue para separação, onde a máquina começa a direcionar grãos, palha e resíduos para caminhos diferentes dentro do sistema.",
-    relatedGroups: ["Rotor", "Batedor"],
-  },
-  {
     id: "limpeza",
-    label: "Limpeza",
+    label: "Separação e limpeza",
     kicker: "Etapa 06",
-    title: "Limpeza e condução",
+    title: "Separação e limpeza",
     text:
-      "A etapa de limpeza ajuda a refinar o resultado do processamento e depende do fluxo interno estável para manter rendimento e qualidade no campo.",
+      "Nessa etapa, a máquina realiza a separação do grão e dos resíduos, conduzindo o material para as próximas fases do processo.",
     relatedGroups: [],
   },
   {
     id: "saida",
     label: "Saída",
     kicker: "Etapa 07",
-    title: "Graneleiro, descarga e palha",
+    title: "Saída e visão geral do caminho",
     text:
       "Depois do processamento, o grão segue para armazenamento/descarga e a palha ou resíduo segue para a saída da máquina.",
     relatedGroups: [],
@@ -76,7 +76,7 @@ const featuredParts = [
     application: "JD 9470 | STS 9470, STS 9570, S540, S550",
     function:
       "Peça alternativa/similar aplicada na região do batedor, ponto importante para proteção e condução do material.",
-    position: { x: 42, y: 41 },
+    position: { x: 40, y: 46 },
     tone: "batedor",
     emphasis: true,
   },
@@ -89,7 +89,7 @@ const featuredParts = [
     application: "JD 9670 | STS 9670, STS 9770 e Série S",
     function:
       "Item de reposição similar à original aplicado no batedor para auxiliar proteção, durabilidade e continuidade do fluxo interno.",
-    position: { x: 47, y: 38 },
+    position: { x: 44, y: 43 },
     tone: "batedor",
     emphasis: true,
   },
@@ -102,7 +102,7 @@ const featuredParts = [
     application: "JD 9470 | STS 9470, STS 9570, S540, S550",
     function:
       "Kit com 3 peças para manutenção da região dianteira do rotor, um dos principais pontos de desgaste da máquina.",
-    position: { x: 54, y: 48 },
+    position: { x: 52, y: 50 },
     tone: "rotor",
     emphasis: true,
   },
@@ -115,7 +115,7 @@ const featuredParts = [
     application: "JD 9470 | STS 9470, STS 9570, S430, S440, S540, S550",
     function:
       "Kit de reposição aplicado na região traseira do rotor para recuperação e manutenção do sistema.",
-    position: { x: 62, y: 46 },
+    position: { x: 59, y: 48 },
     tone: "rotor",
     emphasis: true,
   },
@@ -128,7 +128,7 @@ const featuredParts = [
     application: "JD 9650/9670 | STS 9650, 9670, 9750, 9770 e Série S",
     function:
       "Conjunto similar à original para reparo dianteiro do rotor em aplicações STS e Série S compatíveis.",
-    position: { x: 57, y: 39 },
+    position: { x: 55, y: 42 },
     tone: "rotor",
     emphasis: true,
   },
@@ -141,7 +141,7 @@ const featuredParts = [
     application: "JD 9650/9670 | STS 9650, 9670, 9750, 9770 e Série S",
     function:
       "Item de reposição para a região traseira do rotor, indicado para manutenção em ponto de alto desgaste.",
-    position: { x: 66, y: 51 },
+    position: { x: 64, y: 52 },
     tone: "rotor",
     emphasis: true,
   },
@@ -154,7 +154,7 @@ const featuredParts = [
     application: "Plataforma de corte | Lateral",
     function:
       "Peça alternativa para reposição lateral da plataforma, ajudando na condução uniforme da cultura no corte.",
-    position: { x: 14, y: 70 },
+    position: { x: 11, y: 70 },
     tone: "plataforma",
     emphasis: true,
   },
@@ -167,7 +167,7 @@ const featuredParts = [
     application: "Plataforma de corte | Central",
     function:
       "Dedo central para reposição na plataforma, com função importante na alimentação uniforme do material.",
-    position: { x: 20, y: 64 },
+    position: { x: 18, y: 66 },
     tone: "plataforma",
     emphasis: true,
   },
@@ -180,7 +180,7 @@ const featuredParts = [
     application: "Plataforma de corte | Início/enrosação",
     function:
       "Peça alternativa de reposição para aplicação no início/enrosação da plataforma. Código encontrado no cadastro atual como 6308502.",
-    position: { x: 26, y: 68 },
+    position: { x: 25, y: 67 },
     tone: "plataforma",
     emphasis: true,
   },
@@ -219,6 +219,43 @@ function quoteMessage(part) {
 
 function partsForStep(step) {
   return featuredParts.filter((part) => step.relatedGroups.includes(part.group));
+}
+
+function renderStepParts(parts, step) {
+  if (!parts.length) {
+    renderPartCard({
+      id: "general",
+      name: step.title,
+      code: "Fluxo",
+      group: "Processo",
+      application: step.label,
+      function: step.text,
+      productId: "",
+      tone: "neutral",
+    });
+    return;
+  }
+
+  partCard.innerHTML = `
+    <p class="eyebrow">Peças VF nesta etapa</p>
+    <h3>${step.label}</h3>
+    <p class="machine-part-note">O fluxo chegou nesta região. Confira os itens de reposição aplicados aqui.</p>
+    <div class="machine-stage-parts">
+      ${parts
+        .map(
+          (part) => `
+            <button class="${part.id === activePartId ? "active" : ""}" type="button" data-stage-part="${part.id}">
+              <strong>${part.code}</strong>
+              <span>${part.name}</span>
+            </button>
+          `
+        )
+        .join("")}
+    </div>
+    <div class="machine-panel-actions">
+      <a class="button primary" href="${quoteUrl(`Olá, quero orçamento das peças da etapa ${step.label} no Fluxo da Máquina da VF.`)}" target="_blank" rel="noreferrer">Solicitar orçamento</a>
+    </div>
+  `;
 }
 
 function setWhatsAppLinks() {
@@ -362,18 +399,13 @@ function setStep(index, options = {}) {
   });
 
   if (relatedParts.length && !options.keepPart) {
-    setActivePart(relatedParts[0].id);
-  } else if (!options.keepPart) {
-    renderPartCard({
-      id: "general",
-      name: step.title,
-      code: "Fluxo",
-      group: "Processo",
-      application: step.label,
-      function: step.text,
-      productId: "",
-      tone: "neutral",
+    activePartId = relatedParts[0].id;
+    renderStepParts(relatedParts, step);
+    document.querySelectorAll("[data-part-id]").forEach((hotspot) => {
+      hotspot.classList.toggle("active", hotspot.dataset.partId === activePartId);
     });
+  } else if (!options.keepPart) {
+    renderStepParts([], step);
     document.querySelectorAll("[data-part-id]").forEach((hotspot) => hotspot.classList.remove("active"));
   }
 
@@ -436,6 +468,13 @@ hotspotLayer.addEventListener("click", (event) => {
     if (stepIndex >= 0) setStep(stepIndex, { keepPart: true });
     setActivePart(part.id);
   }
+});
+
+partCard.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-stage-part]");
+  if (!button) return;
+  stopAutoPlay();
+  setActivePart(button.dataset.stagePart);
 });
 
 startButton?.addEventListener("click", () => {

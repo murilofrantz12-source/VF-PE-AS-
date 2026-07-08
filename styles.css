@@ -3308,11 +3308,15 @@ button:disabled {
 }
 
 .machine-flow-stage[data-step="plataforma"] .machine-svg {
-  transform: translateX(18%) translateY(2%) scale(1.28);
+  transform: translateX(20%) translateY(2%) scale(1.34);
+}
+
+.machine-flow-stage[data-step="dedos"] .machine-svg {
+  transform: translateX(22%) translateY(3%) scale(1.48);
 }
 
 .machine-flow-stage[data-step="alimentacao"] .machine-svg {
-  transform: translateX(10%) scale(1.24);
+  transform: translateX(8%) translateY(1%) scale(1.32);
 }
 
 .machine-flow-stage[data-step="rotor"] .machine-svg {
@@ -3320,7 +3324,7 @@ button:disabled {
 }
 
 .machine-flow-stage[data-step="batedor"] .machine-svg {
-  transform: translateX(8%) translateY(1%) scale(1.34);
+  transform: translateX(12%) translateY(1%) scale(1.42);
 }
 
 .machine-flow-stage[data-step="separacao"] .machine-svg {
@@ -3345,10 +3349,36 @@ button:disabled {
   stroke-width: 3;
 }
 
+.crop-ground {
+  fill: none;
+  stroke: rgba(223, 180, 58, 0.46);
+  stroke-linecap: round;
+  stroke-width: 6;
+}
+
+.crop-stalk,
+.crop-head {
+  fill: none;
+  stroke: rgba(242, 209, 107, 0.72);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 5;
+}
+
+.crop-head {
+  fill: rgba(223, 180, 58, 0.08);
+}
+
 .machine-cut {
-  fill: rgba(255, 254, 250, 0.045);
+  fill: url(#cutGradient);
   stroke: rgba(255, 254, 250, 0.26);
   stroke-dasharray: 10 12;
+  stroke-width: 2;
+}
+
+.machine-panel-line {
+  fill: none;
+  stroke: rgba(255, 254, 250, 0.12);
   stroke-width: 2;
 }
 
@@ -3359,12 +3389,54 @@ button:disabled {
   stroke-width: 2;
 }
 
+.machine-cab-glass {
+  fill: rgba(187, 221, 232, 0.18);
+  stroke: rgba(255, 254, 250, 0.24);
+  stroke-width: 2;
+}
+
+.machine-grain-elevator,
+.machine-rear {
+  fill: none;
+  stroke: rgba(223, 180, 58, 0.38);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 8;
+}
+
 .machine-auger,
 .header-auger {
   fill: none;
   stroke: rgba(223, 180, 58, 0.58);
   stroke-linecap: round;
   stroke-width: 12;
+}
+
+.header-main {
+  fill: rgba(18, 63, 42, 0.82);
+  stroke: rgba(223, 180, 58, 0.62);
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.header-side {
+  fill: rgba(5, 9, 7, 0.52);
+  stroke: rgba(223, 180, 58, 0.4);
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.header-reel-ring {
+  fill: rgba(255, 254, 250, 0.035);
+  stroke: rgba(223, 180, 58, 0.6);
+  stroke-width: 5;
+}
+
+.header-reel-spoke {
+  fill: none;
+  stroke: rgba(223, 180, 58, 0.45);
+  stroke-linecap: round;
+  stroke-width: 4;
 }
 
 .header-frame {
@@ -3385,6 +3457,13 @@ button:disabled {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 8;
+}
+
+.header-fingers-zone {
+  fill: none;
+  stroke: rgba(255, 254, 250, 0.26);
+  stroke-linecap: round;
+  stroke-width: 10;
 }
 
 .wheel-front,
@@ -3414,8 +3493,27 @@ button:disabled {
   fill: rgba(223, 106, 46, 0.035);
 }
 
+.region-feedhouse {
+  fill: rgba(223, 180, 58, 0.04);
+}
+
+.rotor-spine,
+.rotor-flight,
+.batedor-bars,
+.cleaning-sieves {
+  fill: none;
+  opacity: 0.38;
+  stroke: rgba(255, 254, 250, 0.42);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+  transition: opacity 0.28s ease, stroke 0.28s ease, filter 0.28s ease;
+}
+
 .machine-flow-stage[data-step="plataforma"] .machine-header,
+.machine-flow-stage[data-step="dedos"] .machine-header,
 .machine-flow-stage[data-step="alimentacao"] .region-feed,
+.machine-flow-stage[data-step="alimentacao"] .region-feedhouse,
 .machine-flow-stage[data-step="rotor"] .region-rotor,
 .machine-flow-stage[data-step="batedor"] .region-batedor,
 .machine-flow-stage[data-step="separacao"] .region-separation,
@@ -3426,7 +3524,11 @@ button:disabled {
 }
 
 .machine-flow-stage[data-step="plataforma"] .header-frame,
-.machine-flow-stage[data-step="plataforma"] .header-teeth {
+.machine-flow-stage[data-step="plataforma"] .header-main,
+.machine-flow-stage[data-step="plataforma"] .header-reel-ring,
+.machine-flow-stage[data-step="plataforma"] .header-teeth,
+.machine-flow-stage[data-step="dedos"] .header-fingers-zone,
+.machine-flow-stage[data-step="dedos"] .header-teeth {
   filter: url(#machineGlow);
 }
 
@@ -3437,6 +3539,15 @@ button:disabled {
 
 .machine-flow-stage[data-step="batedor"] .region-batedor {
   stroke: #f2d16b;
+}
+
+.machine-flow-stage[data-step="rotor"] .rotor-spine,
+.machine-flow-stage[data-step="rotor"] .rotor-flight,
+.machine-flow-stage[data-step="batedor"] .batedor-bars,
+.machine-flow-stage[data-step="limpeza"] .cleaning-sieves {
+  opacity: 1;
+  stroke: #f2d16b;
+  filter: url(#machineGlow);
 }
 
 .machine-flow-stage[data-step="separacao"] .region-separation,
@@ -3457,6 +3568,7 @@ button:disabled {
 }
 
 .machine-flow-stage[data-step="plataforma"] [data-flow-region="plataforma"],
+.machine-flow-stage[data-step="dedos"] [data-flow-region="dedos"],
 .machine-flow-stage[data-step="alimentacao"] [data-flow-region="alimentacao"],
 .machine-flow-stage[data-step="rotor"] [data-flow-region="rotor"],
 .machine-flow-stage[data-step="batedor"] [data-flow-region="batedor"],
@@ -3632,6 +3744,47 @@ button:disabled {
   border-left: 3px solid var(--yellow);
   border-radius: 6px;
   font-size: 0.86rem;
+}
+
+.machine-stage-parts {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.machine-stage-parts button {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  color: rgba(255, 254, 250, 0.82);
+  background: rgba(255, 254, 250, 0.06);
+  border: 1px solid rgba(255, 254, 250, 0.12);
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.machine-stage-parts button.active,
+.machine-stage-parts button:hover {
+  color: var(--white);
+  background: rgba(223, 180, 58, 0.12);
+  border-color: rgba(223, 180, 58, 0.42);
+}
+
+.machine-stage-parts strong {
+  display: inline-flex;
+  padding: 6px 8px;
+  color: var(--ink);
+  background: var(--yellow);
+  border-radius: 5px;
+  font-size: 0.76rem;
+}
+
+.machine-stage-parts span {
+  font-weight: 800;
 }
 
 .machine-controls {
@@ -3817,73 +3970,73 @@ button:disabled {
 @keyframes particleA2 {
   0% {
     opacity: 0;
-    transform: translate(86px, 430px);
+    transform: translate(72px, 444px);
   }
 
   28% {
     opacity: 1;
-    transform: translate(376px, 340px);
+    transform: translate(386px, 388px);
   }
 
   60% {
     opacity: 1;
-    transform: translate(640px, 274px);
+    transform: translate(684px, 292px);
   }
 
   100% {
     opacity: 0;
-    transform: translate(1122px, 314px);
+    transform: translate(1174px, 350px);
   }
 }
 
 @keyframes particleB2 {
   0% {
     opacity: 0;
-    transform: translate(130px, 410px);
+    transform: translate(106px, 456px);
   }
 
   45% {
     opacity: 1;
-    transform: translate(598px, 276px);
+    transform: translate(548px, 318px);
   }
 
   100% {
     opacity: 0;
-    transform: translate(890px, 386px);
+    transform: translate(956px, 414px);
   }
 }
 
 @keyframes particleC2 {
   0% {
     opacity: 0;
-    transform: translate(348px, 340px);
+    transform: translate(386px, 388px);
   }
 
   45% {
     opacity: 1;
-    transform: translate(704px, 224px);
+    transform: translate(704px, 286px);
   }
 
   100% {
     opacity: 0;
-    transform: translate(886px, 384px);
+    transform: translate(950px, 416px);
   }
 }
 
 @keyframes particleD2 {
   0% {
     opacity: 0;
-    transform: translate(582px, 394px);
+    transform: translate(560px, 438px);
   }
 
   60% {
     opacity: 1;
-    transform: translate(800px, 436px);
+    transform: translate(828px, 480px);
   }
 
   100% {
     opacity: 0;
-    transform: translate(1080px, 324px);
+    transform: translate(1120px, 392px);
   }
 }
 
@@ -4153,6 +4306,7 @@ button:disabled {
 
   .machine-svg,
   .machine-flow-stage[data-step="plataforma"] .machine-svg,
+  .machine-flow-stage[data-step="dedos"] .machine-svg,
   .machine-flow-stage[data-step="alimentacao"] .machine-svg,
   .machine-flow-stage[data-step="rotor"] .machine-svg,
   .machine-flow-stage[data-step="batedor"] .machine-svg,
