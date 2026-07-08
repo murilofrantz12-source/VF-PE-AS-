@@ -1803,6 +1803,29 @@ h3 {
   margin-top: 18px;
 }
 
+.orders-account {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.orders-account div {
+  display: grid;
+  gap: 3px;
+}
+
+.orders-account span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
 .client-order {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -1861,6 +1884,11 @@ h3 {
   padding-top: 10px;
   border-top: 1px solid var(--line);
   font-size: 0.88rem;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.66;
 }
 
 .confirmation-modal {

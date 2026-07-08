@@ -48,6 +48,7 @@ const footer = document.querySelector(".footer");
 const accountModal = document.querySelector("[data-account-modal]");
 const ordersModal = document.querySelector("[data-orders-modal]");
 const clientOrders = document.querySelector("[data-client-orders]");
+const ordersAccount = document.querySelector("[data-orders-account]");
 const confirmationModal = document.querySelector("[data-confirmation-modal]");
 const confirmationDetail = document.querySelector("[data-confirmation-detail]");
 const loginForm = document.querySelector("[data-login-form]");
@@ -69,7 +70,11 @@ function saveCustomer(customer) {
 
 function renderAccountShortcut() {
   if (!loginLabel) return;
-  loginLabel.textContent = state.customer ? "Minha conta" : "Entrar";
+  loginLabel.textContent = state.customer?.isAuthenticated ? "Minha conta" : "Entrar";
+}
+
+function customerIsLoggedIn() {
+  return Boolean(state.customer?.isAuthenticated);
 }
 
 function readOrders() {
@@ -315,9 +320,9 @@ function renderCart() {
     ? `Pedido ${state.lastOrderId} enviado. Seu carrinho está vazio.`
     : "Seu carrinho ainda está vazio.";
   cartEmpty.hidden = state.cart.length > 0;
-  customerSummary.innerHTML = state.customer
+  customerSummary.innerHTML = customerIsLoggedIn()
     ? `<strong>Pedido vinculado a ${state.customer.name}</strong>${state.customer.city} | ${state.customer.whatsapp}`
-    : `<strong>Conta necessária para finalizar</strong>Entre ou crie uma conta para salvar o pedido no seu cadastro.`;
+    : `<strong>Conta necessária para finalizar</strong>Entre ou crie uma conta real para salvar o pedido no seu cadastro.`;
 
   cartItems.innerHTML = state.cart
     .map(
@@ -558,7 +563,7 @@ function renderClientOrders(orders) {
 }
 
 async function openOrdersModal() {
-  if (!state.customer) {
+  if (!customerIsLoggedIn()) {
     openAccountModal("login", "orders");
     accountStatus.textContent = "Entre para visualizar seus pedidos enviados.";
     return;
@@ -567,6 +572,15 @@ async function openOrdersModal() {
   ordersModal.classList.add("open");
   overlay.classList.add("open");
   ordersModal.setAttribute("aria-hidden", "false");
+  if (ordersAccount) {
+    ordersAccount.innerHTML = `
+      <div>
+        <strong>${state.customer.name}</strong>
+        <span>${state.customer.email} | ${state.customer.whatsapp || "WhatsApp a informar"}</span>
+      </div>
+      <button class="button secondary" type="button" data-logout>Sair da conta</button>
+    `;
+  }
   clientOrders.innerHTML = `<p class="cart-empty">Carregando pedidos...</p>`;
 
   const orders = await window.VFStore.readCustomerOrders(state.customer);
@@ -655,8 +669,9 @@ function submitFinalOrder(checkout = {}) {
     return;
   }
 
-  if (!state.customer) {
+  if (!customerIsLoggedIn()) {
     openAccountModal("register", "checkout");
+    accountStatus.textContent = "Entre ou crie uma conta real para finalizar e acompanhar o pedido.";
     return;
   }
 
@@ -722,7 +737,7 @@ document.addEventListener("click", (event) => {
 
   if (event.target.closest("[data-open-cart]")) openCart();
   if (event.target.closest("[data-open-login]")) {
-    if (state.customer) {
+    if (customerIsLoggedIn()) {
       openOrdersModal();
     } else {
       openAccountModal("login", "orders");
@@ -738,6 +753,15 @@ document.addEventListener("click", (event) => {
   if (event.target.closest("[data-view-orders]")) {
     closeConfirmationModal();
     openOrdersModal();
+  }
+  if (event.target.closest("[data-logout]")) {
+    window.VFStore?.signOutCustomer();
+    state.customer = null;
+    renderAccountShortcut();
+    renderCart();
+    closeOrdersModal();
+    openAccountModal("login", "orders");
+    accountStatus.textContent = "Você saiu da conta. Entre novamente para visualizar seus pedidos.";
   }
   if (event.target === overlay) {
     closeCart();
@@ -798,43 +822,70 @@ if (floatingWhatsApp && footer && "IntersectionObserver" in window) {
   footerObserver.observe(footer);
 }
 
-loginForm.addEventListener("submit", (event) => {
+loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(loginForm);
   const login = data.get("login");
-  const saved = readCustomer();
+  const password = data.get("senha");
+  const button = loginForm.querySelector("button[type='submit']");
+  button.disabled = true;
+  accountStatus.textContent = "Entrando na sua conta...";
 
-  saveCustomer({
-    name: saved?.name || "Cliente VF",
-    whatsapp: saved?.whatsapp || login,
-    email: saved?.email || login,
-    city: saved?.city || "A informar",
-  });
+  try {
+    const customer = await window.VFStore.signInCustomer(login, password);
+    saveCustomer(customer);
 
-  if (state.accountIntent === "orders") {
-    closeAccountModal();
-    openOrdersModal();
-  } else {
-    showCheckoutForm();
+    if (state.accountIntent === "orders") {
+      closeAccountModal();
+      openOrdersModal();
+    } else {
+      showCheckoutForm();
+    }
+  } catch (error) {
+    accountStatus.textContent =
+      error?.message || "Não foi possível entrar. Confira e-mail e senha.";
+  } finally {
+    button.disabled = false;
   }
 });
 
-registerForm.addEventListener("submit", (event) => {
+registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(registerForm);
-
-  saveCustomer({
+  const button = registerForm.querySelector("button[type='submit']");
+  const customerData = {
     name: data.get("nome"),
     whatsapp: data.get("whatsapp"),
     email: data.get("email"),
     city: data.get("cidade"),
-  });
+  };
 
-  if (state.accountIntent === "orders") {
-    closeAccountModal();
-    openOrdersModal();
-  } else {
-    showCheckoutForm();
+  button.disabled = true;
+  accountStatus.textContent = "Criando sua conta...";
+
+  try {
+    const customer = await window.VFStore.signUpCustomer(customerData, data.get("senha"));
+    saveCustomer(customer);
+
+    if (customer.needsEmailConfirmation) {
+      accountStatus.textContent =
+        "Conta criada. Confirme o e-mail para ativar o acesso e depois entre para finalizar o pedido.";
+      setAccountTab("login");
+      loginForm.elements.login.value = customer.email || "";
+      return;
+    }
+
+    if (state.accountIntent === "orders") {
+      closeAccountModal();
+      openOrdersModal();
+    } else {
+      showCheckoutForm();
+    }
+  } catch (error) {
+    accountStatus.textContent =
+      error?.message || "Não foi possível criar a conta. Confira os dados e tente novamente.";
+  } finally {
+    button.disabled = false;
   }
 });
 
@@ -864,6 +915,19 @@ quoteForm.addEventListener("submit", (event) => {
   window.open(whatsappUrl(message), "_blank", "noopener,noreferrer");
 });
 
+async function initCustomerSession() {
+  try {
+    const customer = await window.VFStore?.hydrateCustomerFromSession();
+    state.customer = customer;
+  } catch {
+    state.customer = readCustomer();
+  }
+
+  renderAccountShortcut();
+  renderCart();
+}
+
 renderProducts();
 renderCart();
 renderAccountShortcut();
+initCustomerSession();
