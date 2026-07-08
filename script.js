@@ -184,6 +184,8 @@ const footer = document.querySelector(".footer");
 const accountModal = document.querySelector("[data-account-modal]");
 const ordersModal = document.querySelector("[data-orders-modal]");
 const clientOrders = document.querySelector("[data-client-orders]");
+const confirmationModal = document.querySelector("[data-confirmation-modal]");
+const confirmationDetail = document.querySelector("[data-confirmation-detail]");
 const loginForm = document.querySelector("[data-login-form]");
 const registerForm = document.querySelector("[data-register-form]");
 const checkoutForm = document.querySelector("[data-checkout-form]");
@@ -479,7 +481,8 @@ function closeCart() {
   if (
     !productModal.classList.contains("open") &&
     !accountModal.classList.contains("open") &&
-    !ordersModal.classList.contains("open")
+    !ordersModal.classList.contains("open") &&
+    !confirmationModal.classList.contains("open")
   ) {
     overlay.classList.remove("open");
   }
@@ -527,7 +530,8 @@ function closeProductDetail() {
   if (
     !cartPanel.classList.contains("open") &&
     !accountModal.classList.contains("open") &&
-    !ordersModal.classList.contains("open")
+    !ordersModal.classList.contains("open") &&
+    !confirmationModal.classList.contains("open")
   ) {
     overlay.classList.remove("open");
   }
@@ -548,7 +552,8 @@ function closeAccountModal() {
   if (
     !cartPanel.classList.contains("open") &&
     !productModal.classList.contains("open") &&
-    !ordersModal.classList.contains("open")
+    !ordersModal.classList.contains("open") &&
+    !confirmationModal.classList.contains("open")
   ) {
     overlay.classList.remove("open");
   }
@@ -686,11 +691,75 @@ function closeOrdersModal() {
   if (
     !cartPanel.classList.contains("open") &&
     !productModal.classList.contains("open") &&
-    !accountModal.classList.contains("open")
+    !accountModal.classList.contains("open") &&
+    !confirmationModal.classList.contains("open")
   ) {
     overlay.classList.remove("open");
   }
   ordersModal.setAttribute("aria-hidden", "true");
+}
+
+function closeConfirmationModal() {
+  confirmationModal.classList.remove("open");
+  if (
+    !cartPanel.classList.contains("open") &&
+    !productModal.classList.contains("open") &&
+    !accountModal.classList.contains("open") &&
+    !ordersModal.classList.contains("open")
+  ) {
+    overlay.classList.remove("open");
+  }
+  confirmationModal.setAttribute("aria-hidden", "true");
+}
+
+function openOrderConfirmation(order, checkout, whatsappMessage) {
+  confirmationDetail.innerHTML = `
+    <div class="confirmation-hero">
+      <span class="confirmation-mark" aria-hidden="true">OK</span>
+      <p class="eyebrow">Pedido recebido</p>
+      <h2>Seu pedido foi enviado com sucesso.</h2>
+      <p>
+        Recebemos sua solicitação e vamos conferir compatibilidade, frete e prazo
+        antes do envio.
+      </p>
+    </div>
+    <div class="confirmation-summary">
+      <div>
+        <span>Número do pedido</span>
+        <strong>${order.id}</strong>
+      </div>
+      <div>
+        <span>Total estimado</span>
+        <strong>${money(order.total)}</strong>
+      </div>
+    </div>
+    <div class="confirmation-block">
+      <strong>Itens do pedido</strong>
+      <ul>
+        ${order.items
+          .map((item) => `<li>${item.amount}x ${item.code} - ${item.name}</li>`)
+          .join("")}
+      </ul>
+    </div>
+    <div class="confirmation-steps">
+      <strong>Próximos passos</strong>
+      <ol>
+        <li>Vamos analisar os dados do pedido e a compatibilidade das peças.</li>
+        <li>Frete e prazo serão confirmados após análise do endereço e transportadora.</li>
+        <li>Se necessário, um vendedor chama você pelo WhatsApp para confirmar detalhes.</li>
+      </ol>
+    </div>
+    <div class="confirmation-actions">
+      <button class="button primary" type="button" data-view-orders>Ver meus pedidos</button>
+      <a class="button secondary" href="${whatsappUrl(whatsappMessage)}" target="_blank" rel="noreferrer">
+        Falar no WhatsApp
+      </a>
+    </div>
+  `;
+
+  confirmationModal.classList.add("open");
+  overlay.classList.add("open");
+  confirmationModal.setAttribute("aria-hidden", "false");
 }
 
 function submitFinalOrder(checkout = {}) {
@@ -705,12 +774,12 @@ function submitFinalOrder(checkout = {}) {
   }
 
   const order = saveOrderSnapshot(checkout);
-  window.open(whatsappUrl(cartMessage("pedido", order.id, checkout)), "_blank", "noopener,noreferrer");
+  const whatsappMessage = cartMessage("pedido", order.id, checkout);
   state.cart = [];
   state.lastOrderId = order.id;
   closeAccountModal();
   renderCart();
-  openCart();
+  openOrderConfirmation(order, checkout, whatsappMessage);
 }
 
 document.addEventListener("click", (event) => {
@@ -770,11 +839,17 @@ document.addEventListener("click", (event) => {
   if (event.target.closest("[data-close-account]")) closeAccountModal();
   if (event.target.closest("[data-open-orders]")) openOrdersModal();
   if (event.target.closest("[data-close-orders]")) closeOrdersModal();
+  if (event.target.closest("[data-close-confirmation]")) closeConfirmationModal();
+  if (event.target.closest("[data-view-orders]")) {
+    closeConfirmationModal();
+    openOrdersModal();
+  }
   if (event.target === overlay) {
     closeCart();
     closeProductDetail();
     closeAccountModal();
     closeOrdersModal();
+    closeConfirmationModal();
   }
 
   const filterButton = event.target.closest("[data-filter]");
