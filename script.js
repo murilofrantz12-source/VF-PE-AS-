@@ -245,6 +245,8 @@ function orderStatusLabel(status = "novo") {
     pago: "Pago",
     enviado: "Enviado",
     concluido: "Concluído",
+    cancelado: "Cancelado",
+    arquivado: "Arquivado",
   };
 
   return labels[status] || status;

@@ -107,7 +107,7 @@
         if (digits.length === 11) return `55${digits}`;
         return digits;
       };
-      const orderStatuses = ["novo", "em atendimento", "pago", "enviado", "concluido"];
+      const orderStatuses = ["novo", "em atendimento", "pago", "enviado", "concluido", "cancelado", "arquivado"];
 
       let currentOrders = [];
 
@@ -153,9 +153,18 @@
                     .join("")}
                 </select>
               </label>
-              <button class="button danger admin-delete" type="button" data-delete-order="${order.id}">
-                Apagar pedido
-              </button>
+              <div class="admin-order-buttons">
+                ${
+                  (order.status || "novo") !== "cancelado"
+                    ? `<button class="button danger admin-small-action" type="button" data-set-order-status="${order.id}" data-status-value="cancelado">Cancelar</button>`
+                    : ""
+                }
+                ${
+                  (order.status || "novo") !== "arquivado"
+                    ? `<button class="button secondary admin-small-action" type="button" data-set-order-status="${order.id}" data-status-value="arquivado">Arquivar</button>`
+                    : ""
+                }
+              </div>
             </div>
             <ul>
               ${order.items
@@ -221,8 +230,12 @@
         document.querySelector("[data-admin-revenue]").textContent = money(totalRevenue);
         document.querySelector("[data-admin-items]").textContent = totalItems;
 
-        const activeOrders = orders.filter((order) => (order.status || "novo") !== "concluido");
+        const closedStatuses = ["concluido", "cancelado", "arquivado"];
+        const activeOrders = orders.filter((order) => !closedStatuses.includes(order.status || "novo"));
         const completedOrders = orders.filter((order) => (order.status || "novo") === "concluido");
+        const archivedOrders = orders.filter((order) =>
+          ["cancelado", "arquivado"].includes(order.status || "novo")
+        );
 
         document.querySelector("[data-admin-list]").innerHTML = orders.length
           ? `
@@ -246,6 +259,17 @@
                 completedOrders.length
                   ? completedOrders.map(renderAdminOrder).join("")
                   : `<p class="cart-empty">Nenhum pedido concluído ainda.</p>`
+              }
+            </div>
+            <div class="admin-order-group">
+              <div class="admin-order-group-head">
+                <h3>Cancelados e arquivados</h3>
+                <span>${archivedOrders.length}</span>
+              </div>
+              ${
+                archivedOrders.length
+                  ? archivedOrders.map(renderAdminOrder).join("")
+                  : `<p class="cart-empty">Nenhum pedido cancelado ou arquivado.</p>`
               }
             </div>
           `
@@ -289,25 +313,33 @@
         readDashboard();
       });
 
+      async function setOrderStatus(orderId, status, button) {
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = "Salvando...";
+
+        try {
+          await window.VFStore.updateOrderStatus(orderId, status);
+          const order = currentOrders.find((item) => item.id === orderId);
+          if (order) order.status = status;
+          await readDashboard();
+        } catch (error) {
+          button.disabled = false;
+          button.textContent = originalText;
+          alert("Nao foi possivel atualizar o pedido. Verifique se voce esta logado como admin.");
+        }
+      }
+
       document.addEventListener("click", async (event) => {
-        const deleteOrderId = event.target.closest("[data-delete-order]")?.dataset.deleteOrder;
-        if (deleteOrderId) {
-          if (!confirm(`Apagar o pedido ${deleteOrderId}? Essa ação remove o pedido do admin.`)) return;
+        const statusButton = event.target.closest("[data-set-order-status]");
+        if (statusButton) {
+          const orderId = statusButton.dataset.setOrderStatus;
+          const status = statusButton.dataset.statusValue;
+          const actionLabel = status === "cancelado" ? "cancelar" : "arquivar";
 
-          const button = event.target.closest("[data-delete-order]");
-          button.disabled = true;
-          button.textContent = "Apagando...";
+          if (!confirm(`Deseja ${actionLabel} o pedido ${orderId}? Ele continuará salvo no histórico do admin.`)) return;
 
-          try {
-            await window.VFStore.deleteOrder(deleteOrderId);
-            currentOrders = currentOrders.filter((order) => order.id !== deleteOrderId);
-            await readDashboard();
-          } catch (error) {
-            button.disabled = false;
-            button.textContent = "Apagar pedido";
-            alert("Nao foi possivel apagar o pedido. Verifique se voce esta logado como admin e se a permissao de delete foi criada no Supabase.");
-          }
-
+          await setOrderStatus(orderId, status, statusButton);
           return;
         }
 
@@ -342,18 +374,7 @@
         if (!orderId) return;
 
         const status = event.target.value;
-        event.target.disabled = true;
-
-        try {
-          await window.VFStore.updateOrderStatus(orderId, status);
-          const order = currentOrders.find((item) => item.id === orderId);
-          if (order) order.status = status;
-          await readDashboard();
-        } catch (error) {
-          alert("Nao foi possivel atualizar o status. Verifique se voce esta logado como admin.");
-        } finally {
-          if (document.body.contains(event.target)) event.target.disabled = false;
-        }
+        await setOrderStatus(orderId, status, event.target);
       });
 
       document.querySelector("[data-admin-login-form]").addEventListener("submit", async (event) => {

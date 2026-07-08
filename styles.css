@@ -1050,10 +1050,17 @@ h3 {
   font-size: 0.82rem;
 }
 
-.admin-delete {
+.admin-small-action {
   min-height: 36px;
   padding: 0 12px;
   font-size: 0.82rem;
+}
+
+.admin-order-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .admin-no-whatsapp {
