@@ -3517,6 +3517,7 @@ button:disabled {
 .machine-flow-stage[data-step="rotor"] .region-rotor,
 .machine-flow-stage[data-step="batedor"] .region-batedor,
 .machine-flow-stage[data-step="separacao"] .region-separation,
+.machine-flow-stage[data-step="limpeza"] .region-separation,
 .machine-flow-stage[data-step="limpeza"] .region-cleaning,
 .machine-flow-stage[data-step="saida"] .region-exit {
   opacity: 1;
@@ -3551,6 +3552,7 @@ button:disabled {
 }
 
 .machine-flow-stage[data-step="separacao"] .region-separation,
+.machine-flow-stage[data-step="limpeza"] .region-separation,
 .machine-flow-stage[data-step="limpeza"] .region-cleaning,
 .machine-flow-stage[data-step="saida"] .region-exit {
   stroke: #fff4c0;
@@ -3573,6 +3575,7 @@ button:disabled {
 .machine-flow-stage[data-step="rotor"] [data-flow-region="rotor"],
 .machine-flow-stage[data-step="batedor"] [data-flow-region="batedor"],
 .machine-flow-stage[data-step="separacao"] [data-flow-region="separacao"],
+.machine-flow-stage[data-step="limpeza"] [data-flow-region="separacao"],
 .machine-flow-stage[data-step="limpeza"] [data-flow-region="limpeza"],
 .machine-flow-stage[data-step="saida"] [data-flow-region="saida"] {
   opacity: 1;
@@ -3611,22 +3614,24 @@ button:disabled {
   position: absolute;
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
+  width: 30px;
+  height: 30px;
   color: var(--white);
   background: radial-gradient(circle, rgba(223, 180, 58, 0.98), rgba(223, 106, 46, 0.72));
   border: 1px solid rgba(255, 254, 250, 0.46);
   border-radius: 999px;
-  box-shadow: 0 0 0 9px rgba(223, 180, 58, 0.11), 0 0 30px rgba(223, 180, 58, 0.4);
+  box-shadow: 0 0 0 7px rgba(223, 180, 58, 0.11), 0 0 26px rgba(223, 180, 58, 0.4);
   cursor: pointer;
   transform: translate(-50%, -50%);
   transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .machine-hotspot span {
-  font-size: 0.58rem;
-  font-weight: 950;
-  letter-spacing: 0.02em;
+  display: block;
+  width: 9px;
+  height: 9px;
+  background: var(--white);
+  border-radius: 999px;
 }
 
 .machine-hotspot.tone-rotor {
@@ -3650,14 +3655,14 @@ button:disabled {
 
 .machine-hotspot:hover,
 .machine-hotspot.active {
-  transform: translate(-50%, -50%) scale(1.08);
+  transform: translate(-50%, -50%) scale(1.18);
 }
 
 .machine-insight {
   position: relative;
   z-index: 5;
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(280px, 0.7fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(220px, 0.55fr) minmax(280px, 0.72fr);
   gap: 18px;
   padding: 22px;
   background: linear-gradient(180deg, rgba(5, 9, 7, 0.2), rgba(5, 9, 7, 0.82));
@@ -3665,6 +3670,7 @@ button:disabled {
 }
 
 .machine-step-card,
+.machine-region-card,
 .machine-part-card,
 .machine-feature-card,
 .machine-final-cta {
@@ -3674,11 +3680,13 @@ button:disabled {
 }
 
 .machine-step-card,
+.machine-region-card,
 .machine-part-card {
   padding: 18px;
 }
 
 .machine-step-card h2,
+.machine-region-card strong,
 .machine-part-card h3,
 .machine-featured-section h2,
 .machine-final-cta h2 {
@@ -3691,11 +3699,167 @@ button:disabled {
 }
 
 .machine-step-card p:not(.eyebrow),
+.machine-region-card p,
 .machine-part-card p,
 .machine-featured-section p,
 .machine-final-cta p {
   color: rgba(255, 254, 250, 0.68);
   line-height: 1.6;
+}
+
+.machine-region-card strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.machine-region-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 146px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    rgba(255, 254, 250, 0.045);
+  background-size: 20px 20px;
+  border: 1px solid rgba(223, 180, 58, 0.18);
+  border-radius: 8px;
+}
+
+.machine-region-visual::before,
+.machine-region-visual::after {
+  filter: drop-shadow(0 0 16px rgba(223, 180, 58, 0.25));
+}
+
+.machine-region-visual::before,
+.machine-region-visual::after,
+.machine-region-visual i {
+  position: absolute;
+  display: block;
+  content: "";
+}
+
+.machine-region-visual span {
+  position: relative;
+  z-index: 3;
+  max-width: 140px;
+  padding: 8px 10px;
+  color: var(--ink);
+  background: var(--yellow);
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 950;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.machine-region-visual.region-platform::before,
+.machine-region-visual.region-fingers::before {
+  left: 16px;
+  right: 16px;
+  bottom: 26px;
+  height: 44px;
+  background: rgba(18, 63, 42, 0.8);
+  border: 2px solid rgba(223, 180, 58, 0.65);
+  transform: skewX(-14deg);
+}
+
+.machine-region-visual.region-platform::after {
+  left: 34px;
+  top: 18px;
+  width: 86px;
+  height: 86px;
+  border: 4px solid rgba(223, 180, 58, 0.72);
+  border-radius: 999px;
+}
+
+.machine-region-visual.region-fingers i {
+  left: 24px;
+  right: 24px;
+  bottom: 18px;
+  height: 34px;
+  background: repeating-linear-gradient(115deg, rgba(255, 254, 250, 0.86) 0 6px, transparent 6px 18px);
+}
+
+.machine-region-visual.region-feed::before {
+  left: 34px;
+  top: 42px;
+  width: 150px;
+  height: 48px;
+  background: rgba(223, 180, 58, 0.15);
+  border: 2px solid rgba(223, 180, 58, 0.5);
+  transform: skewX(-22deg);
+}
+
+.machine-region-visual.region-feed::after {
+  left: 30px;
+  right: 24px;
+  top: 86px;
+  border-top: 4px dotted rgba(242, 209, 107, 0.64);
+  transform: rotate(-12deg);
+}
+
+.machine-region-visual.region-rotor::before {
+  width: 154px;
+  height: 78px;
+  border: 4px solid rgba(223, 106, 46, 0.72);
+  border-radius: 999px;
+}
+
+.machine-region-visual.region-rotor::after {
+  width: 130px;
+  height: 34px;
+  border-top: 4px solid rgba(255, 254, 250, 0.48);
+  border-bottom: 4px solid rgba(255, 254, 250, 0.26);
+  transform: rotate(13deg);
+}
+
+.machine-region-visual.region-batedor::before {
+  width: 90px;
+  height: 90px;
+  border: 4px solid rgba(242, 209, 107, 0.72);
+  border-radius: 999px;
+}
+
+.machine-region-visual.region-batedor::after {
+  width: 104px;
+  border-top: 5px solid rgba(255, 254, 250, 0.5);
+  transform: rotate(45deg);
+}
+
+.machine-region-visual.region-cleaning::before {
+  left: 24px;
+  right: 24px;
+  bottom: 44px;
+  height: 52px;
+  background: repeating-linear-gradient(-12deg, rgba(255, 254, 250, 0.44) 0 4px, transparent 4px 18px);
+  border-bottom: 3px solid rgba(223, 180, 58, 0.58);
+}
+
+.machine-region-visual.region-cleaning::after {
+  left: 42px;
+  right: 42px;
+  bottom: 76px;
+  border-top: 4px dotted rgba(242, 209, 107, 0.62);
+  transform: rotate(-12deg);
+}
+
+.machine-region-visual.region-exit::before {
+  width: 150px;
+  border-top: 5px solid rgba(223, 180, 58, 0.72);
+  transform: rotate(-18deg);
+}
+
+.machine-region-visual.region-exit::after {
+  right: 38px;
+  width: 46px;
+  height: 46px;
+  border-top: 5px solid rgba(223, 180, 58, 0.72);
+  border-right: 5px solid rgba(223, 180, 58, 0.72);
+  transform: rotate(24deg);
 }
 
 .machine-part-card {
@@ -3706,6 +3870,26 @@ button:disabled {
 .machine-part-card h3 {
   margin-bottom: 12px;
   font-size: 1.35rem;
+}
+
+.machine-part-visual {
+  display: grid;
+  place-items: center;
+  min-height: 142px;
+  margin-bottom: 14px;
+  background: rgba(255, 254, 250, 0.9);
+  border-radius: 8px;
+}
+
+.machine-part-visual img {
+  max-width: 92%;
+  max-height: 130px;
+  object-fit: contain;
+}
+
+.machine-part-visual span {
+  color: var(--ink);
+  font-weight: 900;
 }
 
 .machine-part-card dl {
@@ -3754,7 +3938,7 @@ button:disabled {
 
 .machine-stage-parts button {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 54px 1fr;
   align-items: center;
   gap: 10px;
   width: 100%;
@@ -3767,6 +3951,15 @@ button:disabled {
   text-align: left;
 }
 
+.machine-stage-parts img {
+  width: 54px;
+  height: 42px;
+  padding: 4px;
+  object-fit: contain;
+  background: rgba(255, 254, 250, 0.9);
+  border-radius: 5px;
+}
+
 .machine-stage-parts button.active,
 .machine-stage-parts button:hover {
   color: var(--white);
@@ -3774,17 +3967,15 @@ button:disabled {
   border-color: rgba(223, 180, 58, 0.42);
 }
 
-.machine-stage-parts strong {
-  display: inline-flex;
-  padding: 6px 8px;
-  color: var(--ink);
-  background: var(--yellow);
-  border-radius: 5px;
-  font-size: 0.76rem;
+.machine-stage-parts b {
+  display: block;
+  font-weight: 800;
 }
 
-.machine-stage-parts span {
-  font-weight: 800;
+.machine-stage-parts small {
+  color: var(--yellow);
+  font-size: 0.76rem;
+  font-weight: 900;
 }
 
 .machine-controls {
@@ -3838,6 +4029,50 @@ button:disabled {
   display: none;
 }
 
+.machine-mobile-sequence strong {
+  display: block;
+  margin: 8px 0;
+  color: var(--white);
+}
+
+.machine-mobile-parts {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.machine-mobile-parts a {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 9px;
+  color: rgba(255, 254, 250, 0.86);
+  background: rgba(255, 254, 250, 0.06);
+  border: 1px solid rgba(255, 254, 250, 0.12);
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.machine-mobile-parts img {
+  width: 54px;
+  height: 42px;
+  padding: 4px;
+  object-fit: contain;
+  background: rgba(255, 254, 250, 0.9);
+  border-radius: 5px;
+}
+
+.machine-mobile-parts b {
+  display: block;
+  color: var(--white);
+  font-size: 0.88rem;
+}
+
+.machine-mobile-parts small {
+  color: var(--yellow);
+}
+
 .machine-featured-section {
   padding: clamp(42px, 6vw, 82px) clamp(16px, 5vw, 70px);
 }
@@ -3860,6 +4095,15 @@ button:disabled {
   padding: 18px;
   overflow: hidden;
   transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.machine-feature-card > img {
+  width: 100%;
+  height: 128px;
+  padding: 10px;
+  object-fit: contain;
+  background: rgba(255, 254, 250, 0.9);
+  border-radius: 6px;
 }
 
 .machine-feature-card::before {

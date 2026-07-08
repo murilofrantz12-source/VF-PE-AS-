@@ -9,6 +9,9 @@ const flowSteps = [
     text:
       "A plataforma é o ponto inicial do processo. É nela que a cultura é captada e conduzida para dentro da máquina.",
     relatedGroups: [],
+    regionTitle: "Plataforma de corte",
+    regionText: "A cultura é captada na frente da máquina e começa a ser direcionada para o alimentador.",
+    regionType: "platform",
   },
   {
     id: "dedos",
@@ -18,6 +21,9 @@ const flowSteps = [
     text:
       "Os dedos da plataforma ajudam na condução do material, sendo componentes importantes na entrada e alimentação inicial.",
     relatedGroups: ["Plataforma"],
+    regionTitle: "Dedos da plataforma",
+    regionText: "Os dedos ficam distribuídos na barra da plataforma e ajudam a guiar a cultura no início do fluxo.",
+    regionType: "fingers",
   },
   {
     id: "alimentacao",
@@ -27,6 +33,9 @@ const flowSteps = [
     text:
       "Depois do corte, o material é conduzido pelo alimentador para a parte interna da colheitadeira. Um fluxo regular reduz acúmulo e melhora a continuidade da operação.",
     relatedGroups: [],
+    regionTitle: "Alimentador interno",
+    regionText: "O material sai da plataforma e sobe pelo canal de alimentação até chegar aos conjuntos internos.",
+    regionType: "feed",
   },
   {
     id: "rotor",
@@ -36,6 +45,9 @@ const flowSteps = [
     text:
       "No rotor acontece uma das etapas mais importantes do processamento. É uma região de alto desgaste, por isso os kits de reparo são peças estratégicas para manutenção e reposição.",
     relatedGroups: ["Rotor"],
+    regionTitle: "Rotor / trilha",
+    regionText: "Região central de processamento, com alto desgaste e necessidade de manutenção bem acompanhada.",
+    regionType: "rotor",
   },
   {
     id: "batedor",
@@ -45,6 +57,9 @@ const flowSteps = [
     text:
       "O batedor auxilia na continuidade do fluxo interno do material. As capas do batedor são peças importantes para proteção, condução e funcionamento adequado dessa região.",
     relatedGroups: ["Batedor"],
+    regionTitle: "Batedor",
+    regionText: "Ponto de continuidade do fluxo após a trilha, com peças aplicadas na proteção e condução do conjunto.",
+    regionType: "batedor",
   },
   {
     id: "limpeza",
@@ -54,6 +69,9 @@ const flowSteps = [
     text:
       "Nessa etapa, a máquina realiza a separação do grão e dos resíduos, conduzindo o material para as próximas fases do processo.",
     relatedGroups: [],
+    regionTitle: "Peneira / separação / limpeza",
+    regionText: "O fluxo desce para a parte inferior, onde grãos, palha e resíduos são separados e conduzidos.",
+    regionType: "cleaning",
   },
   {
     id: "saida",
@@ -63,6 +81,9 @@ const flowSteps = [
     text:
       "Depois do processamento, o grão segue para armazenamento/descarga e a palha ou resíduo segue para a saída da máquina.",
     relatedGroups: [],
+    regionTitle: "Saída do fluxo",
+    regionText: "A apresentação fecha mostrando o caminho completo percorrido pelo material dentro da máquina.",
+    regionType: "exit",
   },
 ];
 
@@ -76,6 +97,7 @@ const featuredParts = [
     application: "JD 9470 | STS 9470, STS 9570, S540, S550",
     function:
       "Peça alternativa/similar aplicada na região do batedor, ponto importante para proteção e condução do material.",
+    image: "assets/products/capa-batedor-9470-ah234023.png",
     position: { x: 40, y: 46 },
     tone: "batedor",
     emphasis: true,
@@ -89,6 +111,7 @@ const featuredParts = [
     application: "JD 9670 | STS 9670, STS 9770 e Série S",
     function:
       "Item de reposição similar à original aplicado no batedor para auxiliar proteção, durabilidade e continuidade do fluxo interno.",
+    image: "assets/products/capa-batedor-jd-9670-ah214671.png",
     position: { x: 44, y: 43 },
     tone: "batedor",
     emphasis: true,
@@ -102,6 +125,7 @@ const featuredParts = [
     application: "JD 9470 | STS 9470, STS 9570, S540, S550",
     function:
       "Kit com 3 peças para manutenção da região dianteira do rotor, um dos principais pontos de desgaste da máquina.",
+    image: "assets/products/kit-reparo-jd-9470-diant-ah219761-1.png",
     position: { x: 52, y: 50 },
     tone: "rotor",
     emphasis: true,
@@ -115,6 +139,7 @@ const featuredParts = [
     application: "JD 9470 | STS 9470, STS 9570, S430, S440, S540, S550",
     function:
       "Kit de reposição aplicado na região traseira do rotor para recuperação e manutenção do sistema.",
+    image: "assets/products/kit-reparo-jd-9470-tras-ah219762.png",
     position: { x: 59, y: 48 },
     tone: "rotor",
     emphasis: true,
@@ -128,6 +153,7 @@ const featuredParts = [
     application: "JD 9650/9670 | STS 9650, 9670, 9750, 9770 e Série S",
     function:
       "Conjunto similar à original para reparo dianteiro do rotor em aplicações STS e Série S compatíveis.",
+    image: "assets/products/kit-reparo-jd-9670-diant-ah216568.png",
     position: { x: 55, y: 42 },
     tone: "rotor",
     emphasis: true,
@@ -141,6 +167,7 @@ const featuredParts = [
     application: "JD 9650/9670 | STS 9650, 9670, 9750, 9770 e Série S",
     function:
       "Item de reposição para a região traseira do rotor, indicado para manutenção em ponto de alto desgaste.",
+    image: "assets/products/kit-reparo-jd-9670-tras-ah216569.png",
     position: { x: 64, y: 52 },
     tone: "rotor",
     emphasis: true,
@@ -154,6 +181,7 @@ const featuredParts = [
     application: "Plataforma de corte | Lateral",
     function:
       "Peça alternativa para reposição lateral da plataforma, ajudando na condução uniforme da cultura no corte.",
+    image: "assets/products/dedo-grosso-6286531.png",
     position: { x: 11, y: 70 },
     tone: "plataforma",
     emphasis: true,
@@ -167,6 +195,7 @@ const featuredParts = [
     application: "Plataforma de corte | Central",
     function:
       "Dedo central para reposição na plataforma, com função importante na alimentação uniforme do material.",
+    image: "assets/products/dedo-duplo-6286532.png",
     position: { x: 18, y: 66 },
     tone: "plataforma",
     emphasis: true,
@@ -180,6 +209,7 @@ const featuredParts = [
     application: "Plataforma de corte | Início/enrosação",
     function:
       "Peça alternativa de reposição para aplicação no início/enrosação da plataforma. Código encontrado no cadastro atual como 6308502.",
+    image: "assets/products/dedo-corte-lateral-6308502.png",
     position: { x: 25, y: 67 },
     tone: "plataforma",
     emphasis: true,
@@ -193,6 +223,9 @@ const timeline = document.querySelector("[data-flow-timeline]");
 const featuredGrid = document.querySelector("[data-featured-parts]");
 const mobileSequence = document.querySelector(".machine-mobile-sequence");
 const partCard = document.querySelector("[data-active-part-card]");
+const regionVisual = document.querySelector("[data-region-visual]");
+const regionTitle = document.querySelector("[data-region-title]");
+const regionText = document.querySelector("[data-region-text]");
 const stepKicker = document.querySelector("[data-step-kicker]");
 const stepTitle = document.querySelector("[data-step-title]");
 const stepText = document.querySelector("[data-step-text]");
@@ -239,14 +272,17 @@ function renderStepParts(parts, step) {
   partCard.innerHTML = `
     <p class="eyebrow">Peças VF nesta etapa</p>
     <h3>${step.label}</h3>
-    <p class="machine-part-note">O fluxo chegou nesta região. Confira os itens de reposição aplicados aqui.</p>
+    <p class="machine-part-note">O fluxo chegou nesta região. Primeiro identifique o local na máquina; depois confira os itens aplicados aqui.</p>
     <div class="machine-stage-parts">
       ${parts
         .map(
           (part) => `
             <button class="${part.id === activePartId ? "active" : ""}" type="button" data-stage-part="${part.id}">
-              <strong>${part.code}</strong>
-              <span>${part.name}</span>
+              <img src="${part.image}" alt="" aria-hidden="true" loading="lazy" />
+              <span>
+                <b>${part.name}</b>
+                <small>${part.code}</small>
+              </span>
             </button>
           `
         )
@@ -293,7 +329,7 @@ function renderHotspots() {
           data-part-id="${part.id}"
           aria-label="${part.name} ${part.code}"
         >
-          <span>${part.code}</span>
+          <span aria-hidden="true"></span>
         </button>
       `
     )
@@ -314,19 +350,22 @@ function renderPartCard(part) {
 
   partCard.innerHTML = `
     <p class="eyebrow">${part.group} | ${part.code}</p>
+    <div class="machine-part-visual">
+      ${part.image ? `<img src="${part.image}" alt="${part.name} ${part.code}" loading="lazy" />` : `<span>${part.group}</span>`}
+    </div>
     <h3>${part.name}</h3>
     <dl>
       <div>
-        <dt>Código</dt>
-        <dd>${part.code}</dd>
-      </div>
-      <div>
-        <dt>Aplicação</dt>
+        <dt>Onde fica</dt>
         <dd>${part.application}</dd>
       </div>
       <div>
         <dt>Função</dt>
         <dd>${part.function}</dd>
+      </div>
+      <div>
+        <dt>Código</dt>
+        <dd>${part.code}</dd>
       </div>
     </dl>
     <p class="machine-part-note">Peça alternativa / similar à original. Confirme aplicação pelo modelo da máquina antes do envio.</p>
@@ -341,6 +380,7 @@ function renderFeaturedCards() {
     .map(
       (part) => `
         <article class="machine-feature-card tone-${part.tone}">
+          <img src="${part.image}" alt="${part.name} ${part.code}" loading="lazy" />
           <span>${part.group}</span>
           <h3>${part.name}</h3>
           <strong>${part.code}</strong>
@@ -356,15 +396,51 @@ function renderFeaturedCards() {
 function renderMobileSequence() {
   mobileSequence.innerHTML = flowSteps
     .map(
-      (step, index) => `
+      (step, index) => {
+        const parts = partsForStep(step);
+        const partsMarkup = parts.length
+          ? `
+            <div class="machine-mobile-parts">
+              ${parts
+                .map(
+                  (part) => `
+                    <a href="${quoteUrl(quoteMessage(part))}" target="_blank" rel="noreferrer">
+                      <img src="${part.image}" alt="" aria-hidden="true" loading="lazy" />
+                      <span>
+                        <b>${part.name}</b>
+                        <small>${part.code}</small>
+                      </span>
+                    </a>
+                  `
+                )
+                .join("")}
+            </div>
+          `
+          : "";
+
+        return `
         <article>
           <span>${String(index + 1).padStart(2, "0")}</span>
           <h2>${step.title}</h2>
+          <strong>${step.regionTitle}</strong>
           <p>${step.text}</p>
+          ${partsMarkup}
         </article>
-      `
+      `;
+      }
     )
     .join("");
+}
+
+function renderRegion(step) {
+  if (!regionVisual || !regionTitle || !regionText) return;
+  regionVisual.className = `machine-region-visual region-${step.regionType}`;
+  regionVisual.innerHTML = `
+    <span>${step.regionTitle}</span>
+    <i></i>
+  `;
+  regionTitle.textContent = step.regionTitle;
+  regionText.textContent = step.regionText;
 }
 
 function setActivePart(partId) {
@@ -385,6 +461,7 @@ function setStep(index, options = {}) {
   stepKicker.textContent = step.kicker;
   stepTitle.textContent = step.title;
   stepText.textContent = step.text;
+  renderRegion(step);
 
   document.querySelectorAll("[data-flow-step]").forEach((button) => {
     const isActive = Number(button.dataset.flowStep) === activeStepIndex;
@@ -449,7 +526,6 @@ renderFeaturedCards();
 renderMobileSequence();
 setWhatsAppLinks();
 setStep(0);
-setActivePart(activePartId);
 
 timeline.addEventListener("click", (event) => {
   const button = event.target.closest("[data-flow-step]");
