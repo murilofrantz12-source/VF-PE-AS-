@@ -320,10 +320,15 @@ function renderSceneVisual(step) {
   const templates = {
     platform: `
       <div class="tour-visual tour-visual-platform">
+        <div class="tour-machine-context">
+          <span>Plataforma de corte</span>
+          <span>Entrada da cultura</span>
+        </div>
         <div class="tour-crop" aria-hidden="true">
           <span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
         <div class="tour-platform">
+          <div class="tour-header-backplate"></div>
           <div class="tour-reel"><i></i><i></i><i></i><i></i></div>
           <div class="tour-cutterbar"></div>
           <div class="tour-auger"></div>
@@ -336,6 +341,10 @@ function renderSceneVisual(step) {
         <div class="tour-region-label">Local dos dedos na plataforma</div>
         <div class="tour-finger-row">
           <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="tour-finger-detail">
+          <b>Barra de corte</b>
+          <small>dedos distribuídos na entrada</small>
         </div>
         <div class="tour-finger-products">
           ${partsForStep(step)
@@ -354,6 +363,9 @@ function renderSceneVisual(step) {
     `,
     feed: `
       <div class="tour-visual tour-visual-feed">
+        <div class="tour-feed-chain">
+          <i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
         <div class="tour-feed-mouth">Plataforma</div>
         <div class="tour-feed-channel">
           <span>Canal de alimentação</span>
@@ -369,6 +381,8 @@ function renderSceneVisual(step) {
           <strong>Rotor / trilha</strong>
           <span>Separação</span>
         </div>
+        <div class="tour-rotor-housing"></div>
+        <div class="tour-concave-grid"><i></i><i></i><i></i><i></i><i></i></div>
         <div class="tour-rotor-cylinder">
           <i></i><i></i><i></i><i></i><i></i>
         </div>
@@ -381,6 +395,7 @@ function renderSceneVisual(step) {
     `,
     beater: `
       <div class="tour-visual tour-visual-beater">
+        <div class="tour-beater-housing"></div>
         <div class="tour-beater-drum">
           <i></i><i></i><i></i><i></i>
         </div>
@@ -396,9 +411,11 @@ function renderSceneVisual(step) {
         <div class="tour-fall-zone">
           <span>grãos</span><span>palha</span><span>resíduos</span>
         </div>
+        <div class="tour-cleaning-fan"><i></i><i></i><i></i></div>
         <div class="tour-sieves">
           <i></i><i></i><i></i><i></i>
         </div>
+        <div class="tour-grain-tray"></div>
         <div class="tour-flow-path cleaning-path">${flow}</div>
       </div>
     `,
@@ -477,19 +494,18 @@ function renderStageParts(step) {
 function renderPartCard(part) {
   return `
     <article class="tour-part-card">
+      <div class="tour-part-meta">
+        <span>${part.region}</span>
+        <h3>${part.name}</h3>
+        <strong class="tour-part-code">${part.code}</strong>
+      </div>
       <div class="tour-part-image">
         <img src="${part.image}" alt="${part.name} ${part.code}" loading="lazy" />
       </div>
-      <div>
-        <span>${part.region}</span>
-        <h3>${part.name}</h3>
-        <small>Código ${part.code}</small>
-        <p>${part.description}</p>
-      </div>
+      <p class="tour-part-description">${part.description}</p>
       <div class="tour-part-actions">
         <a class="button primary" href="${quoteUrl(quoteMessage(part))}" target="_blank" rel="noreferrer">Solicitar orçamento</a>
         <a class="button secondary" href="${quoteUrl(`Olá, quero falar no WhatsApp sobre a peça ${part.code}.`)}" target="_blank" rel="noreferrer">Falar no WhatsApp</a>
-        <a class="button secondary" href="${productUrl(part)}">Ver peça</a>
       </div>
     </article>
   `;
