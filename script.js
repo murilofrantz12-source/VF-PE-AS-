@@ -514,6 +514,12 @@ function showOrderReview(checkout) {
       <p>Máquina/observação: ${checkout.machineNote || "Sem observação"}</p>
       <p>Frete e prazo serão confirmados após análise do endereço e transportadora.</p>
     </div>
+    <div class="checkout-seals review-seals" aria-label="Garantias do pedido">
+      <span>Pedido salvo no sistema</span>
+      <span>Atendimento pelo WhatsApp</span>
+      <span>Compatibilidade conferida antes do envio</span>
+      <span>Frete confirmado antes da cobrança</span>
+    </div>
     <div class="review-actions">
       <button class="button secondary" type="button" data-edit-checkout>Editar dados</button>
       <button class="button primary" type="button" data-confirm-order>Confirmar pedido</button>

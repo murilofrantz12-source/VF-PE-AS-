@@ -1812,6 +1812,61 @@ h3 {
   line-height: 1.45;
 }
 
+.checkout-seals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.checkout-seals span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 9px 10px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.checkout-seals span::before {
+  content: "OK";
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--white);
+  background: var(--green);
+  border-radius: 999px;
+  font-size: 0.58rem;
+  font-weight: 900;
+}
+
+.checkout-seals span:nth-child(2)::before {
+  background: var(--blue);
+}
+
+.checkout-seals span:nth-child(3)::before {
+  color: var(--ink);
+  background: var(--yellow);
+}
+
+.checkout-seals span:nth-child(4)::before {
+  background: var(--green-2);
+}
+
+.review-seals {
+  padding: 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
 .order-review {
   display: grid;
   gap: 12px;
@@ -2379,6 +2434,10 @@ button:disabled {
 
   .confirmation-summary,
   .confirmation-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-seals {
     grid-template-columns: 1fr;
   }
 }
