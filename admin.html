@@ -124,6 +124,68 @@
         return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
       }
 
+      function renderAdminOrder(order) {
+        const whatsappUrl = orderWhatsAppUrl(order);
+
+        return `
+          <article class="admin-order">
+            <div>
+              <p class="eyebrow">${new Date(order.createdAt).toLocaleString("pt-BR")}</p>
+              <h3>${order.id}</h3>
+              <p>${order.customer?.name || "Cliente não informado"} | ${order.customer?.city || "Cidade não informada"}</p>
+              <p>WhatsApp: ${order.customer?.whatsapp || "Nao informado"}</p>
+            </div>
+            <div class="admin-order-side">
+              <strong>${money(order.total || 0)}</strong>
+              ${
+                whatsappUrl
+                  ? `<a class="button secondary admin-whatsapp" href="${whatsappUrl}" target="_blank" rel="noreferrer">Abrir WhatsApp</a>`
+                  : `<span class="admin-no-whatsapp">WhatsApp não informado</span>`
+              }
+              <label>
+                Status
+                <select data-order-status="${order.id}">
+                  ${orderStatuses
+                    .map(
+                      (status) =>
+                        `<option value="${status}" ${status === (order.status || "novo") ? "selected" : ""}>${status}</option>`
+                    )
+                    .join("")}
+                </select>
+              </label>
+              <button class="button danger admin-delete" type="button" data-delete-order="${order.id}">
+                Apagar pedido
+              </button>
+            </div>
+            <ul>
+              ${order.items
+                .map(
+                  (item) =>
+                    `<li>${item.amount}x ${item.code} - ${item.name} (${money(item.subtotal || 0)})</li>`
+                )
+                .join("")}
+            </ul>
+            <div class="admin-checkout">
+              <strong>Entrega e pagamento</strong>
+              <p>CPF/CNPJ: ${order.checkout?.document || "Nao informado"}</p>
+              <p>Endereço: ${order.checkout?.address || "Nao informado"}</p>
+              <p>Cidade/UF: ${order.checkout?.city || order.customer?.city || "Nao informado"}</p>
+              <p>Pagamento: ${order.checkout?.payment || "Nao informado"}</p>
+              <p>Máquina/observação: ${order.checkout?.machineNote || "Sem observação"}</p>
+            </div>
+            <div class="admin-internal-note">
+              <label>
+                Observação interna
+                <textarea data-order-note="${order.id}" rows="3" placeholder="Ex: cliente pediu retorno à tarde, conferir transportadora, negociar desconto">${escapeHtml(order.internalNote || "")}</textarea>
+              </label>
+              <button class="button secondary" type="button" data-save-note="${order.id}">
+                Salvar observação
+              </button>
+            </div>
+          </article>
+        `;
+      }
+
       async function getOrdersForDashboard() {
         if (!window.VFStore.client) return window.VFStore.readOrders();
 
@@ -159,69 +221,34 @@
         document.querySelector("[data-admin-revenue]").textContent = money(totalRevenue);
         document.querySelector("[data-admin-items]").textContent = totalItems;
 
-        document.querySelector("[data-admin-list]").innerHTML = orders.length
-          ? orders
-              .map(
-                (order) => {
-                  const whatsappUrl = orderWhatsAppUrl(order);
+        const activeOrders = orders.filter((order) => (order.status || "novo") !== "concluido");
+        const completedOrders = orders.filter((order) => (order.status || "novo") === "concluido");
 
-                  return `
-                  <article class="admin-order">
-                    <div>
-                      <p class="eyebrow">${new Date(order.createdAt).toLocaleString("pt-BR")}</p>
-                      <h3>${order.id}</h3>
-                      <p>${order.customer?.name || "Cliente não informado"} | ${order.customer?.city || "Cidade não informada"}</p>
-                      <p>WhatsApp: ${order.customer?.whatsapp || "Nao informado"}</p>
-                    </div>
-                    <div class="admin-order-side">
-                      <strong>${money(order.total || 0)}</strong>
-                      ${
-                        whatsappUrl
-                          ? `<a class="button secondary admin-whatsapp" href="${whatsappUrl}" target="_blank" rel="noreferrer">Abrir WhatsApp</a>`
-                          : `<span class="admin-no-whatsapp">WhatsApp não informado</span>`
-                      }
-                      <label>
-                        Status
-                        <select data-order-status="${order.id}">
-                          ${orderStatuses
-                            .map(
-                              (status) =>
-                                `<option value="${status}" ${status === (order.status || "novo") ? "selected" : ""}>${status}</option>`
-                            )
-                            .join("")}
-                        </select>
-                      </label>
-                    </div>
-                    <ul>
-                      ${order.items
-                        .map(
-                          (item) =>
-                            `<li>${item.amount}x ${item.code} - ${item.name} (${money(item.subtotal || 0)})</li>`
-                        )
-                        .join("")}
-                    </ul>
-                    <div class="admin-checkout">
-                      <strong>Entrega e pagamento</strong>
-                      <p>CPF/CNPJ: ${order.checkout?.document || "Nao informado"}</p>
-                      <p>Endereço: ${order.checkout?.address || "Nao informado"}</p>
-                      <p>Cidade/UF: ${order.checkout?.city || order.customer?.city || "Nao informado"}</p>
-                      <p>Pagamento: ${order.checkout?.payment || "Nao informado"}</p>
-                      <p>Máquina/observação: ${order.checkout?.machineNote || "Sem observação"}</p>
-                    </div>
-                    <div class="admin-internal-note">
-                      <label>
-                        Observação interna
-                        <textarea data-order-note="${order.id}" rows="3" placeholder="Ex: cliente pediu retorno à tarde, conferir transportadora, negociar desconto">${escapeHtml(order.internalNote || "")}</textarea>
-                      </label>
-                      <button class="button secondary" type="button" data-save-note="${order.id}">
-                        Salvar observação
-                      </button>
-                    </div>
-                  </article>
-                `;
-                }
-              )
-              .join("")
+        document.querySelector("[data-admin-list]").innerHTML = orders.length
+          ? `
+            <div class="admin-order-group">
+              <div class="admin-order-group-head">
+                <h3>Pedidos em aberto</h3>
+                <span>${activeOrders.length}</span>
+              </div>
+              ${
+                activeOrders.length
+                  ? activeOrders.map(renderAdminOrder).join("")
+                  : `<p class="cart-empty">Nenhum pedido em aberto.</p>`
+              }
+            </div>
+            <div class="admin-order-group">
+              <div class="admin-order-group-head">
+                <h3>Pedidos concluídos</h3>
+                <span>${completedOrders.length}</span>
+              </div>
+              ${
+                completedOrders.length
+                  ? completedOrders.map(renderAdminOrder).join("")
+                  : `<p class="cart-empty">Nenhum pedido concluído ainda.</p>`
+              }
+            </div>
+          `
           : `<p class="cart-empty">Nenhum pedido salvo neste navegador ainda.</p>`;
       }
 
@@ -263,6 +290,27 @@
       });
 
       document.addEventListener("click", async (event) => {
+        const deleteOrderId = event.target.closest("[data-delete-order]")?.dataset.deleteOrder;
+        if (deleteOrderId) {
+          if (!confirm(`Apagar o pedido ${deleteOrderId}? Essa ação remove o pedido do admin.`)) return;
+
+          const button = event.target.closest("[data-delete-order]");
+          button.disabled = true;
+          button.textContent = "Apagando...";
+
+          try {
+            await window.VFStore.deleteOrder(deleteOrderId);
+            currentOrders = currentOrders.filter((order) => order.id !== deleteOrderId);
+            await readDashboard();
+          } catch (error) {
+            button.disabled = false;
+            button.textContent = "Apagar pedido";
+            alert("Nao foi possivel apagar o pedido. Verifique se voce esta logado como admin e se a permissao de delete foi criada no Supabase.");
+          }
+
+          return;
+        }
+
         const orderId = event.target.closest("[data-save-note]")?.dataset.saveNote;
         if (!orderId) return;
 
@@ -300,10 +348,11 @@
           await window.VFStore.updateOrderStatus(orderId, status);
           const order = currentOrders.find((item) => item.id === orderId);
           if (order) order.status = status;
+          await readDashboard();
         } catch (error) {
           alert("Nao foi possivel atualizar o status. Verifique se voce esta logado como admin.");
         } finally {
-          event.target.disabled = false;
+          if (document.body.contains(event.target)) event.target.disabled = false;
         }
       });
 

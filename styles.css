@@ -936,7 +936,37 @@ h3 {
 
 .admin-orders {
   display: grid;
+  gap: 22px;
+}
+
+.admin-order-group {
+  display: grid;
   gap: 12px;
+}
+
+.admin-order-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.admin-order-group-head h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.admin-order-group-head span {
+  display: grid;
+  min-width: 34px;
+  height: 34px;
+  place-items: center;
+  color: var(--white);
+  background: var(--green);
+  border-radius: 999px;
+  font-weight: 900;
 }
 
 .admin-order {
@@ -993,6 +1023,12 @@ h3 {
 }
 
 .admin-whatsapp {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 0.82rem;
+}
+
+.admin-delete {
   min-height: 36px;
   padding: 0 12px;
   font-size: 0.82rem;

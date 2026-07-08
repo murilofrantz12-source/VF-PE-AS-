@@ -47,6 +47,11 @@ window.VFStore = {
     localStorage.removeItem(VF_STORE_KEYS.orders);
   },
 
+  deleteOrderLocal(orderId) {
+    const orders = this.readOrders().filter((order) => order.id !== orderId);
+    localStorage.setItem(VF_STORE_KEYS.orders, JSON.stringify(orders));
+  },
+
   updateOrderStatusLocal(orderId, status) {
     const orders = this.readOrders().map((order) =>
       order.id === orderId ? { ...order, status } : order
@@ -93,6 +98,17 @@ window.VFStore = {
 
     if (error) throw error;
     return data;
+  },
+
+  async deleteOrder(orderId) {
+    this.deleteOrderLocal(orderId);
+
+    if (!this.client) return null;
+
+    const { error } = await this.client.from("orders").delete().eq("id", orderId);
+
+    if (error) throw error;
+    return true;
   },
 
   async saveOrderRemote(order) {
