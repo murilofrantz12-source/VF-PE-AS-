@@ -277,6 +277,15 @@ function cartTotal() {
   return state.cart.reduce((total, item) => total + itemSubtotal(item), 0);
 }
 
+function checkoutCityUf(checkout = {}) {
+  return checkout.state ? `${checkout.city || "A informar"}-${checkout.state}` : checkout.city || "A informar";
+}
+
+function checkoutAddressLine(checkout = {}) {
+  const number = checkout.number ? `, ${checkout.number}` : "";
+  return `${checkout.address || "A informar"}${number}`;
+}
+
 function productMessage(product) {
   return [
     "Olá, quero falar com um vendedor sobre esta peça:",
@@ -333,8 +342,10 @@ function cartMessage(intent = "confirmar", orderId = "", checkout = {}) {
         "",
         "Entrega e pagamento:",
         `CPF/CNPJ: ${checkout.document || "A informar"}`,
-        `Endereço: ${checkout.address || "A informar"}`,
-        `Cidade/UF: ${checkout.city || "A informar"}`,
+        `CEP: ${checkout.zipCode || "A informar"}`,
+        `Endereço: ${checkoutAddressLine(checkout)}`,
+        `Bairro: ${checkout.district || "A informar"}`,
+        `Cidade/UF: ${checkoutCityUf(checkout)}`,
         `Pagamento: ${checkout.payment || "A combinar"}`,
         `Observação da máquina: ${checkout.machineNote || "Sem observação"}`,
         "Frete e prazo: a confirmar após análise do endereço e transportadora.",
@@ -625,8 +636,10 @@ function showOrderReview(checkout) {
     <div class="review-block">
       <strong>Entrega e pagamento</strong>
       <p>CPF/CNPJ: ${checkout.document}</p>
-      <p>Endereço: ${checkout.address}</p>
-      <p>Cidade/UF: ${checkout.city}</p>
+      <p>CEP: ${checkout.zipCode}</p>
+      <p>Endereço: ${checkoutAddressLine(checkout)}</p>
+      <p>Bairro: ${checkout.district}</p>
+      <p>Cidade/UF: ${checkoutCityUf(checkout)}</p>
       <p>Pagamento: ${checkout.payment}</p>
       <p>Máquina/observação: ${checkout.machineNote || "Sem observação"}</p>
       <p>Frete e prazo serão confirmados após análise do endereço e transportadora.</p>
@@ -966,8 +979,12 @@ checkoutForm.addEventListener("submit", (event) => {
 
   const checkout = {
     document: data.get("documento"),
+    zipCode: data.get("cep"),
     address: data.get("endereco"),
+    number: data.get("numero"),
+    district: data.get("bairro"),
     city: data.get("cidade"),
+    state: String(data.get("uf") || "").toUpperCase(),
     payment: data.get("pagamento"),
     machineNote: data.get("observacao") || "",
   };

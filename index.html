@@ -334,12 +334,28 @@
               <input name="documento" autocomplete="off" required />
             </label>
             <label>
-              Endereço de entrega
-              <input name="endereco" autocomplete="street-address" required />
+              CEP
+              <input name="cep" autocomplete="postal-code" inputmode="numeric" placeholder="85900-000" required />
             </label>
             <label>
-              Cidade/UF
-              <input name="cidade" autocomplete="address-level2" placeholder="Toledo-PR" required />
+              Endereço
+              <input name="endereco" autocomplete="street-address" placeholder="Rua, avenida ou estrada" required />
+            </label>
+            <label>
+              Número
+              <input name="numero" autocomplete="address-line2" placeholder="123, s/n, barracão" required />
+            </label>
+            <label>
+              Bairro
+              <input name="bairro" autocomplete="address-level3" required />
+            </label>
+            <label>
+              Cidade
+              <input name="cidade" autocomplete="address-level2" placeholder="Toledo" required />
+            </label>
+            <label>
+              UF
+              <input name="uf" autocomplete="address-level1" maxlength="2" placeholder="PR" required />
             </label>
             <label>
               Forma de pagamento

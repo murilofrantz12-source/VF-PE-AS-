@@ -177,8 +177,14 @@
             <div class="admin-checkout">
               <strong>Entrega e pagamento</strong>
               <p>CPF/CNPJ: ${order.checkout?.document || "Nao informado"}</p>
-              <p>Endereço: ${order.checkout?.address || "Nao informado"}</p>
-              <p>Cidade/UF: ${order.checkout?.city || order.customer?.city || "Nao informado"}</p>
+              <p>CEP: ${order.checkout?.zipCode || "Nao informado"}</p>
+              <p>Endereço: ${order.checkout?.address || "Nao informado"}${order.checkout?.number ? `, ${order.checkout.number}` : ""}</p>
+              <p>Bairro: ${order.checkout?.district || "Nao informado"}</p>
+              <p>Cidade/UF: ${
+                order.checkout?.state
+                  ? `${order.checkout?.city || "Nao informado"}-${order.checkout.state}`
+                  : order.checkout?.city || order.customer?.city || "Nao informado"
+              }</p>
               <p>Pagamento: ${order.checkout?.payment || "Nao informado"}</p>
               <p>Máquina/observação: ${order.checkout?.machineNote || "Sem observação"}</p>
             </div>
