@@ -68,6 +68,14 @@ window.VFStore = {
     return orders.find((order) => order.id === orderId) || null;
   },
 
+  updateOrderShippingLocal(orderId, adminShipping) {
+    const orders = this.readOrders().map((order) =>
+      order.id === orderId ? { ...order, adminShipping } : order
+    );
+    localStorage.setItem(VF_STORE_KEYS.orders, JSON.stringify(orders));
+    return orders.find((order) => order.id === orderId) || null;
+  },
+
   async updateOrderStatus(orderId, status) {
     this.updateOrderStatusLocal(orderId, status);
 
@@ -92,6 +100,22 @@ window.VFStore = {
     const { data, error } = await this.client
       .from("orders")
       .update({ internal_note: internalNote })
+      .eq("id", orderId)
+      .select("*")
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  async updateOrderShipping(orderId, adminShipping) {
+    this.updateOrderShippingLocal(orderId, adminShipping);
+
+    if (!this.client) return null;
+
+    const { data, error } = await this.client
+      .from("orders")
+      .update({ admin_shipping: adminShipping })
       .eq("id", orderId)
       .select("*")
       .single();
@@ -179,6 +203,7 @@ window.VFStore = {
       total: Number(order.total || 0),
       status: order.status || "novo",
       internalNote: order.internal_note || "",
+      adminShipping: order.admin_shipping || {},
       checkout: order.checkout || {},
     }));
   },
@@ -211,6 +236,7 @@ window.VFStore = {
         total: Number(order.total || 0),
         status: order.status || "novo",
         internalNote: order.internal_note || "",
+        adminShipping: order.admin_shipping || {},
         checkout: order.checkout || {},
       }));
     } catch {

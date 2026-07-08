@@ -182,6 +182,30 @@
               <p>Pagamento: ${order.checkout?.payment || "Nao informado"}</p>
               <p>Máquina/observação: ${order.checkout?.machineNote || "Sem observação"}</p>
             </div>
+            <div class="admin-shipping">
+              <strong>Frete e prazo</strong>
+              <div class="admin-shipping-grid">
+                <label>
+                  Valor do frete
+                  <input data-shipping-field="freight" data-order-shipping="${order.id}" value="${escapeHtml(order.adminShipping?.freight || "")}" placeholder="Ex: R$ 180,00" />
+                </label>
+                <label>
+                  Prazo previsto
+                  <input data-shipping-field="deadline" data-order-shipping="${order.id}" value="${escapeHtml(order.adminShipping?.deadline || "")}" placeholder="Ex: 3 a 5 dias úteis" />
+                </label>
+                <label>
+                  Transportadora
+                  <input data-shipping-field="carrier" data-order-shipping="${order.id}" value="${escapeHtml(order.adminShipping?.carrier || "")}" placeholder="Ex: Jadlog, Braspress, retirada" />
+                </label>
+                <label>
+                  Código/rastreamento
+                  <input data-shipping-field="tracking" data-order-shipping="${order.id}" value="${escapeHtml(order.adminShipping?.tracking || "")}" placeholder="Código, placa ou observação" />
+                </label>
+              </div>
+              <button class="button secondary" type="button" data-save-shipping="${order.id}">
+                Salvar frete e prazo
+              </button>
+            </div>
             <div class="admin-internal-note">
               <label>
                 Observação interna
@@ -279,7 +303,21 @@
       function exportOrders() {
         const orders = currentOrders.length ? currentOrders : window.VFStore.readOrders();
         const rows = [
-          ["pedido", "data", "cliente", "whatsapp", "cidade", "status", "total", "observacao interna", "itens"].map(csvValue).join(","),
+          [
+            "pedido",
+            "data",
+            "cliente",
+            "whatsapp",
+            "cidade",
+            "status",
+            "total",
+            "frete",
+            "prazo",
+            "transportadora",
+            "rastreamento",
+            "observacao interna",
+            "itens",
+          ].map(csvValue).join(","),
           ...orders.map((order) =>
             [
               order.id,
@@ -289,6 +327,10 @@
               order.customer?.city,
               order.status || "novo",
               order.total || 0,
+              order.adminShipping?.freight || "",
+              order.adminShipping?.deadline || "",
+              order.adminShipping?.carrier || "",
+              order.adminShipping?.tracking || "",
               order.internalNote || "",
               order.items.map((item) => `${item.amount}x ${item.code}`).join(" | "),
             ]
@@ -340,6 +382,37 @@
           if (!confirm(`Deseja ${actionLabel} o pedido ${orderId}? Ele continuará salvo no histórico do admin.`)) return;
 
           await setOrderStatus(orderId, status, statusButton);
+          return;
+        }
+
+        const shippingOrderId = event.target.closest("[data-save-shipping]")?.dataset.saveShipping;
+        if (shippingOrderId) {
+          const button = event.target.closest("[data-save-shipping]");
+          const fields = document.querySelectorAll(`[data-order-shipping="${shippingOrderId}"]`);
+          const adminShipping = {};
+
+          fields.forEach((field) => {
+            adminShipping[field.dataset.shippingField] = field.value || "";
+          });
+
+          button.disabled = true;
+          button.textContent = "Salvando...";
+
+          try {
+            await window.VFStore.updateOrderShipping(shippingOrderId, adminShipping);
+            const order = currentOrders.find((item) => item.id === shippingOrderId);
+            if (order) order.adminShipping = adminShipping;
+            button.textContent = "Frete salvo";
+          } catch (error) {
+            button.textContent = "Salvar frete e prazo";
+            alert("Nao foi possivel salvar frete e prazo. Verifique se o SQL foi atualizado e se voce esta logado como admin.");
+          } finally {
+            setTimeout(() => {
+              button.disabled = false;
+              button.textContent = "Salvar frete e prazo";
+            }, 1200);
+          }
+
           return;
         }
 

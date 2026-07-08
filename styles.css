@@ -1112,6 +1112,55 @@ h3 {
   line-height: 1.45;
 }
 
+.admin-shipping {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  background: #edf2e9;
+  border: 1px solid #d6dfd1;
+  border-radius: 6px;
+}
+
+.admin-shipping strong {
+  color: var(--ink);
+}
+
+.admin-shipping-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.admin-shipping label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.admin-shipping input {
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 10px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid #d6dfd1;
+  border-radius: 6px;
+  outline: none;
+}
+
+.admin-shipping input:focus {
+  border-color: var(--green-2);
+  box-shadow: 0 0 0 4px rgba(47, 111, 71, 0.12);
+}
+
+.admin-shipping .button {
+  justify-self: start;
+  min-height: 38px;
+}
+
 .admin-internal-note {
   grid-column: 1 / -1;
   display: grid;
@@ -1953,6 +2002,10 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .admin-shipping-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .family-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2030,6 +2083,10 @@ h3 {
 
   .admin-order-side {
     justify-items: start;
+  }
+
+  .admin-shipping-grid {
+    grid-template-columns: 1fr;
   }
 
   .footer-contact {
