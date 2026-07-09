@@ -6727,3 +6727,408 @@ button:disabled {
     grid-column: 2;
   }
 }
+
+/* Identidade premium VF: site escuro com amarelo, azul e verde */
+body {
+  color: rgba(255, 254, 250, 0.92);
+  background:
+    radial-gradient(circle at 78% 4%, rgba(47, 111, 159, 0.16), transparent 32%),
+    radial-gradient(circle at 20% 16%, rgba(36, 112, 74, 0.16), transparent 30%),
+    linear-gradient(145deg, #020403 0%, #07110d 43%, #07141c 100%);
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.84), transparent 88%);
+  content: "";
+}
+
+.topbar {
+  color: rgba(255, 254, 250, 0.92);
+  background: rgba(2, 6, 4, 0.9);
+  border-bottom-color: rgba(223, 180, 58, 0.16);
+}
+
+.topbar .brand strong,
+.topbar .nav a,
+.topbar .nav-button {
+  color: rgba(255, 254, 250, 0.9);
+}
+
+.topbar .brand small {
+  color: rgba(255, 254, 250, 0.62);
+}
+
+.topbar .brand-mark {
+  padding: 4px;
+  background: var(--white);
+  border-radius: 4px;
+}
+
+.nav a:hover,
+.nav a[aria-current="page"],
+.nav-button:hover {
+  color: var(--yellow);
+}
+
+.button.primary,
+.topbar-action.button.primary {
+  color: #06110c;
+  background: linear-gradient(135deg, #f0ca4f, var(--yellow));
+  border: 1px solid rgba(223, 180, 58, 0.7);
+  box-shadow: 0 14px 32px rgba(223, 180, 58, 0.14);
+}
+
+.button.secondary,
+.login-button,
+.mobile-orders-button {
+  color: rgba(255, 254, 250, 0.92);
+  background: rgba(255, 254, 250, 0.08);
+  border: 1px solid rgba(255, 254, 250, 0.14);
+}
+
+.cart-button,
+.button.secondary[data-whatsapp-link],
+.button.secondary[data-whatsapp-missing],
+.admin-whatsapp {
+  color: #02120d;
+  background: linear-gradient(135deg, #78dba8, var(--green-2));
+  border: 1px solid rgba(120, 219, 168, 0.48);
+}
+
+.hero {
+  background:
+    radial-gradient(circle at 82% 16%, rgba(223, 180, 58, 0.16), transparent 28%),
+    #06110c;
+}
+
+.hero-backdrop {
+  background:
+    linear-gradient(90deg, rgba(2, 6, 4, 0.96), rgba(6, 17, 12, 0.78) 42%, rgba(29, 79, 120, 0.32) 76%),
+    linear-gradient(0deg, rgba(2, 6, 4, 0.5), rgba(223, 180, 58, 0.08));
+}
+
+.trust-strip,
+.code-order,
+.seo-local,
+.seo-products,
+.shop-strip,
+.catalog-section,
+.confidence-section,
+.payment-section,
+.quote-section,
+.policy-page,
+.product-page,
+.about-page,
+.product-seo-section,
+.policy-hero,
+.about-intro,
+.admin-page {
+  color: rgba(255, 254, 250, 0.9);
+  background: transparent;
+  border-color: rgba(255, 254, 250, 0.1);
+}
+
+.trust-strip,
+.shop-strip,
+.seo-products,
+.code-order,
+.seo-local,
+.product-seo-section,
+.policy-hero,
+.about-intro {
+  background:
+    radial-gradient(circle at 86% 8%, rgba(47, 111, 159, 0.1), transparent 26%),
+    rgba(255, 254, 250, 0.035);
+  border-bottom: 1px solid rgba(255, 254, 250, 0.1);
+}
+
+.section-heading h2,
+.seo-local h2,
+.family-heading h3,
+.policy-hero h1,
+.about-intro h2,
+.about-band h2,
+.product-page-content h1,
+.product-seo-section h2,
+.product-page-empty h1,
+.cart-header h2,
+.product-detail-content h2,
+.account-copy h2,
+.orders-dialog h2,
+.confirmation-hero h2 {
+  color: var(--white);
+}
+
+.section-heading p:not(.eyebrow),
+.quote-section p,
+.seo-local p,
+.seo-products-grid span,
+.family-heading p:not(.eyebrow),
+.product-card p,
+.product-page-content > p:not(.eyebrow),
+.product-seo-section > p,
+.confidence-grid p,
+.payment-grid p,
+.volume-callout span,
+.policy-hero p:not(.eyebrow),
+.policy-grid p,
+.about-intro > p,
+.about-grid p,
+.cart-note,
+.cart-empty,
+.cart-customer,
+.product-detail-content > p,
+.account-copy p:not(.eyebrow),
+.account-note,
+.orders-account span,
+.client-order p,
+.client-order ul,
+.checkout-title span,
+.review-block p,
+.review-block ul,
+.confirmation-block ul,
+.confirmation-steps ol {
+  color: rgba(255, 254, 250, 0.66);
+}
+
+.trust-item,
+.code-order-form,
+.seo-products-grid a,
+.catalog-missing-callout,
+.catalog-empty-state,
+.product-card,
+.confidence-grid article,
+.payment-grid article,
+.volume-callout,
+.quote-form,
+.policy-grid article,
+.about-grid article,
+.cart-panel,
+.cart-line,
+.cart-customer,
+.product-modal-dialog,
+.product-detail-visual,
+.account-dialog,
+.account-box,
+.checkout-title,
+.checkout-alert,
+.checkout-seals span,
+.review-seals,
+.review-block,
+.review-total,
+.orders-dialog,
+.orders-account,
+.client-order,
+.order-timeline,
+.confirmation-dialog,
+.confirmation-summary div,
+.confirmation-block,
+.confirmation-steps {
+  color: rgba(255, 254, 250, 0.9);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(47, 111, 159, 0.1), transparent 28%),
+    rgba(255, 254, 250, 0.06);
+  border-color: rgba(255, 254, 250, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 254, 250, 0.05), 0 16px 38px rgba(0, 0, 0, 0.2);
+}
+
+.product-visual,
+.product-page-visual,
+.product-detail-visual,
+.tour-part-image {
+  background: rgba(255, 254, 250, 0.94);
+  border-color: rgba(255, 254, 250, 0.14);
+}
+
+.product-card:hover,
+.seo-products-grid a:hover,
+.confidence-grid article:hover,
+.payment-grid article:hover,
+.policy-grid article:hover,
+.about-grid article:hover {
+  border-color: rgba(223, 180, 58, 0.42);
+  transform: translateY(-2px);
+}
+
+.catalog-summary,
+.catalog-missing-callout,
+.volume-callout,
+.product-page-pricebox,
+.review-total,
+.cart-total {
+  color: rgba(255, 254, 250, 0.9);
+  background: rgba(223, 180, 58, 0.12);
+  border-color: rgba(223, 180, 58, 0.28);
+  border-left-color: var(--yellow);
+}
+
+.catalog-missing-callout strong,
+.catalog-empty-state strong,
+.confidence-grid strong,
+.volume-callout strong,
+.policy-grid h2,
+.about-grid h2,
+.product-card h3,
+.product-details dd,
+.price,
+.product-page-code strong,
+.product-page-price,
+.product-compatibility-box strong,
+.cart-line-total,
+.cart-total strong,
+.cart-customer strong,
+.product-detail-content h2,
+.account-box strong,
+.checkout-title strong,
+.review-block strong,
+.review-total strong,
+.client-order h3,
+.order-timeline-closed strong,
+.confirmation-summary strong,
+.confirmation-block strong,
+.confirmation-steps strong {
+  color: var(--white);
+}
+
+.product-code,
+.product-page-code,
+.product-compatibility-alert,
+.client-order-status,
+.checkout-alert {
+  color: #eaf6ff;
+  background: rgba(47, 111, 159, 0.24);
+  border: 1px solid rgba(143, 200, 242, 0.28);
+}
+
+.tag,
+.product-note,
+.filter,
+.product-compatibility-box,
+.order-timeline-closed {
+  color: rgba(255, 254, 250, 0.86);
+  background: rgba(36, 112, 74, 0.18);
+  border: 1px solid rgba(120, 219, 168, 0.18);
+}
+
+.filter.active,
+.account-tabs button.active {
+  color: #06110c;
+  background: var(--yellow);
+  border-color: var(--yellow);
+}
+
+.trust-item span,
+.flow-grid span,
+.confirmation-mark,
+.cart-button strong {
+  color: #06110c;
+  background: var(--yellow);
+}
+
+.trust-item:nth-child(2) span,
+.checkout-seals span::before,
+.order-timeline li.done span {
+  color: #06110c;
+  background: #78dba8;
+}
+
+.trust-item:nth-child(3) span,
+.checkout-seals span:nth-child(2)::before {
+  color: var(--white);
+  background: var(--blue-2);
+}
+
+.trust-item strong,
+.seo-products-grid strong,
+.payment-grid strong,
+.product-compatibility-box span,
+.client-order-status,
+.order-timeline li.current strong {
+  color: #78dba8;
+}
+
+.flow-section,
+.about-band,
+.policy-cta,
+.confirmation-hero {
+  background:
+    radial-gradient(circle at 82% 10%, rgba(223, 180, 58, 0.16), transparent 28%),
+    linear-gradient(135deg, rgba(6, 17, 12, 0.98), rgba(8, 27, 38, 0.96));
+  border-top: 1px solid rgba(223, 180, 58, 0.16);
+  border-bottom: 1px solid rgba(223, 180, 58, 0.12);
+}
+
+.flow-grid article {
+  background: rgba(255, 254, 250, 0.06);
+  border-color: rgba(255, 254, 250, 0.13);
+}
+
+.search-wrap label,
+.quote-form label,
+.quantity-field,
+.account-form label {
+  color: rgba(255, 254, 250, 0.66);
+}
+
+.search-wrap input,
+.quote-form input,
+.quote-form select,
+.quote-form textarea,
+.code-order-form input,
+.quantity-field input,
+.account-form input,
+.account-form select,
+.account-form textarea {
+  color: rgba(255, 254, 250, 0.92);
+  background: rgba(2, 6, 4, 0.72);
+  border-color: rgba(255, 254, 250, 0.14);
+}
+
+.search-wrap input::placeholder,
+.quote-form input::placeholder,
+.quote-form textarea::placeholder,
+.code-order-form input::placeholder,
+.account-form input::placeholder,
+.account-form textarea::placeholder {
+  color: rgba(255, 254, 250, 0.38);
+}
+
+.cart-stepper,
+.cart-line-meta span,
+.order-timeline span {
+  background: rgba(255, 254, 250, 0.055);
+  border-color: rgba(255, 254, 250, 0.12);
+}
+
+.cart-stepper button,
+.icon-button,
+.account-tabs button {
+  color: rgba(255, 254, 250, 0.9);
+  background: rgba(255, 254, 250, 0.08);
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.footer {
+  background:
+    radial-gradient(circle at 80% 4%, rgba(47, 111, 159, 0.16), transparent 28%),
+    linear-gradient(135deg, rgba(2, 6, 4, 0.98), rgba(6, 17, 12, 0.98));
+  border-top: 1px solid rgba(223, 180, 58, 0.16);
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    background: rgba(2, 6, 4, 0.94);
+  }
+}
